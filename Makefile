@@ -9,7 +9,6 @@
 # .cpp en .o dans le dossier build/ qui est créé automatiquement
 # Les headers sont inclus via le flag -Iinclude
 
-
 CXX = g++
 SRC_DIR = src
 INC_DIR = include
