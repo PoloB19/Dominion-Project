@@ -1,0 +1,4 @@
+#Liste des fichiers et dossiers à ignorer par git
+
+#Paul
+.DS_store
