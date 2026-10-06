@@ -1,5 +1,21 @@
 #Liste des fichiers et dossiers à ignorer par git
 
-#Paul
-.DS_store
-.build/
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Compilation C++
+build/
+*.o
+*.out
+*.exe
+*.a
+*.dylib
+
+# IDEs et Éditeurs
+.vscode/
+.idea/
+*.swp
+*~
