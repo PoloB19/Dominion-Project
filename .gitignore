@@ -15,6 +15,7 @@ build/
 *.dylib
 
 # IDEs et Éditeurs
+compile_commands.json
 .vscode/
 .idea/
 *.swp
