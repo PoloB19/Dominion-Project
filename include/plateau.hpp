@@ -13,7 +13,7 @@ class Plateau {
     private:
         std::vector<Joueur> m_joueurs;
         Composition m_compositionPartie;
-        std::stack<const Carte*> m_rebuts;
+        std::stack<const Carte*> m_rebut;
         std::map<const Carte*, unsigned short> m_piles;
 
     public:

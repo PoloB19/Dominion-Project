@@ -5,7 +5,6 @@
 class Carte {
 
     private:
-
         static unsigned short m_nextId;
         unsigned short m_id;
         unsigned short m_prix;
