@@ -1,4 +1,5 @@
 #include "carte.hpp"
 
-Carte::Carte(std::string description, unsigned short prix) : description(description), prix(prix), id(nextId++){};
+unsigned short Carte::m_nextId = 1;
 
+Carte::Carte(unsigned short prix, std::string description) : m_prix(prix), m_description(description), m_id(m_nextId++){};

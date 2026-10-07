@@ -20,5 +20,8 @@ class Plateau {
         Plateau(std::vector<Joueur> joueurs, Composition compositionPartie);
         ~Plateau();
 
+        bool checkerEndCondition();
+        Joueur determinerGagnant(); //Il faut que ce soit au action turn, au buy turn
+
 
 };

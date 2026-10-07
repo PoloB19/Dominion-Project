@@ -11,7 +11,7 @@ class Carte {
         std::string m_description;
 
     public:
-        Carte(std::string description, unsigned short prix);
+        Carte(unsigned short prix, std::string description);
         ~Carte();
 
 };

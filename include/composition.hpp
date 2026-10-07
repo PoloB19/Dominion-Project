@@ -14,7 +14,5 @@ class Composition {
 public:
     Composition(std::vector<Carte> compositionPartie);
     ~Composition();
-
-    bool checkerWinCondition(); //Il faut que ce soit au action turn, au buy turn
     
 };
