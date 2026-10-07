@@ -6,11 +6,10 @@ class Carte {
 
     private:
 
-        unsigned short id;
-        static unsigned short nextId;
-
-        std::string description;
-        unsigned short prix;
+        static unsigned short m_nextId;
+        unsigned short m_id;
+        unsigned short m_prix;
+        std::string m_description;
 
     public:
         Carte(std::string description, unsigned short prix);
