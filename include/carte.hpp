@@ -14,4 +14,6 @@ class Carte {
         Carte(unsigned short prix, std::string description);
         ~Carte();
 
+        virtual std::string getCarteType() const = 0;
+
 };
