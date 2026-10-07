@@ -22,6 +22,8 @@ class Plateau {
 
         void ajoutRebut(const Carte* carteRebutee);
 
+        void retirerCartePlateau(const Carte* carteAchetee);
+
         bool checkerEndCondition();
         Joueur determinerGagnant(); //Il faut que ce soit au action turn, au buy turn
 
