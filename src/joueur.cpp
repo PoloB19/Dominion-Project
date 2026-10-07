@@ -29,8 +29,18 @@ void Joueur::piocher(){
 }
 
 void acheter(const Carte* carte);
-void defausser(const Carte* carte);
-void ecarter(const Carte* carte);
+
+void Joueur::defausser(const Carte* carteDefausse){
+    m_main.erase(std::find(m_main.begin(), m_main.end(), carteDefausse));
+    m_defausse.push(carteDefausse);
+};
+
+void Joueur::ecarter(const Carte* carte) {
+
+    
+
+
+}
 
 void Joueur::melangerDefausse(){
 
@@ -54,6 +64,7 @@ void Joueur::melangerDefausse(){
     }
 
 }
+
 void resetTour();
 
 short compterPoints();
