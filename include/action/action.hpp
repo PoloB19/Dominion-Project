@@ -10,5 +10,4 @@ class Action : public Carte {
     public:
         virtual void utiliser() = 0;
 
-
 };
