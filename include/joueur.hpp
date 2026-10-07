@@ -28,7 +28,7 @@ class Joueur {
         void piocher();
         void acheter(const Carte* carte);
         void defausser(const Carte* carte);
-        void ecarter(const Carte* carte);
+        void ecarter(Carte* carteRebutee, Plateau& P);
 
         void melangerDefausse();
         void resetTour();

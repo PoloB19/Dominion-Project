@@ -2,3 +2,10 @@
 
 Plateau::Plateau(std::vector<Joueur> joueurs, Composition compositionPartie) : m_joueurs(joueurs), m_compositionPartie(compositionPartie), m_rebut(std::stack<const Carte*>()), m_piles(std::map<const Carte*, unsigned short>()) {}
 
+
+bool Plateau::checkerEndCondition(){
+
+
+};
+
+Joueur determinerGagnant(); //Il faut que ce soit au action turn, au buy turn

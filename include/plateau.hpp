@@ -20,6 +20,8 @@ class Plateau {
         Plateau(std::vector<Joueur> joueurs, Composition compositionPartie);
         ~Plateau();
 
+        void ajoutRebut(const Carte* carteRebutee);
+
         bool checkerEndCondition();
         Joueur determinerGagnant(); //Il faut que ce soit au action turn, au buy turn
 

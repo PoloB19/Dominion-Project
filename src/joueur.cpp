@@ -1,5 +1,6 @@
 #include "joueur.hpp"
 #include "carte.hpp"
+#include "plateau.hpp"
 
 Joueur::Joueur(std::string pseudo) {
     m_pseudo = pseudo ; 
@@ -35,10 +36,10 @@ void Joueur::defausser(const Carte* carteDefausse){
     m_defausse.push(carteDefausse);
 };
 
-void Joueur::ecarter(const Carte* carte) {
+void Joueur::ecarter(Carte* carteRebutee, Plateau& P) {
 
-    
-
+    m_main.erase(std::find(m_main.begin(), m_main.end(), carteRebutee));
+    P.ajoutRebut(carteRebutee);
 
 }
 
