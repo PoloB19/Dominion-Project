@@ -4,6 +4,11 @@
 #include <stack>
 #include <vector>
 
+#include <iostream>
+
+#include <random>
+#include <algorithm>
+
 class Joueur {
     private:
         std::string m_pseudo;
@@ -26,6 +31,7 @@ class Joueur {
         void ecarter(const Carte* carte);
 
         void melangerDefausse();
+        void resetTour();
 
         short compterPoints();
 };
