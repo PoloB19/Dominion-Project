@@ -3,10 +3,12 @@
 #include "plateau.hpp"
 
 Joueur::Joueur(std::string pseudo) {
+
     m_pseudo = pseudo ; 
     m_pioche = std::stack<const Carte*>(); 
     m_main = std::vector<const Carte*>(); 
     m_defausse = std::stack<const Carte*>();
+
     m_nbAction = 1;
     m_nbAchat = 1;
     m_monnaie = 0;
@@ -30,14 +32,14 @@ void Joueur::piocher(){
 
 }
 
-void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
-    m_main.push_back(carteAchetee);
-    P.retirerCartePlateau(carteAchetee);
-};
-
 void Joueur::defausser(const Carte* carteDefausse){
     m_main.erase(std::find(m_main.begin(), m_main.end(), carteDefausse));
     m_defausse.push(carteDefausse);
+};
+
+void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
+    m_main.push_back(carteAchetee);
+    P.retirerCartePlateau(carteAchetee);
 };
 
 void Joueur::ecarter(Carte* carteRebutee, Plateau& P) {
@@ -73,50 +75,25 @@ void Joueur::resetTour() {
     m_nbAction = 1;
 };
 
-//A FINIR
 short Joueur::compterPoints(){
-
-    //On vide la main dans la défausse
-    while(!m_main.empty()){
-        defausser(m_main.at(0));
-    }
-
-    //On reconstruit son deck dans la pioche avec sa défausse
-    melangerDefausse();
 
     short score;
 
-    //On va vider la pioche dans la défausse petit à petit et compter
-
-    //Pas oublier la malédiction
+    //On reconstruit son deck dans la pioche avec sa défausse et sa main
+    while(!m_main.empty()){
+        defausser(m_main.at(0));
+    }
+    melangerDefausse();
     
+    //On va vider la pioche dans la défausse petit à petit et compter
     const Carte* carteTmp;
-
     while(!m_pioche.empty()){
-
         carteTmp = m_pioche.top();
         switch (carteTmp->getCardType())
         {
             case "Victoire":
-                
-                switch (carteTmp->getCardNom())
-                {
-                    case "Domaine":
-                        score+=1;
-                        break;
-                    
-                    case "Duche":
-                        score+= 3;
-                        break;
-
-                    case "Province":
-                        score+=6;
-                        break;
-
-                    default:
-                        break;
-                }
-
+                score+= carteTmp->getPointsVictoire();
+                break;
             case "Malédiction":
                 score-=1;
                 break;
@@ -125,9 +102,6 @@ short Joueur::compterPoints(){
                 break;
         }
 
-
+        defausser(m_pioche.top());
     }
-    
-
-
 };

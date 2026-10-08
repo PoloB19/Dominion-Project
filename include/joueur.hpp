@@ -30,8 +30,8 @@ class Joueur {
         unsigned short getNbTourJoues() {return m_nbTourJoues;}
          
         void piocher();
-        void acheter(const Carte* carteAchetee, Plateau &P);
         void defausser(const Carte* cartDefaussee);
+        void acheter(const Carte* carteAchetee, Plateau &P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
         void melangerDefausse();
