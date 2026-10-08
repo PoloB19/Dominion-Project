@@ -10,6 +10,7 @@ Joueur::Joueur(std::string pseudo) {
     m_nbAction = 1;
     m_nbAchat = 1;
     m_monnaie = 0;
+    m_nbTourJoues = 0;
 };
 
 void Joueur::piocher(){
