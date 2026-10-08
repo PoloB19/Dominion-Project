@@ -21,15 +21,17 @@ class Joueur {
         unsigned short m_nbAchat;
         unsigned short m_monnaie;
 
-        unsigned short nbTourJoué;
+        unsigned short m_nbTourJoues;
 
     public:
         Joueur(std::string pseudo);
         ~Joueur();
+
+        unsigned short getNbTourJoues() {return m_nbTourJoues;}
          
         void piocher();
-        void acheter(const Carte* carteAchetee, Plateau &P);
         void defausser(const Carte* cartDefaussee);
+        void acheter(const Carte* carteAchetee, Plateau &P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
         void melangerDefausse();
