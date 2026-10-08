@@ -20,7 +20,7 @@ bool Plateau::checkerEndCondition(){
             compteur_tmp++;
 
             //On regarde aussi si la pile des Province est vide
-            if(pair.first->getCarteType() == "Province"){
+            if(pair.first->getCarteNom() == "Province"){
                 return true;
             }
         }

@@ -84,34 +84,50 @@ short Joueur::compterPoints(){
     //On reconstruit son deck dans la pioche avec sa défausse
     melangerDefausse();
 
-    short score = 0;
+    short score;
 
     //On va vider la pioche dans la défausse petit à petit et compter
 
-    /*
+    //Pas oublier la malédiction
     
+    const Carte* carteTmp;
+
     while(!m_pioche.empty()){
 
-        switch (m_pioche.top().getCardType())
+        carteTmp = m_pioche.top();
+        switch (carteTmp->getCardType())
         {
-        case "Domaine":
-            score+=1;
-            break;
-        case "Duché":
-            score+=3;
-            break;
+            case "Victoire":
+                
+                switch (carteTmp->getCardNom())
+                {
+                    case "Domaine":
+                        score+=1;
+                        break;
+                    
+                    case "Duche":
+                        score+= 3;
+                        break;
 
-        case "Province":
-            score
+                    case "Province":
+                        score+=6;
+                        break;
 
-        default:
-            break;
+                    default:
+                        break;
+                }
+
+            case "Malédiction":
+                score-=1;
+                break;
+
+            default:
+                break;
         }
 
 
     }
     
-    */
 
 
 };
