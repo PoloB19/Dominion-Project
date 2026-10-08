@@ -15,5 +15,5 @@ class Carte {
         ~Carte();
 
         virtual std::string getCarteType() const = 0;
-
+        
 };

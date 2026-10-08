@@ -13,6 +13,9 @@ class Voleur : public ActionAttaque {
 
     //Finalement pas besoin de faire la map de merde
     //On va juste faire un vector de trésor pour le voleur, toutes les autres cartes sont défaussés
-
+    
+    public :
+        // obtenir nom de la carte
+        std::string getCarteNom() { return "Voleur"; }
 
 };
