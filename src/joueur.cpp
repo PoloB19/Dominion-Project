@@ -1,5 +1,6 @@
 #include "joueur.hpp"
 #include "carte.hpp"
+#include "plateau.hpp"
 
 Joueur::Joueur(std::string pseudo) {
     m_pseudo = pseudo ; 
@@ -28,9 +29,20 @@ void Joueur::piocher(){
 
 }
 
-void acheter(const Carte* carte);
-void defausser(const Carte* carte);
-void ecarter(const Carte* carte);
+void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
+    m_main.push_back(carteAchetee);
+    P.retirerCartePlateau(carteAchetee);
+};
+
+void Joueur::defausser(const Carte* carteDefausse){
+    m_main.erase(std::find(m_main.begin(), m_main.end(), carteDefausse));
+    m_defausse.push(carteDefausse);
+};
+
+void Joueur::ecarter(Carte* carteRebutee, Plateau& P) {
+    m_main.erase(std::find(m_main.begin(), m_main.end(), carteRebutee));
+    P.ajoutRebut(carteRebutee);
+}
 
 void Joueur::melangerDefausse(){
 
@@ -49,11 +61,56 @@ void Joueur::melangerDefausse(){
 
     //On remplit la pioche
     while(!tas_temporaire.empty()){
-        m_pioche.push(tas_temporaire[0]); //
+        m_pioche.push(tas_temporaire.at(0)); //
         tas_temporaire.erase(tas_temporaire.begin());
     }
 
 }
-void resetTour();
 
-short compterPoints();
+void Joueur::resetTour() {
+    m_nbAchat = 1;
+    m_nbAction = 1;
+};
+
+//A FINIR
+short Joueur::compterPoints(){
+
+    //On vide la main dans la défausse
+    while(!m_main.empty()){
+        defausser(m_main.at(0));
+    }
+
+    //On reconstruit son deck dans la pioche avec sa défausse
+    melangerDefausse();
+
+    short score = 0;
+
+    //On va vider la pioche dans la défausse petit à petit et compter
+
+    /*
+    
+    while(!m_pioche.empty()){
+
+        switch (m_pioche.top().getCardType())
+        {
+        case "Domaine":
+            score+=1;
+            break;
+        case "Duché":
+            score+=3;
+            break;
+
+        case "Province":
+            score
+
+        default:
+            break;
+        }
+
+
+    }
+    
+    */
+
+
+};
