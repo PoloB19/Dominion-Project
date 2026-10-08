@@ -1,0 +1,6 @@
+POUR LE RAPPORT : 
+
+expliquer les difficultés :
+    -enum le nom des cartes? comment préciser leur type? Ou alors leur donner un nom en + du type?
+    -comment optimiser nos vector de cartes (utiliser stack) car bcp + optimiser
+    - choix délibrer de faire chaque caction des cartes dans leur classse respetive car on veut un jeu évolutif à qui on peut juste rajouter des cartes
