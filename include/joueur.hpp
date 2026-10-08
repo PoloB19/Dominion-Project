@@ -28,6 +28,9 @@ class Joueur {
         ~Joueur();
 
         unsigned short getNbTourJoues() {return m_nbTourJoues;}
+
+        unsigned short augmenterNbAction() {m_nbAction++;}
+        unsigned short augmenterNbAchat() {m_nbAchat++;}
          
         void piocher();
         void defausser(const Carte* cartDefaussee);
