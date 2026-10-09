@@ -1,6 +1,8 @@
-#include "joueur.hpp"
 #include "carte.hpp"
+#include "joueur.hpp"
 #include "plateau.hpp"
+#include "victoire.hpp"
+#include "malediction.hpp"
 
 Joueur::Joueur(std::string pseudo) {
 
@@ -86,22 +88,16 @@ short Joueur::compterPoints(){
     melangerDefausse();
     
     //On va vider la pioche dans la défausse petit à petit et compter
-    const Carte* carteTmp;
     while(!m_pioche.empty()){
-        carteTmp = m_pioche.top();
-        switch (carteTmp->getCardType())
-        {
-            case "Victoire":
-                score+= carteTmp->getPointsVictoire();
-                break;
-            case "Malédiction":
-                score-=1;
-                break;
-
-            default:
-                break;
+        const Carte* carteTmp = m_pioche.top();
+        if (carteTmp->getCarteType() == "Victoire") {
+            score += const_cast<Victoire*>(static_cast<const Victoire*>(carteTmp))->getPointsVictoire();
+        } else if (carteTmp->getCarteType() == "Malédiction") {
+            score -= const_cast<Victoire*>(static_cast<const Victoire*>(carteTmp))->getPointsVictoire();
         }
 
         defausser(m_pioche.top());
     }
 };
+
+//DERNIERE FONCTION DEGEULASSE

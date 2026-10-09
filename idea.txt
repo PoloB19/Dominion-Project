@@ -4,3 +4,18 @@ expliquer les difficultés :
     -enum le nom des cartes? comment préciser leur type? Ou alors leur donner un nom en + du type?
     -comment optimiser nos vector de cartes (utiliser stack) car bcp + optimiser
     - choix délibrer de faire chaque caction des cartes dans leur classse respetive car on veut un jeu évolutif à qui on peut juste rajouter des cartes
+    -le makefile pas adapté pour l'arborescence de files
+    -Pour compter les points de victoire, il faut regarder les cartes de type Victoire mais impossible d'aller recupérer les points
+
+
+Problèmes pour nous: 
+
+Définir les cartes Jardins comme des victoire en calculant
+
+const cast dans joueur.cpp dégueulasse
+
+A quoi sert "description" dans les carte?
+
+getCarteNom et getCarteType sont hard codé ou sont des vrais attributs?
+
+Laboratoire.hpp : //On est sûr qu'on fait comme ça?
