@@ -3,8 +3,7 @@
 #include "action.hpp"
 
 class ActionAttaque : public Action {
-
     public :
-        // obtenir le type de la carte
-        std::string getCarteType() { return "Action_Attaque"; }
+        ActionAttaque(std::string nom, unsigned short prix, std::string description) : Action(nom, "ActionAttaque", prix, description, 0, 0) {};
+        ~ActionAttaque();
 };

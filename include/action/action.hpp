@@ -1,20 +1,15 @@
 #pragma once
 
 #include "carte.hpp"
+#include "plateau.hpp"
 
 class Action : public Carte {
 
-    private:
-
-
     public:
 
-        Action(unsigned short prix, std::string description);
+        Action(std::string nom, std::string type, unsigned short prix, std::string description, unsigned short pointsVictoire, unsigned short valeur) : Carte(nom, type, prix, description, pointsVictoire, valeur) {};
         ~Action();
 
-        virtual void utiliser() = 0;
-
-        // obtenir le type de la carte
-        virtual std::string getCarteType() { return "Action"; }
+        virtual void utiliser(const Plateau& P, size_t idJoueur) = 0;
 
 };

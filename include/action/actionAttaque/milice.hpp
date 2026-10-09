@@ -5,6 +5,9 @@
 class Milice : public ActionAttaque {
 
     public :
-        // obtenir nom de la carte
-        std::string getCarteNom() { return "Milice"; }
+
+        Milice();
+        ~Milice();
+
+        void utiliser(const Plateau& P, size_t idJoueur);
 };

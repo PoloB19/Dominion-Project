@@ -2,9 +2,9 @@
 
 #include "carte.hpp"
 
-class Malédiction : public Carte {
+class Malediction : public Carte {
 
     public :
-        // obtenir type de la carte
-        std::string getCarteType() { return "Malediction"; }
+        Malediction() : Carte("Malediction", "Malediction", 0, "Retire un point de victoire.", -1, 0) {};
+        ~Malediction();
 };
