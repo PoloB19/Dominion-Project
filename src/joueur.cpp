@@ -84,10 +84,7 @@ short Joueur::compterPoints() const {
 
     short score = 0;
 
-    //A MODIFIER car pas du tout évolutif
-    short compteurJardin = 0;
-
-    // On regroupe le deck du joueur
+    // On construit le deck total du joueur en regroupant ses cartes
     std::vector<const Carte*> deck = m_main;
     deck.reserve(m_pioche.size() + m_defausse.size() + m_main.size());
 
@@ -102,11 +99,8 @@ short Joueur::compterPoints() const {
         deck.push_back(defausseTmp.top());
         defausseTmp.pop();
     }
-
-    //Pitié non
-    short nbCartesDeck = deck.size();
     
-    //Tout simplement
+    //On calcul son score
     for (const Carte* c : deck){
         score += c->getPointsVictoire(*this);
     }

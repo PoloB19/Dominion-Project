@@ -40,7 +40,7 @@ class Joueur {
         //Setters
         void ajustNbAction(unsigned short delta) {m_nbAction += delta;}
         void ajustNbAchat(unsigned short delta) {m_nbAchat += delta;}
-        void ajustPiece(unsigned short delta) {m_pieces += delta;}
+        void ajustNbPiece(unsigned short delta) {m_pieces += delta;}
 
         //Méthodes
         void piocher();
