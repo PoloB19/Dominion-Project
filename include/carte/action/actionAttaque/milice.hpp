@@ -3,9 +3,7 @@
 #include "actionAttaque.hpp"
 
 class Milice : public ActionAttaque {
-
     public :
-
         Milice();
         ~Milice();
 

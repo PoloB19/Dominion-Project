@@ -6,24 +6,9 @@
 
 std::vector<const Composition*> Plateau::m_compositions = {};
 
-void Plateau::ajoutComposition(const Composition &composition) {
-    Plateau::m_compositions.push_back(&composition);
-}
-
-void Plateau::setCompositions(std::vector<const Composition*> compositions) {
-    Plateau::m_compositions = compositions;
-}
-
-std::vector<const Composition*> Plateau::getCompositions() {
-    return Plateau::m_compositions;
-}
-
-
 // PARTIE INSTANCIABLE
 
 Plateau::Plateau(std::vector<const Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_rebut(std::stack<const Carte*>()), m_piles(Plateau::getCompositions().at(idCompositionPartie)->getCompositionPartie()) {}
-
-Plateau::~Plateau() {}
 
 void Plateau::ajoutRebut(const Carte* carteRebutee) {
     m_rebut.push(carteRebutee);

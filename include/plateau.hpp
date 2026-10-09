@@ -25,6 +25,7 @@ class Plateau {
 
         //Getters
         static std::vector<const Composition*> getCompositions() {return m_compositions;}
+        std::vector<const Joueur*> getJoueurs() {return m_joueurs;}
 
         //Setters
         static void setCompositions(std::vector<const Composition*> compositions) {m_compositions = compositions;}
