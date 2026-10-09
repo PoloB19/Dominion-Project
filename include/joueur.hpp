@@ -1,7 +1,5 @@
 #pragma once
 
-#include "plateau.hpp"
-
 #include <string>
 #include <stack>
 #include <vector>
@@ -12,6 +10,8 @@
 #include <random>
 #include <algorithm>
 
+class Plateau;
+class Carte;
 class Joueur {
     private:
         std::string m_pseudo;
