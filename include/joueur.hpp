@@ -11,8 +11,6 @@
 #include <random>
 #include <algorithm>
 
-class Plateau; //Car plateau.hpp a besoin de joueur.cpp
-
 class Joueur {
     private:
         std::string m_pseudo;
@@ -35,16 +33,20 @@ class Joueur {
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
         unsigned short nbCartesDeck() const;
 
+        //Setters
         void augmenterNbAction() {m_nbAction++;}
         void augmenterNbAchat() {m_nbAchat++;}
         void diminuerNbAction() {m_nbAction--;}
         void diminuerNbAchat() {m_nbAchat--;}
-        void resetTour();
-        
+
+        //Méthodes
         void piocher();
         void defausser(const Carte* cartDefaussee);
+        
         void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
+
+        void resetTour();
 
         void melangerDefausse();
 

@@ -8,8 +8,6 @@
 #include "carte.hpp"
 #include "joueur.hpp"
 
-class Joueur; //Car joueur.hpp a aussi besoin de plateau.hpp
-
 class Plateau {
 
     private:
@@ -22,22 +20,19 @@ class Plateau {
         std::stack<const Carte*> m_rebut;
 
     public:
-        // méthodes globales
-        static void ajoutComposition(const Composition &composition);
-        static void setCompositions(std::vector<const Composition*> compositions);
-        static std::vector<const Composition*> getCompositions();
-
-
-        // méthodes instanciables
         Plateau(std::vector<const Joueur*> joueurs, size_t idCompositionPartie);
         ~Plateau();
 
+        //Getters
+        static std::vector<const Composition*> getCompositions() {return m_compositions;}
+
+        //Setters
+        static void setCompositions(std::vector<const Composition*> compositions) {m_compositions = compositions;}
+
+        //Méthodes
         void ajoutRebut(const Carte* carteRebutee);
-
         void retirerCartePlateau(const Carte* carteAchetee);
-
         bool checkerEndCondition();
-
         std::vector<Joueur> determinerGagnant();
 
 };
