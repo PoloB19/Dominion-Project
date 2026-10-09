@@ -8,6 +8,7 @@
 
 #include <iostream>
 
+//Pour mélanger des paquets de carte
 #include <random>
 #include <algorithm>
 
