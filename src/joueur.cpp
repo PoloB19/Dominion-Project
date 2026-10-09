@@ -14,7 +14,7 @@ Joueur::Joueur(std::string pseudo) {
     m_nbAction = 1;
     m_nbAchat = 1;
     m_monnaie = 0;
-    m_nbTourJoues = 0;
+    m_nbToursJoues = 0;
 };
 
 void Joueur::piocher(){
@@ -77,27 +77,34 @@ void Joueur::resetTour() {
     m_nbAction = 1;
 };
 
-short Joueur::compterPoints(){
+unsigned short Joueur::nbCartesDeck() const {
+    return m_pioche.size() + m_main.size() + m_defausse.size();
+}
+
+short Joueur::compterPoints() const {
 
     short score;
 
-    //On reconstruit son deck dans la pioche avec sa défausse et sa main
-    while(!m_main.empty()){
-        defausser(m_main.at(0));
+    short compteurJardin = 0;
+
+    // On regroupe le deck du joueur en une pile
+    std::stack<const Carte*> deck = m_pioche;
+    deck.emplace(m_defausse);
+    deck.emplace(m_main);
+
+    short nbCartesDeck = deck.size();
+
+    // On parcourt le deck du joueur et compte ses points
+    const Carte* carteTmp;
+
+    while (!deck.empty()) {
+        carteTmp = deck.top();
+        score += carteTmp->getPointsVictoire();
+        if (carteTmp->getNom() == "Jardin") compteurJardin += 1;
+        deck.pop();
     }
-    melangerDefausse();
     
-    //On va vider la pioche dans la défausse petit à petit et compter
-    while(!m_pioche.empty()){
-        const Carte* carteTmp = m_pioche.top();
-        if (carteTmp->getCarteType() == "Victoire") {
-            score += const_cast<Victoire*>(static_cast<const Victoire*>(carteTmp))->getPointsVictoire();
-        } else if (carteTmp->getCarteType() == "Malédiction") {
-            score -= const_cast<Victoire*>(static_cast<const Victoire*>(carteTmp))->getPointsVictoire();
-        }
+    score += compteurJardin * (nbCartesDeck/10);
 
-        defausser(m_pioche.top());
-    }
+    return score;
 };
-
-//DERNIERE FONCTION DEGEULASSE

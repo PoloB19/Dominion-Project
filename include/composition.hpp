@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <map>
 #include <string>
 
 #include "carte.hpp"
@@ -12,7 +12,14 @@ class Composition {
     std::map<const Carte*, unsigned short> m_compositionPartie;
 
 public:
-    Composition(std::vector<Carte> compositionPartie);
+    Composition(std::string nomDeComposition, std::string description, std::map<const Carte*, unsigned short> compositionPartie);
+
     ~Composition();
-    
+
+    // getters
+    std::string getNomDeComposition() const;
+
+    std::string getDescription() const;
+
+    std::map<const Carte*, unsigned short> getCompositionPartie() const;
 };

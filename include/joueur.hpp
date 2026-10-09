@@ -21,24 +21,28 @@ class Joueur {
         unsigned short m_nbAchat;
         unsigned short m_monnaie;
 
-        unsigned short m_nbTourJoues;
+        unsigned short m_nbToursJoues;
 
     public:
         Joueur(std::string pseudo);
         ~Joueur();
 
-        unsigned short getNbTourJoues() {return m_nbTourJoues;}
+        unsigned short getNbTourJoues() const {return m_nbToursJoues;}
 
-        unsigned short augmenterNbAction() {m_nbAction++;}
-        unsigned short augmenterNbAchat() {m_nbAchat++;}
-         
+        void augmenterNbAction() {m_nbAction++;}
+        void augmenterNbAchat() {m_nbAchat++;}
+        void diminuerNbAction() {m_nbAction--;}
+        void diminuerNbAchat() {m_nbAchat--;}
+        void resetTour();
+        
         void piocher();
         void defausser(const Carte* cartDefaussee);
         void acheter(const Carte* carteAchetee, Plateau &P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
         void melangerDefausse();
-        void resetTour();
 
-        short compterPoints();
+        unsigned short nbCartesDeck() const;
+
+        short compterPoints() const;
 };
