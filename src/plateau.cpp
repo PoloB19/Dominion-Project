@@ -1,6 +1,29 @@
+#include <vector>
+
 #include "plateau.hpp"
 
-Plateau::Plateau(std::vector<Joueur> joueurs, Composition compositionPartie) : m_joueurs(joueurs), m_compositionPartie(compositionPartie), m_rebut(std::stack<const Carte*>()), m_piles(std::map<const Carte*, unsigned short>()) {}
+// PARTIE GLOBALE
+
+std::vector<const Composition*> Plateau::m_compositions = {};
+
+void Plateau::ajoutComposition(const Composition &composition) {
+    Plateau::m_compositions.push_back(&composition);
+}
+
+void Plateau::setCompositions(std::vector<const Composition*> compositions) {
+    Plateau::m_compositions = compositions;
+}
+
+std::vector<const Composition*> Plateau::getCompositions() {
+    return Plateau::m_compositions;
+}
+
+
+// PARTIE INSTANCIABLE
+
+Plateau::Plateau(std::vector<const Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_rebut(std::stack<const Carte*>()), m_piles(Plateau::getCompositions().at(idCompositionPartie)->getCompositionPartie()) {}
+
+Plateau::~Plateau() {}
 
 void Plateau::ajoutRebut(const Carte* carteRebutee) {
     m_rebut.push(carteRebutee);
@@ -21,7 +44,7 @@ bool Plateau::checkerEndCondition(){
             compteur_tmp++;
 
             //On regarde aussi si la pile des Province est vide
-            if(pair.first->getCarteNom() == "Province"){
+            if(pair.first->getNom() == "Province"){
                 return true;
             }
         }
@@ -32,26 +55,26 @@ bool Plateau::checkerEndCondition(){
 
 std::vector<Joueur> Plateau::determinerGagnant(){
 
-    std::vector<Joueur> gagnantsTmp ={m_joueurs.at(0)};
+    std::vector<Joueur> gagnantsTmp = {*m_joueurs.at(0)};
 
     for (auto J = m_joueurs.begin() + 1; J != m_joueurs.end(); ++J){
 
         //Si le joueur a un meilleur score que les gagnants actuels
 
-        if(J->compterPoints() > gagnantsTmp.at(0).compterPoints()){
-            gagnantsTmp.at(0) = *J;
+        if((*J)->compterPoints() > gagnantsTmp.at(0).compterPoints()){
+            gagnantsTmp.at(0) = **J;
 
         //Si le joueur a un score égal aux gagnants actuels
-        } else if (J->compterPoints() == gagnantsTmp.at(0).compterPoints()){
+        } else if ((*J)->compterPoints() == gagnantsTmp.at(0).compterPoints()){
 
             //Si le joueur a - de tour joués que les gagnants actuels
-            if (J->getNbTourJoues() > gagnantsTmp.at(0).getNbTourJoues()){
+            if ((*J)->getNbTourJoues() > gagnantsTmp.at(0).getNbTourJoues()){
                 gagnantsTmp.clear(); 
-                gagnantsTmp.at(0) = *J;
+                gagnantsTmp.at(0) = **J;
 
             //Si le joueur et les gagnants actuels ont le même score et le même nombre de tour joués
-            } else if (J->getNbTourJoues() == gagnantsTmp.at(0).getNbTourJoues()){
-                gagnantsTmp.push_back(*J);
+            } else if ((*J)->getNbTourJoues() == gagnantsTmp.at(0).getNbTourJoues()){
+                gagnantsTmp.push_back(**J);
             }
 
         }
