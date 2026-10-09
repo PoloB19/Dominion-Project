@@ -8,5 +8,4 @@ class Douves : public ActionReaction {
         Douves();
         ~Douves();
 
-        void utiliser(const Plateau& P, size_t idJoueur);
-};
+        void utiliser(Joueur& J, Plateau& P);};

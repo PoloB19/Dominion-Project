@@ -8,7 +8,6 @@ class Chancelier : public ActionSimple {
         Chancelier();
         ~Chancelier();
 
-        void utiliser(const Plateau& P, size_t idJoueur);
-
+        void utiliser(Joueur& J, Plateau& P);
 };
 

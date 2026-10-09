@@ -11,7 +11,7 @@ Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
 
     m_nbAction = 1;
     m_nbAchat = 1;
-    m_monnaie = 0;
+    m_pieces = 0;
     
     m_nbToursJoues = 0;
 };

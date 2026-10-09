@@ -10,6 +10,6 @@ class Action : public Carte {
         Action(std::string nom, std::string type, unsigned short prix, std::string description, unsigned short pointsVictoire, unsigned short valeur) : Carte(nom, type, prix, description, pointsVictoire, valeur) {};
         ~Action();
 
-        virtual void utiliser(const Plateau& P, size_t idJoueur) = 0;
+        virtual void utiliser(Joueur& J, Plateau& P) = 0;
 
 };

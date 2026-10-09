@@ -8,6 +8,5 @@ class ChambreDuConseil : public ActionSimple {
         ChambreDuConseil();
         ~ChambreDuConseil();
 
-        void utiliser(const Plateau& P, size_t idJoueur);
-
+        void utiliser(Joueur& J, Plateau& P);
 };

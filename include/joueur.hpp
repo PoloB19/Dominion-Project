@@ -22,7 +22,7 @@ class Joueur {
 
         unsigned short m_nbAction;
         unsigned short m_nbAchat;
-        unsigned short m_monnaie;
+        unsigned short m_pieces;
 
         unsigned short m_nbToursJoues;
 
@@ -38,10 +38,9 @@ class Joueur {
         unsigned short nbCartesDeck() const;
 
         //Setters
-        void augmenterNbAction() {m_nbAction++;}
-        void augmenterNbAchat() {m_nbAchat++;}
-        void diminuerNbAction() {m_nbAction--;}
-        void diminuerNbAchat() {m_nbAchat--;}
+        void ajustNbAction(unsigned short delta) {m_nbAction += delta;}
+        void ajustNbAchat(unsigned short delta) {m_nbAchat += delta;}
+        void ajustPiece(unsigned short delta) {m_pieces += delta;}
 
         //Méthodes
         void piocher();
