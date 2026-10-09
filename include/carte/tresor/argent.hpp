@@ -6,7 +6,7 @@ class Argent : public Tresor {
 
     public :
     
-        Argent() : Tresor(3, "Trésor Argent", 2) {};
+        Argent() : Tresor("Argent", 3, 2) {};
         ~Argent();
 
 };

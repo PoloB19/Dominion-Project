@@ -1,5 +1,7 @@
 #pragma once
 
+#include "plateau.hpp"
+
 #include <string>
 #include <stack>
 #include <vector>
@@ -8,6 +10,8 @@
 
 #include <random>
 #include <algorithm>
+
+class Plateau; //Car plateau.hpp a besoin de joueur.cpp
 
 class Joueur {
     private:
@@ -27,7 +31,9 @@ class Joueur {
         Joueur(std::string pseudo);
         ~Joueur();
 
+        //Getters
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
+        unsigned short nbCartesDeck() const;
 
         void augmenterNbAction() {m_nbAction++;}
         void augmenterNbAchat() {m_nbAchat++;}
@@ -37,12 +43,10 @@ class Joueur {
         
         void piocher();
         void defausser(const Carte* cartDefaussee);
-        void acheter(const Carte* carteAchetee, Plateau &P);
+        void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
         void melangerDefausse();
-
-        unsigned short nbCartesDeck() const;
 
         short compterPoints() const;
 };

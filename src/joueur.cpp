@@ -4,9 +4,8 @@
 #include "victoire.hpp"
 #include "malediction.hpp"
 
-Joueur::Joueur(std::string pseudo) {
+Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
 
-    m_pseudo = pseudo ; 
     m_pioche = std::stack<const Carte*>(); 
     m_main = std::vector<const Carte*>(); 
     m_defausse = std::stack<const Carte*>();
@@ -14,6 +13,7 @@ Joueur::Joueur(std::string pseudo) {
     m_nbAction = 1;
     m_nbAchat = 1;
     m_monnaie = 0;
+    
     m_nbToursJoues = 0;
 };
 
@@ -85,6 +85,7 @@ short Joueur::compterPoints() const {
 
     short score;
 
+    //A MODIFIER
     short compteurJardin = 0;
 
     // On regroupe le deck du joueur en une pile

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "action.cpp"
+#include "action.hpp"
 
 class ActionSimple : public Action {
     public:

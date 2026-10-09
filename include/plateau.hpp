@@ -8,6 +8,8 @@
 #include "carte.hpp"
 #include "joueur.hpp"
 
+class Joueur; //Car joueur.hpp a aussi besoin de plateau.hpp
+
 class Plateau {
 
     private:
@@ -37,6 +39,5 @@ class Plateau {
         bool checkerEndCondition();
 
         std::vector<Joueur> determinerGagnant();
-
 
 };

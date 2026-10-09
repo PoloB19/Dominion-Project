@@ -3,10 +3,7 @@
 #include "tresor.hpp"
 
 class Or : public Tresor {
-
     public :
-
-        Or() : Tresor(6, "Trésor Or", 3){};
+        Or() : Tresor("Or", 6, 3){};
         ~Or();
-
 };
