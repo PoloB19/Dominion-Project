@@ -5,20 +5,8 @@
 #include <string>
 class Tresor : public Carte {
 
-    private:
-        unsigned short m_valeur;
-
     public:
-        // constructeur
-        Tresor(unsigned short prix, std::string description, unsigned short valeur) : Carte(prix, description), m_valeur(valeur){};
-
-        // destructeur
+        Tresor(std::string nom, std::string type, unsigned short prix, std::string description, unsigned short pointsVictoire, unsigned short valeur) : Carte(std::string nom, std::string type, unsigned short prix, std::string description, unsigned short pointsVictoire, unsigned short valeur){};
         ~Tresor();
-
-        // obtenir type de la carte
-        std::string getCarteType() { return "Tresor"; }
-
-        // obtenir valeur du trésor
-        unsigned short getValeur() { return m_valeur; }
 
 };
