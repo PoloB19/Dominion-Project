@@ -2,4 +2,9 @@
 
 #include "actionAttaque.hpp"
 
-class Milice : public ActionAttaque {};
+class Milice : public ActionAttaque {
+
+    public :
+        // obtenir nom de la carte
+        std::string getCarteNom() { return "Milice"; }
+};

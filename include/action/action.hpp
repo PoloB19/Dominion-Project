@@ -14,4 +14,7 @@ class Action : public Carte {
 
         virtual void utiliser() = 0;
 
+        // obtenir le type de la carte
+        virtual std::string getCarteType() { return "Action"; }
+
 };
