@@ -43,7 +43,7 @@ class Joueur {
         void ajustNbPiece(unsigned short delta) {m_pieces += delta;}
 
         //Méthodes
-        void piocher();
+        void piocher(unsigned short nbPioche);
         void defausser(const Carte* cartDefaussee);
         
         void acheter(const Carte* carteAchetee, Plateau& P);

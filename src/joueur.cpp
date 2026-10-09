@@ -16,20 +16,25 @@ Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
     m_nbToursJoues = 0;
 };
 
-void Joueur::piocher(){
+void Joueur::piocher(unsigned short nbPioche){
 
-    //On refait une pioche si elle est vide
-    if(m_pioche.empty()){ 
-        melangerDefausse();
+    for(size_t i; i < nbPioche; i++){
+
+        //On refait une pioche si elle est vide
+        if(m_pioche.empty()){ 
+            melangerDefausse();
+        }
+
+        //On pioche seulement si la pioche n'est pas vide
+        if (!m_pioche.empty()){
+            m_main.push_back(m_pioche.top());
+            m_pioche.pop();
+        } else {
+            std::cout << "Aucune carte à piocher." << std::endl;
+            break;
+        }
     }
 
-    //On pioche seulement si la pioche n'est pas vide
-    if (!m_pioche.empty()){
-        m_main.push_back(m_pioche.top());
-        m_pioche.pop();
-    } else {
-        std::cout << "Aucune carte à piocher." << std::endl;
-    }
 
 }
 

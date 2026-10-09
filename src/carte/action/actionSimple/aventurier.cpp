@@ -8,14 +8,14 @@ void Aventurier::utiliser(Joueur& J, Plateau& P){
 
     while(nbTresorTrouveTmp < 2) {
         
-        J.piocher();
+        J.piocher(1);
 
         if(J.getPioche().top()->getType() == "Tresor") {
             //On récupère une carte Trésor
             std::cout << "Vous avez pioché un Trésor nommé : " << J.getMain().at(-1)->getNom() << std::endl;
             nbTresorTrouveTmp++;
         } else {
-            //On défausse la carte qu'on viens de piocher
+            //On défausse la carte qu'on vient de piocher
             std::cout << "La carte " << J.getMain().at(-1)->getNom() << " a été défaussée." << std::endl;
             J.defausser(J.getMain().at(-1));
         }

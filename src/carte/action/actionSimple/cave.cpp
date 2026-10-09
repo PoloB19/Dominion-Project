@@ -12,7 +12,7 @@ void Cave::utiliser(Joueur& J,  Plateau& P){
 
     while(choix != "STOP"){
         std::cout << "Quelle carte souhaitez vous défausser de votre main? Indiquez son nom." << std::endl;
-        std::cout << "Choix :";
+        std::cout << "Choix : ";
 
         std::cin >> choix;
 
