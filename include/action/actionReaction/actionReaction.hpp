@@ -2,9 +2,13 @@
 
 #include "action.hpp"
 
-class ActionRéaction : public Action {
+class ActionReaction : public Action {
     
     public :
-        // obtenir le type de la carte
-        std::string getCarteType() { return "Action_Reaction"; }
+
+    ActionReaction(unsigned short prix, std::string description, unsigned short pointsVictoire, unsigned short valeur);
+    ~ActionReaction();
+
+    // obtenir le type de la carte
+    std::string getCarteType() { return "Action_Reaction"; }
 };

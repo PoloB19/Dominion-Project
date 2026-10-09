@@ -15,7 +15,12 @@ class Voleur : public ActionAttaque {
     //On va juste faire un vector de trésor pour le voleur, toutes les autres cartes sont défaussés
     
     public :
-        // obtenir nom de la carte
-        std::string getCarteNom() { return "Voleur"; }
+        Voleur();
+        ~Voleur();
+
+        //On est sûr qu'on fait comme ça?
+        //std::string getCarteNom(){return "Voleur";}
+
+        void utiliser(const Plateau& P, size_t idJoueur);
 
 };
