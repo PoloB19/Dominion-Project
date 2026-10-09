@@ -2,7 +2,7 @@
 
 Aventurier::Aventurier() : ActionSimple("Aventurier", 6, "Révélez une à une les cartes de votre pioche jusqu'à avoir trouvé 2 cartes Trésor. \nPrenez ces Trésor dans votre main et défausser les autres cartes révélées.") {};
 
-void Aventurier::utiliser(Joueur& J, Plateau& P){
+void Aventurier::utiliser(Joueur& J, Plateau&){
 
     unsigned short nbTresorTrouveTmp = 0;
 

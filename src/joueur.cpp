@@ -18,7 +18,7 @@ Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
 
 void Joueur::piocher(unsigned short nbPioche){
 
-    for(size_t i; i < nbPioche; i++){
+    for(size_t i = 0; i < nbPioche; i++){
 
         //On refait une pioche si elle est vide
         if(m_pioche.empty()){ 
@@ -34,7 +34,6 @@ void Joueur::piocher(unsigned short nbPioche){
             break;
         }
     }
-
 
 }
 
@@ -80,10 +79,6 @@ void Joueur::resetTour() {
     m_nbAchat = 1;
     m_nbAction = 1;
 };
-
-unsigned short Joueur::nbCartesDeck() const {
-    return m_pioche.size() + m_main.size() + m_defausse.size();
-}
 
 short Joueur::compterPoints() const {
 

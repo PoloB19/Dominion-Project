@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-//Pour mélanger des paquets de carte
+//Pour mélanger des paquets de cartes
 #include <random>
 #include <algorithm>
 
@@ -35,7 +35,7 @@ class Joueur {
         std::vector<const Carte*> getMain() const {return m_main;}
         std::stack<const Carte*> getDefausse() const {return m_defausse;}
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
-        unsigned short nbCartesDeck() const;
+        unsigned short getTailleDeck() const {return m_pioche.size() + m_main.size() + m_defausse.size();}
 
         //Setters
         void ajustNbAction(unsigned short delta) {m_nbAction += delta;}
