@@ -21,6 +21,6 @@ class Carte {
         //Getters
         std::string getNom() const {return m_nom;}
         std::string getType() const {return m_type;}
-        short getPointsVictoire() const {return m_pointsVictoire;}
+        virtual short getPointsVictoire(const Joueur& J) const {return m_pointsVictoire;}
         
 };

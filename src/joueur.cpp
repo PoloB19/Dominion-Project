@@ -108,10 +108,8 @@ short Joueur::compterPoints() const {
     
     //Tout simplement
     for (const Carte* c : deck){
-        score += c->getPointsVictoire();
+        score += c->getPointsVictoire(*this);
     }
-
-    score += compteurJardin * (nbCartesDeck/10);
 
     return score;
 };

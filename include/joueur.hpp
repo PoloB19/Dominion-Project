@@ -31,6 +31,9 @@ class Joueur {
         ~Joueur();
 
         //Getters
+        std::stack<const Carte*> getPioche() const {return m_pioche;}
+        std::vector<const Carte*> getMain() const {return m_main;}
+        std::stack<const Carte*> getDefausse() const {return m_defausse;}
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
         unsigned short nbCartesDeck() const;
 
