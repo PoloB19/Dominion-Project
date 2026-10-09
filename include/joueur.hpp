@@ -6,9 +6,12 @@
 
 #include <iostream>
 
+//Pour mélanger des paquets de carte
 #include <random>
 #include <algorithm>
 
+class Plateau;
+class Carte;
 class Joueur {
     private:
         std::string m_pseudo;
@@ -27,22 +30,26 @@ class Joueur {
         Joueur(std::string pseudo);
         ~Joueur();
 
+        //Getters
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
+        unsigned short nbCartesDeck() const;
 
+        //Setters
         void augmenterNbAction() {m_nbAction++;}
         void augmenterNbAchat() {m_nbAchat++;}
         void diminuerNbAction() {m_nbAction--;}
         void diminuerNbAchat() {m_nbAchat--;}
-        void resetTour();
-        
+
+        //Méthodes
         void piocher();
         void defausser(const Carte* cartDefaussee);
-        void acheter(const Carte* carteAchetee, Plateau &P);
+        
+        void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
-        void melangerDefausse();
+        void resetTour();
 
-        unsigned short nbCartesDeck() const;
+        void melangerDefausse();
 
         short compterPoints() const;
 };

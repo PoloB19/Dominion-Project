@@ -1,12 +1,10 @@
-#include "carte.hpp"
 #include "joueur.hpp"
+
 #include "plateau.hpp"
-#include "victoire.hpp"
-#include "malediction.hpp"
+#include "carte.hpp"
 
-Joueur::Joueur(std::string pseudo) {
+Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
 
-    m_pseudo = pseudo ; 
     m_pioche = std::stack<const Carte*>(); 
     m_main = std::vector<const Carte*>(); 
     m_defausse = std::stack<const Carte*>();
@@ -14,6 +12,7 @@ Joueur::Joueur(std::string pseudo) {
     m_nbAction = 1;
     m_nbAchat = 1;
     m_monnaie = 0;
+    
     m_nbToursJoues = 0;
 };
 
@@ -83,27 +82,35 @@ unsigned short Joueur::nbCartesDeck() const {
 
 short Joueur::compterPoints() const {
 
-    short score;
+    short score = 0;
 
+    //A MODIFIER car pas du tout évolutif
     short compteurJardin = 0;
 
-    // On regroupe le deck du joueur en une pile
-    std::stack<const Carte*> deck = m_pioche;
-    deck.emplace(m_defausse);
-    deck.emplace(m_main);
+    // On regroupe le deck du joueur
+    std::vector<const Carte*> deck = m_main;
+    deck.reserve(m_pioche.size() + m_defausse.size() + m_main.size());
 
-    short nbCartesDeck = deck.size();
-
-    // On parcourt le deck du joueur et compte ses points
-    const Carte* carteTmp;
-
-    while (!deck.empty()) {
-        carteTmp = deck.top();
-        score += carteTmp->getPointsVictoire();
-        if (carteTmp->getNom() == "Jardin") compteurJardin += 1;
-        deck.pop();
+    std::stack<const Carte*> piocheTmp = m_pioche;
+    while (!piocheTmp.empty()) {
+        deck.push_back(piocheTmp.top());
+        piocheTmp.pop();
     }
+
+    std::stack<const Carte*> defausseTmp = m_defausse;
+    while (!defausseTmp.empty()) {
+        deck.push_back(defausseTmp.top());
+        defausseTmp.pop();
+    }
+
+    //Pitié non
+    short nbCartesDeck = deck.size();
     
+    //Tout simplement
+    for (const Carte* c : deck){
+        score += c->getPointsVictoire();
+    }
+
     score += compteurJardin * (nbCartesDeck/10);
 
     return score;
