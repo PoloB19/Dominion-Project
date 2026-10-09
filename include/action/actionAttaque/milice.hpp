@@ -9,8 +9,5 @@ class Milice : public ActionAttaque {
         Milice();
         ~Milice();
 
-        //On est sûr qu'on fait comme ça?
-        //std::string getCarteNom(){return "Milice";}
-
         void utiliser(const Plateau& P, size_t idJoueur);
 };

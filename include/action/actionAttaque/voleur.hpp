@@ -3,8 +3,6 @@
 #include "actionAttaque.hpp"
 
 class Voleur : public ActionAttaque {
-
-
     //Creer une map temporaire qui relie chaque joueurs à ses cartes montrés
     //Clé nom joueur value les cartes
     //Le voleur choisis son trésor dans un vector des trésor disponible
@@ -17,9 +15,6 @@ class Voleur : public ActionAttaque {
     public :
         Voleur();
         ~Voleur();
-
-        //On est sûr qu'on fait comme ça?
-        //std::string getCarteNom(){return "Voleur";}
 
         void utiliser(const Plateau& P, size_t idJoueur);
 
