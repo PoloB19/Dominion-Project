@@ -8,6 +8,10 @@ class Action : public Carte {
 
 
     public:
+
+        Action(unsigned short prix, std::string description);
+        ~Action();
+
         virtual void utiliser() = 0;
 
         // obtenir le type de la carte
