@@ -12,8 +12,19 @@
 
 class Plateau;
 class Carte;
+
+enum class Destination {
+    DEFAUSSE,
+    MAIN,
+    PIOCHE
+};
+
 class Joueur {
     private:
+
+        static unsigned short m_nextId;
+        unsigned short m_idJoueur;
+
         std::string m_pseudo;
 
         std::stack<const Carte*> m_pioche;
@@ -31,6 +42,8 @@ class Joueur {
         ~Joueur();
 
         //Getters
+        unsigned short getId() const {return m_idJoueur;}
+        std::string getPseudo() const {return m_pseudo;}
         std::stack<const Carte*> getPioche() const {return m_pioche;}
         std::vector<const Carte*> getMain() const {return m_main;}
         std::stack<const Carte*> getDefausse() const {return m_defausse;}
@@ -46,6 +59,7 @@ class Joueur {
         void piocher(unsigned short nbPioche);
         void defausser(const Carte* cartDefaussee);
         
+        void obtenirCarte(const Carte* carte, Plateau& P, Destination dest);
         void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
@@ -54,4 +68,8 @@ class Joueur {
         void melangerDefausse();
 
         short compterPoints() const;
+
+        bool Joueur::demanderOuiNon(const std::string& question) const;
+
+        bool Joueur::operator== (const Joueur& J) {return m_idJoueur == J.m_idJoueur;}
 };

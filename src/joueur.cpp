@@ -3,7 +3,11 @@
 #include "plateau.hpp"
 #include "carte.hpp"
 
-Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
+#include "ui_interaction.hpp"
+
+unsigned short m_nextId = 0;
+
+Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
 
     m_pioche = std::stack<const Carte*>(); 
     m_main = std::vector<const Carte*>(); 
@@ -42,9 +46,42 @@ void Joueur::defausser(const Carte* carteDefausse){
     m_defausse.push(carteDefausse);
 };
 
+void Joueur::obtenirCarte(const Carte* carte, Plateau& P, Destination dest){
+    
+    if (carte == nullptr || P.pileEstVide(carte)){
+        return;
+    }
+
+    switch (dest)
+    {
+    case Destination::MAIN :
+        m_main.push_back(carte);
+        break;
+    
+    case Destination::DEFAUSSE :
+        m_defausse.push(carte);
+        break;  
+        
+    case Destination::PIOCHE :
+        m_pioche.push(carte);    
+    default:
+        break;
+    }
+
+    P.retirerCartePlateau(carte);
+
+}
+
 void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
-    m_main.push_back(carteAchetee);
-    P.retirerCartePlateau(carteAchetee);
+    
+    if (m_pieces >= carteAchetee->getPrix()){
+        obtenirCarte(carteAchetee, P, Destination::DEFAUSSE);
+        ajustNbPiece(-carteAchetee->getPrix());
+    } else {
+        std::cout << "Vous n'avez pas assez de pièces pour acheter cette carte ! " << std::endl;
+    }
+
+
 };
 
 void Joueur::ecarter(Carte* carteRebutee, Plateau& P) {
@@ -107,3 +144,8 @@ short Joueur::compterPoints() const {
 
     return score;
 };
+
+bool Joueur::demanderOuiNon(const std::string& question) const {
+    return UI::choixOuiNon(m_pseudo + ", " + question);
+}
+
