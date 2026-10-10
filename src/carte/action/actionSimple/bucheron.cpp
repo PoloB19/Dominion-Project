@@ -2,6 +2,10 @@
 
 Bucheron::Bucheron() : ActionSimple("Bucheron", 3, "+1 Achat \n+2 pièces") {}
 
-/* void Bucheron::utiliser(const Plateau& P, size_t idJoueur) {
-    //A FAIRE
-} */
+void Bucheron::utiliser(Joueur& J, Plateau&){
+
+    std::cout << "Vous obtenez 1 achat et 2 pièces supplémentaires." << std::endl;
+
+    J.ajustNbAchat(+1);
+    J.ajustNbPiece(+2);
+}

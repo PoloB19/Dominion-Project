@@ -11,24 +11,28 @@ Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
 
     m_nbAction = 1;
     m_nbAchat = 1;
-    m_monnaie = 0;
+    m_pieces = 0;
     
     m_nbToursJoues = 0;
 };
 
-void Joueur::piocher(){
+void Joueur::piocher(unsigned short nbPioche){
 
-    //On refait une pioche si elle est vide
-    if(m_pioche.empty()){ 
-        melangerDefausse();
-    }
+    for(size_t i = 0; i < nbPioche; i++){
 
-    //On pioche seulement si la pioche n'est pas vide
-    if (!m_pioche.empty()){
-        m_main.push_back(m_pioche.top());
-        m_pioche.pop();
-    } else {
-        std::cout << "Aucune carte à piocher." << std::endl;
+        //On refait une pioche si elle est vide
+        if(m_pioche.empty()){ 
+            melangerDefausse();
+        }
+
+        //On pioche seulement si la pioche n'est pas vide
+        if (!m_pioche.empty()){
+            m_main.push_back(m_pioche.top());
+            m_pioche.pop();
+        } else {
+            std::cout << "Aucune carte à piocher." << std::endl;
+            break;
+        }
     }
 
 }
@@ -76,18 +80,11 @@ void Joueur::resetTour() {
     m_nbAction = 1;
 };
 
-unsigned short Joueur::nbCartesDeck() const {
-    return m_pioche.size() + m_main.size() + m_defausse.size();
-}
-
 short Joueur::compterPoints() const {
 
     short score = 0;
 
-    //A MODIFIER car pas du tout évolutif
-    short compteurJardin = 0;
-
-    // On regroupe le deck du joueur
+    // On construit le deck total du joueur en regroupant ses cartes
     std::vector<const Carte*> deck = m_main;
     deck.reserve(m_pioche.size() + m_defausse.size() + m_main.size());
 
@@ -102,16 +99,11 @@ short Joueur::compterPoints() const {
         deck.push_back(defausseTmp.top());
         defausseTmp.pop();
     }
-
-    //Pitié non
-    short nbCartesDeck = deck.size();
     
-    //Tout simplement
+    //On calcul son score
     for (const Carte* c : deck){
-        score += c->getPointsVictoire();
+        score += c->getPointsVictoire(*this);
     }
-
-    score += compteurJardin * (nbCartesDeck/10);
 
     return score;
 };
