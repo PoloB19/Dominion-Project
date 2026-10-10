@@ -13,14 +13,14 @@ void Espion::utiliser(Joueur& J, Plateau& P){
 
     for (Joueur* j : P.getJoueurs()){
 
-        if (j->getPioche().empty()) j->melangerDefausse();
-
-        if (!j->getPioche().empty()){
+        if(j->accesPioche()){
 
             std::cout << "Cette carte est votre prochaine pioche : " << j->getPioche().top()->getNom()<< std::endl; 
+            
             if (UI::choixOuiNon("souhaitez-vous la défausser")){
                 /**/
             }
-        } 
+
+        }
     }
 }

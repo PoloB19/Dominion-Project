@@ -75,7 +75,7 @@ void Joueur::defausserDepuisMain(const Carte* carteDefausse){
     }
 };
 
-void Joueur::obtenirCarte(const Carte* carte, Plateau& P, Emplacement destination){
+void Joueur::obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination){
     
     if (carte == nullptr || P.pileEstVide(carte)){
         return;
@@ -104,12 +104,15 @@ void Joueur::obtenirCarte(const Carte* carte, Plateau& P, Emplacement destinatio
 void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
     
     if (m_pieces >= carteAchetee->getPrix()){
-        obtenirCarte(carteAchetee, P, Emplacement::DEFAUSSE);
-        ajustNbPiece(-carteAchetee->getPrix());
-    } else {
-        std::cout << "Vous n'avez pas assez de pièces pour acheter cette carte ! " << std::endl;
-    }
 
+        obtenirCartePlateau(carteAchetee, P, Emplacement::DEFAUSSE);
+        ajustNbPiece(-carteAchetee->getPrix());
+
+    } else {
+
+        std::cout << "Vous n'avez pas assez de pièces pour acheter cette carte ! " << std::endl;
+        
+    }
 
 };
 

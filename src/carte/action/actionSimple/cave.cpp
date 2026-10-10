@@ -2,6 +2,7 @@
 
 Cave::Cave() : ActionSimple("Cave", 2, "+1 Action \nDéfaussez autant de carte que vous le souhaitez. +1 Carte par carte défaussée.") {}
 
+/*
 void Cave::utiliser(Joueur& J,  Plateau&){
 
     J.ajustNbAction(+1);
@@ -30,3 +31,5 @@ void Cave::utiliser(Joueur& J,  Plateau&){
     }
         
 }
+
+*/

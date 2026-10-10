@@ -65,7 +65,7 @@ class Joueur {
         bool accesDefausse() const;
 
 
-        void obtenirCarte(const Carte* carte, Plateau& P, Emplacement destination);
+        void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
@@ -79,5 +79,5 @@ class Joueur {
 
         bool demanderOuiNon(const std::string& question) const;
 
-        bool Joueur::operator== (const Joueur& J) {return m_idJoueur == J.m_idJoueur;}
+        bool operator== (const Joueur& J) {return m_idJoueur == J.m_idJoueur;}
 };

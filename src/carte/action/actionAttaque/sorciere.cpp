@@ -8,7 +8,8 @@ void Sorciere::utiliser(Joueur& J, Plateau& P){
 
     for (Joueur* cible : P.getJoueurs()){
         if (cible != &J){
-            cible->obtenirCarte(P.getCarteParNom("Malédiction"), P, Destination::DEFAUSSE);
+            cible->obtenirCartePlateau(P.getCarteParNom("Malédiction"), P, Emplacement::DEFAUSSE);
         }
     }
+
 }

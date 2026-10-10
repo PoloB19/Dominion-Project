@@ -1,8 +1,5 @@
-#pragma once
-#include <string>
-#include <iostream>
-
 #include "ui_interaction.hpp"
+#include "carte.hpp"
 
 inline bool choixOuiNon(const std::string& message) {
 
