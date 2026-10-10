@@ -24,45 +24,74 @@ void Joueur::piocher(unsigned short nbPioche){
 
     for(size_t i = 0; i < nbPioche; i++){
 
-        //On refait une pioche si elle est vide
-        if(m_pioche.empty()){ 
-            melangerDefausse();
+        if (!accesPioche()){
+            return;
         }
 
-        //On pioche seulement si la pioche n'est pas vide
-        if (!m_pioche.empty()){
-            m_main.push_back(m_pioche.top());
-            m_pioche.pop();
-        } else {
-            std::cout << "Aucune carte à piocher." << std::endl;
-            break;
-        }
+        std::cout << "Vous avez pioché la carte : " << m_pioche.top()->getNom();
+        
+        m_main.push_back(m_pioche.top());
+        m_pioche.pop();
+        
     }
-
 }
 
-void Joueur::defausser(const Carte* carteDefausse){
-    m_main.erase(std::find(m_main.begin(), m_main.end(), carteDefausse));
-    m_defausse.push(carteDefausse);
+bool Joueur::accesPioche() {
+    if(m_pioche.empty()) melangerDefausse();
+    if(m_pioche.empty()) {
+        std::cout << "La pioche et la défausse sont vide." << std::endl;
+        return false;
+    }
+    return true;
+}
+
+void Joueur::ajouterAPioche(const Carte* carte){
+    if(carte != nullptr){
+        m_pioche.push(carte);
+    }
+}
+
+bool Joueur::accesDefausse() const {
+    if(m_defausse.empty()) {
+        std::cout << "La défausse est vide." << std::endl;
+        return false;
+    }
+    return true; 
+}
+
+void Joueur::ajouterADefausse(const Carte* carte){
+    if(carte != nullptr){
+        m_defausse.push(carte);
+    }
+}
+
+void Joueur::defausserDepuisMain(const Carte* carteDefausse){
+    auto it = std::find(m_main.begin(), m_main.end(), carteDefausse);
+    
+    //Sécurité
+    if (it != m_main.end()) {
+        m_main.erase(it);
+        ajouterADefausse(carteDefausse); 
+    }
 };
 
-void Joueur::obtenirCarte(const Carte* carte, Plateau& P, Destination dest){
+void Joueur::obtenirCarte(const Carte* carte, Plateau& P, Emplacement destination){
     
     if (carte == nullptr || P.pileEstVide(carte)){
         return;
     }
 
-    switch (dest)
+    switch (destination)
     {
-    case Destination::MAIN :
+    case Emplacement::MAIN :
         m_main.push_back(carte);
         break;
     
-    case Destination::DEFAUSSE :
+    case Emplacement::DEFAUSSE :
         m_defausse.push(carte);
         break;  
         
-    case Destination::PIOCHE :
+    case Emplacement::PIOCHE :
         m_pioche.push(carte);    
     default:
         break;
@@ -75,7 +104,7 @@ void Joueur::obtenirCarte(const Carte* carte, Plateau& P, Destination dest){
 void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
     
     if (m_pieces >= carteAchetee->getPrix()){
-        obtenirCarte(carteAchetee, P, Destination::DEFAUSSE);
+        obtenirCarte(carteAchetee, P, Emplacement::DEFAUSSE);
         ajustNbPiece(-carteAchetee->getPrix());
     } else {
         std::cout << "Vous n'avez pas assez de pièces pour acheter cette carte ! " << std::endl;
@@ -110,6 +139,37 @@ void Joueur::melangerDefausse(){
         tas_temporaire.erase(tas_temporaire.begin());
     }
 
+}
+
+const Carte* Joueur::revelerCarte(Emplacement depuis){
+
+    const Carte* carteRevelee = nullptr;
+
+    switch (depuis)
+    {
+    case Emplacement::PIOCHE :
+
+        if(!accesPioche()) return nullptr;
+
+        carteRevelee = m_pioche.top();
+        m_pioche.pop();
+
+        break;
+
+    case Emplacement::DEFAUSSE :
+
+        if(!accesDefausse()) return nullptr;
+
+        carteRevelee = m_defausse.top();
+        m_defausse.pop();
+
+        break;
+
+    default:
+        return carteRevelee;
+    }
+
+    return carteRevelee;
 }
 
 void Joueur::resetTour() {

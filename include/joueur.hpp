@@ -13,7 +13,7 @@
 class Plateau;
 class Carte;
 
-enum class Destination {
+enum class Emplacement {
     DEFAUSSE,
     MAIN,
     PIOCHE
@@ -57,9 +57,15 @@ class Joueur {
 
         //Méthodes
         void piocher(unsigned short nbPioche);
-        void defausser(const Carte* cartDefaussee);
+        bool accesPioche();
+        void ajouterAPioche(const Carte* carte);
         
-        void obtenirCarte(const Carte* carte, Plateau& P, Destination dest);
+        void ajouterADefausse(const Carte* carte);
+        void defausserDepuisMain(const Carte* cartDefaussee);
+        bool accesDefausse() const;
+
+
+        void obtenirCarte(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
@@ -67,9 +73,11 @@ class Joueur {
 
         void melangerDefausse();
 
+        const Carte* revelerCarte(Emplacement depuis);
+
         short compterPoints() const;
 
-        bool Joueur::demanderOuiNon(const std::string& question) const;
+        bool demanderOuiNon(const std::string& question) const;
 
         bool Joueur::operator== (const Joueur& J) {return m_idJoueur == J.m_idJoueur;}
 };

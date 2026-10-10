@@ -10,6 +10,5 @@ void Sorciere::utiliser(Joueur& J, Plateau& P){
         if (cible != &J){
             cible->obtenirCarte(P.getCarteParNom("Malédiction"), P, Destination::DEFAUSSE);
         }
-        
     }
 }
