@@ -9,18 +9,21 @@ void Espion::utiliser(Joueur& J, Plateau& P){
     J.piocher(1);
     J.ajustNbAction(+1);
 
-    std::string choix;
-
     for (Joueur* j : P.getJoueurs()){
 
         if(j->accesPioche()){
 
-            std::cout << "Cette carte est votre prochaine pioche : " << j->getPioche().top()->getNom()<< std::endl; 
-            
-            if (UI::choixOuiNon("souhaitez-vous la défausser")){
-                /**/
-            }
+            const Carte* carteRevelee = j->revelerCarte(Emplacement::PIOCHE); 
 
+            if (carteRevelee != nullptr) {
+
+                if (j->demanderOuiNon("vous avez révélé " + carteRevelee->getNom() + ". Voulez-vous la défausser ?")) {
+                    j->ajouterADefausse(carteRevelee);
+                } else {
+                    j->ajouterAPioche(carteRevelee);
+                }
+
+            };
         }
     }
 }

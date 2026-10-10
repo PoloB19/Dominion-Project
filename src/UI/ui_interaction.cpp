@@ -6,7 +6,7 @@ inline bool choixOuiNon(const std::string& message) {
     std::string choix;
 
     while (true) {
-        std::cout << message << " (O/N) : ";
+        std::cout << message << " Choix (O/N) : ";
         std::cin >> choix;
         
         if (choix == "O" || choix == "o" || choix == "Oui" || choix == "oui" || choix == "OUI") return true;
