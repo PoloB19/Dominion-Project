@@ -4,10 +4,13 @@
 
 namespace UI {
 
+
     bool choixOuiNon(const std::string& message);
     
+    std::string getNomCarte();
+
+
     // Plus tard
-    //bool choixCarte(const std::vector<const Carte*> cartes);
     // int demanderChoix(const std::string& message, int maxChoix);
     // std::string demanderCible(const std::vector<Joueur*>& joueurs);
 

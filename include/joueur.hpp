@@ -56,15 +56,16 @@ class Joueur {
         void ajustNbPiece(unsigned short delta) {m_pieces += delta;}
 
         //Méthodes
-        void piocher(unsigned short nbPioche);
+        bool accesMain() const;
+        bool accesDefausse() const;
         bool accesPioche();
+
+        void piocher(unsigned short nbPioche);
         void ajouterAPioche(const Carte* carte);
         
         void ajouterADefausse(const Carte* carte);
-        void defausserDepuisMain(const Carte* cartDefaussee);
-        bool accesDefausse() const;
-
-
+        void defausserDepuisMain(const std::string& nomCarte);
+        
         void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
@@ -77,7 +78,9 @@ class Joueur {
 
         short compterPoints() const;
 
+        //Interactions
         bool demanderOuiNon(const std::string& question) const;
+        std::string demanderNomCarte() const;
 
-        bool operator== (const Joueur& J) {return m_idJoueur == J.m_idJoueur;}
+        bool operator== (const Joueur& J) const {return m_idJoueur == J.m_idJoueur;}
 };

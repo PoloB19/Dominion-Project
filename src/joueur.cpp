@@ -20,6 +20,29 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
     m_nbToursJoues = 0;
 };
 
+
+bool Joueur::accesMain() const {
+    return m_main.size() > 0;
+}
+
+bool Joueur::accesPioche() {
+    if(m_pioche.empty()) melangerDefausse();
+    if(m_pioche.empty()) {
+        std::cout << "La pioche et la défausse sont vide." << std::endl;
+        return false;
+    }
+    return true;
+}
+
+bool Joueur::accesDefausse() const {
+    if(m_defausse.empty()) {
+        std::cout << "La défausse est vide." << std::endl;
+        return false;
+    }
+    return true; 
+}
+
+
 void Joueur::piocher(unsigned short nbPioche){
 
     for(size_t i = 0; i < nbPioche; i++){
@@ -36,28 +59,13 @@ void Joueur::piocher(unsigned short nbPioche){
     }
 }
 
-bool Joueur::accesPioche() {
-    if(m_pioche.empty()) melangerDefausse();
-    if(m_pioche.empty()) {
-        std::cout << "La pioche et la défausse sont vide." << std::endl;
-        return false;
-    }
-    return true;
-}
-
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
     }
 }
 
-bool Joueur::accesDefausse() const {
-    if(m_defausse.empty()) {
-        std::cout << "La défausse est vide." << std::endl;
-        return false;
-    }
-    return true; 
-}
+
 
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
@@ -65,21 +73,27 @@ void Joueur::ajouterADefausse(const Carte* carte){
     }
 }
 
-void Joueur::defausserDepuisMain(const Carte* carteDefausse){
-    auto it = std::find(m_main.begin(), m_main.end(), carteDefausse);
-    
-    //Sécurité
-    if (it != m_main.end()) {
-        m_main.erase(it);
-        ajouterADefausse(carteDefausse); 
+void Joueur::defausserDepuisMain(const std::string& nomCarte){
+
+    for (size_t i = 0; i < m_main.size(); i++) {
+        
+        if (m_main.at(i)->getNom() == nomCarte) {
+            
+            const Carte* carteDefausse = m_main.at(i);
+            m_main.erase(m_main.begin() + i);
+            ajouterADefausse(carteDefausse);
+            
+            return; //Pour ne défausser qu'une seule carte
+        }
     }
 };
 
+
 void Joueur::obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination){
     
-    if (carte == nullptr || P.pileEstVide(carte)){
-        return;
-    }
+    if (carte == nullptr || P.pileEstVide(carte)) return;
+
+    P.retirerCartePlateau(carte);
 
     switch (destination)
     {
@@ -97,8 +111,6 @@ void Joueur::obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement des
         break;
     }
 
-    P.retirerCartePlateau(carte);
-
 }
 
 void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
@@ -111,7 +123,7 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
     } else {
 
         std::cout << "Vous n'avez pas assez de pièces pour acheter cette carte ! " << std::endl;
-        
+
     }
 
 };
@@ -212,3 +224,6 @@ bool Joueur::demanderOuiNon(const std::string& question) const {
     return UI::choixOuiNon(m_pseudo + ", " + question);
 }
 
+std::string Joueur::demanderNomCarte() const {
+    return UI::getNomCarte();
+}
