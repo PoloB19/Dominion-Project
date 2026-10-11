@@ -21,10 +21,11 @@ class Carte {
         ~Carte();
 
         //Getters
-        std::string getNom() const {return m_nom;}
         std::string getType() const {return m_type;}
+        std::string getNom() const {return m_nom;}
         unsigned short getPrix() const {return m_prix;}
         std::string getDescription() const {return m_description;}
         virtual short getPointsVictoire(const Joueur&) const {return m_pointsVictoire;}
+        unsigned short getValeur() const {return m_valeur;}
         
 };

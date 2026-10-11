@@ -193,10 +193,16 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
     return carteRevelee;
 }
 
-void Joueur::resetTour() {
-    m_nbAchat = 1;
-    m_nbAction = 1;
-};
+
+void Joueur::compterPieces() {
+
+    m_pieces = 0;
+    
+    for (const Carte* t : m_main){
+        m_pieces += t->getValeur();
+    }
+
+}
 
 short Joueur::compterPoints() const {
 
@@ -226,6 +232,14 @@ short Joueur::compterPoints() const {
     return score;
 };
 
+
+void Joueur::resetTour() {
+
+    compterPieces();
+
+    m_nbAchat = 1;
+    m_nbAction = 1;
+};
 
 //Interactions
 
