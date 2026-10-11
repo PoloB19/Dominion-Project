@@ -70,17 +70,18 @@ class Joueur {
         void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
-        void resetTour();
-
         void melangerDefausse();
 
         const Carte* revelerCarte(Emplacement depuis);
 
+        void compterPieces();
         short compterPoints() const;
+
+        void resetTour();
 
         //Interactions
         bool demanderOuiNon(const std::string& question) const;
         std::string demanderNomCarte() const;
 
-        bool operator== (const Joueur& J) const {return m_idJoueur == J.m_idJoueur;}
+        bool Joueur::operator== (const Joueur& J) const {return m_idJoueur == J.m_idJoueur;}
 };
