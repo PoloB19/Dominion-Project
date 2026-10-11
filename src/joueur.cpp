@@ -20,6 +20,7 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
     m_nbToursJoues = 0;
 };
 
+//Accès sécurisé
 
 bool Joueur::accesMain() const {
     return m_main.size() > 0;
@@ -42,6 +43,8 @@ bool Joueur::accesDefausse() const {
     return true; 
 }
 
+
+//Piocher
 
 void Joueur::piocher(unsigned short nbPioche){
 
@@ -66,6 +69,7 @@ void Joueur::ajouterAPioche(const Carte* carte){
 }
 
 
+//Défausser
 
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
@@ -88,6 +92,8 @@ void Joueur::defausserDepuisMain(const std::string& nomCarte){
     }
 };
 
+
+//Méthodes
 
 void Joueur::obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination){
     
@@ -219,6 +225,9 @@ short Joueur::compterPoints() const {
 
     return score;
 };
+
+
+//Interactions
 
 bool Joueur::demanderOuiNon(const std::string& question) const {
     return UI::choixOuiNon(m_pseudo + ", " + question);
