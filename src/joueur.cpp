@@ -1,47 +1,137 @@
-#include "carte.hpp"
 #include "joueur.hpp"
+
 #include "plateau.hpp"
-#include "victoire.hpp"
-#include "malediction.hpp"
+#include "carte.hpp"
 
-Joueur::Joueur(std::string pseudo) {
+#include "ui_interaction.hpp"
 
-    m_pseudo = pseudo ; 
+unsigned short m_nextId = 0;
+
+Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
+
     m_pioche = std::stack<const Carte*>(); 
     m_main = std::vector<const Carte*>(); 
     m_defausse = std::stack<const Carte*>();
 
     m_nbAction = 1;
     m_nbAchat = 1;
-    m_monnaie = 0;
+    m_pieces = 0;
+    
     m_nbToursJoues = 0;
 };
 
-void Joueur::piocher(){
+//Accès sécurisé
 
-    //On refait une pioche si elle est vide
-    if(m_pioche.empty()){ 
-        melangerDefausse();
+bool Joueur::accesMain() const {
+    return m_main.size() > 0;
+}
+
+bool Joueur::accesPioche() {
+    if(m_pioche.empty()) melangerDefausse();
+    if(m_pioche.empty()) {
+        std::cout << "La pioche et la défausse sont vide." << std::endl;
+        return false;
     }
+    return true;
+}
 
-    //On pioche seulement si la pioche n'est pas vide
-    if (!m_pioche.empty()){
+bool Joueur::accesDefausse() const {
+    if(m_defausse.empty()) {
+        std::cout << "La défausse est vide." << std::endl;
+        return false;
+    }
+    return true; 
+}
+
+
+//Piocher
+
+void Joueur::piocher(unsigned short nbPioche){
+
+    for(size_t i = 0; i < nbPioche; i++){
+
+        if (!accesPioche()){
+            return;
+        }
+
+        std::cout << "Vous avez pioché la carte : " << m_pioche.top()->getNom();
+        
         m_main.push_back(m_pioche.top());
         m_pioche.pop();
-    } else {
-        std::cout << "Aucune carte à piocher." << std::endl;
+        
+    }
+}
+
+void Joueur::ajouterAPioche(const Carte* carte){
+    if(carte != nullptr){
+        m_pioche.push(carte);
+    }
+}
+
+
+//Défausser
+
+void Joueur::ajouterADefausse(const Carte* carte){
+    if(carte != nullptr){
+        m_defausse.push(carte);
+    }
+}
+
+void Joueur::defausserDepuisMain(const std::string& nomCarte){
+
+    for (size_t i = 0; i < m_main.size(); i++) {
+        
+        if (m_main.at(i)->getNom() == nomCarte) {
+            
+            const Carte* carteDefausse = m_main.at(i);
+            m_main.erase(m_main.begin() + i);
+            ajouterADefausse(carteDefausse);
+            
+            return; //Pour ne défausser qu'une seule carte
+        }
+    }
+};
+
+
+//Méthodes
+
+void Joueur::obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination){
+    
+    if (carte == nullptr || P.pileEstVide(carte)) return;
+
+    P.retirerCartePlateau(carte);
+
+    switch (destination)
+    {
+    case Emplacement::MAIN :
+        m_main.push_back(carte);
+        break;
+    
+    case Emplacement::DEFAUSSE :
+        m_defausse.push(carte);
+        break;  
+        
+    case Emplacement::PIOCHE :
+        m_pioche.push(carte);    
+    default:
+        break;
     }
 
 }
 
-void Joueur::defausser(const Carte* carteDefausse){
-    m_main.erase(std::find(m_main.begin(), m_main.end(), carteDefausse));
-    m_defausse.push(carteDefausse);
-};
-
 void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
-    m_main.push_back(carteAchetee);
-    P.retirerCartePlateau(carteAchetee);
+    
+    if (m_pieces >= carteAchetee->getPrix()){
+
+        obtenirCartePlateau(carteAchetee, P, Emplacement::DEFAUSSE);
+        ajustNbPiece(-carteAchetee->getPrix());
+
+    } else {
+
+        std::cout << "Vous n'avez pas assez de pièces pour acheter cette carte ! " << std::endl;
+
+    }
+
 };
 
 void Joueur::ecarter(Carte* carteRebutee, Plateau& P) {
@@ -72,39 +162,91 @@ void Joueur::melangerDefausse(){
 
 }
 
-void Joueur::resetTour() {
-    m_nbAchat = 1;
-    m_nbAction = 1;
-};
+const Carte* Joueur::revelerCarte(Emplacement depuis){
 
-unsigned short Joueur::nbCartesDeck() const {
-    return m_pioche.size() + m_main.size() + m_defausse.size();
+    const Carte* carteRevelee = nullptr;
+
+    switch (depuis)
+    {
+    case Emplacement::PIOCHE :
+
+        if(!accesPioche()) return nullptr;
+
+        carteRevelee = m_pioche.top();
+        m_pioche.pop();
+
+        break;
+
+    case Emplacement::DEFAUSSE :
+
+        if(!accesDefausse()) return nullptr;
+
+        carteRevelee = m_defausse.top();
+        m_defausse.pop();
+
+        break;
+
+    default:
+        return carteRevelee;
+    }
+
+    return carteRevelee;
+}
+
+
+void Joueur::compterPieces() {
+
+    m_pieces = 0;
+    
+    for (const Carte* t : m_main){
+        m_pieces += t->getValeur();
+    }
+
 }
 
 short Joueur::compterPoints() const {
 
-    short score;
+    short score = 0;
 
-    short compteurJardin = 0;
+    // On construit le deck total du joueur en regroupant ses cartes
+    std::vector<const Carte*> deck = m_main;
+    deck.reserve(m_pioche.size() + m_defausse.size() + m_main.size());
 
-    // On regroupe le deck du joueur en une pile
-    std::stack<const Carte*> deck = m_pioche;
-    deck.emplace(m_defausse);
-    deck.emplace(m_main);
+    std::stack<const Carte*> piocheTmp = m_pioche;
+    while (!piocheTmp.empty()) {
+        deck.push_back(piocheTmp.top());
+        piocheTmp.pop();
+    }
 
-    short nbCartesDeck = deck.size();
-
-    // On parcourt le deck du joueur et compte ses points
-    const Carte* carteTmp;
-
-    while (!deck.empty()) {
-        carteTmp = deck.top();
-        score += carteTmp->getPointsVictoire();
-        if (carteTmp->getNom() == "Jardin") compteurJardin += 1;
-        deck.pop();
+    std::stack<const Carte*> defausseTmp = m_defausse;
+    while (!defausseTmp.empty()) {
+        deck.push_back(defausseTmp.top());
+        defausseTmp.pop();
     }
     
-    score += compteurJardin * (nbCartesDeck/10);
+    //On calcul son score
+    for (const Carte* c : deck){
+        score += c->getPointsVictoire(*this);
+    }
 
     return score;
 };
+
+
+void Joueur::resetTour() {
+
+    compterPieces();
+
+    m_nbAchat = 1;
+    m_nbAction = 1;
+};
+
+//Interactions
+
+bool Joueur::demanderOuiNon(const std::string& question) const {
+    return UI::choixOuiNon(m_pseudo + ", " + question);
+}
+
+std::string Joueur::demanderNomCarte() const {
+    return UI::getNomCarte();
+}

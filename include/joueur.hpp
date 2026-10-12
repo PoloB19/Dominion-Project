@@ -6,11 +6,25 @@
 
 #include <iostream>
 
+//Pour mélanger des paquets de cartes
 #include <random>
 #include <algorithm>
 
+class Plateau;
+class Carte;
+
+enum class Emplacement {
+    DEFAUSSE,
+    MAIN,
+    PIOCHE
+};
+
 class Joueur {
     private:
+
+        static unsigned short m_nextId;
+        unsigned short m_idJoueur;
+
         std::string m_pseudo;
 
         std::stack<const Carte*> m_pioche;
@@ -19,7 +33,7 @@ class Joueur {
 
         unsigned short m_nbAction;
         unsigned short m_nbAchat;
-        unsigned short m_monnaie;
+        unsigned short m_pieces;
 
         unsigned short m_nbToursJoues;
 
@@ -27,22 +41,47 @@ class Joueur {
         Joueur(std::string pseudo);
         ~Joueur();
 
+        //Getters
+        unsigned short getId() const {return m_idJoueur;}
+        std::string getPseudo() const {return m_pseudo;}
+        std::stack<const Carte*> getPioche() const {return m_pioche;}
+        std::vector<const Carte*> getMain() const {return m_main;}
+        std::stack<const Carte*> getDefausse() const {return m_defausse;}
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
+        unsigned short getTailleDeck() const {return m_pioche.size() + m_main.size() + m_defausse.size();}
 
-        void augmenterNbAction() {m_nbAction++;}
-        void augmenterNbAchat() {m_nbAchat++;}
-        void diminuerNbAction() {m_nbAction--;}
-        void diminuerNbAchat() {m_nbAchat--;}
-        void resetTour();
+        //Setters
+        void ajustNbAction(unsigned short delta) {m_nbAction += delta;}
+        void ajustNbAchat(unsigned short delta) {m_nbAchat += delta;}
+        void ajustNbPiece(unsigned short delta) {m_pieces += delta;}
+
+        //Méthodes
+        bool accesMain() const;
+        bool accesDefausse() const;
+        bool accesPioche();
+
+        void piocher(unsigned short nbPioche);
+        void ajouterAPioche(const Carte* carte);
         
-        void piocher();
-        void defausser(const Carte* cartDefaussee);
-        void acheter(const Carte* carteAchetee, Plateau &P);
+        void ajouterADefausse(const Carte* carte);
+        void defausserDepuisMain(const std::string& nomCarte);
+        
+        void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
+        void acheter(const Carte* carteAchetee, Plateau& P);
         void ecarter(Carte* carteRebutee, Plateau& P);
 
         void melangerDefausse();
 
-        unsigned short nbCartesDeck() const;
+        const Carte* revelerCarte(Emplacement depuis);
 
+        void compterPieces();
         short compterPoints() const;
+
+        void resetTour();
+
+        //Interactions
+        bool demanderOuiNon(const std::string& question) const;
+        std::string demanderNomCarte() const;
+
+        bool Joueur::operator== (const Joueur& J) const {return m_idJoueur == J.m_idJoueur;}
 };

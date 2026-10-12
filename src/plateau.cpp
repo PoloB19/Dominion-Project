@@ -2,35 +2,28 @@
 
 #include "plateau.hpp"
 
-// PARTIE GLOBALE
-
+//A COMPLETER LES COMPO
 std::vector<const Composition*> Plateau::m_compositions = {};
 
-void Plateau::ajoutComposition(const Composition &composition) {
-    Plateau::m_compositions.push_back(&composition);
+Plateau::Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie)->getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {};
+
+const Carte* Plateau::getCarteParNom(const std::string& nomCarte) const {
+    for (const auto& c : m_piles) {
+        if (c.first->getNom() == nomCarte) {
+            return c.first;
+        }
+    }
+    return nullptr;
 }
-
-void Plateau::setCompositions(std::vector<const Composition*> compositions) {
-    Plateau::m_compositions = compositions;
-}
-
-std::vector<const Composition*> Plateau::getCompositions() {
-    return Plateau::m_compositions;
-}
-
-
-// PARTIE INSTANCIABLE
-
-Plateau::Plateau(std::vector<const Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_rebut(std::stack<const Carte*>()), m_piles(Plateau::getCompositions().at(idCompositionPartie)->getCompositionPartie()) {}
-
-Plateau::~Plateau() {}
 
 void Plateau::ajoutRebut(const Carte* carteRebutee) {
     m_rebut.push(carteRebutee);
 };
 
-void Plateau::retirerCartePlateau(const Carte* carteAchetee){
-    m_piles[carteAchetee] -= 1;
+void Plateau::retirerCartePlateau(const Carte* carte){
+    if (m_piles.at(carte) > 0) {
+        m_piles.at(carte) -= 1;
+    }
 };
 
 bool Plateau::checkerEndCondition(){ 
