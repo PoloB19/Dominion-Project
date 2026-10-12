@@ -8,7 +8,7 @@ int main(){
     //Tresor
     Carte argent = Argent();
     Carte cuivre = Cuivre();
-    Carte or = Or();
+    Carte or_ = Or();
 
     //Malédiction
     Carte mal = Malediction();
@@ -32,7 +32,7 @@ int main(){
 
     // CREATION COMPOSITION
     std::cout << "Combien de joueurs êtes-vous ?" << std::endl;
-    unsigned short nbJoueur;
+    //unsigned short nbJoueur;
     //creer fonction pour vérifier que le nb est valide 
     //std::cin >> unsigned short(nbJoueur);
 
