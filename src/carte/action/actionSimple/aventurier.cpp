@@ -22,7 +22,7 @@ void Aventurier::utiliser(Joueur& J, Plateau&){
             J.annonceCarteVers(carteRevelee->getNom(), Emplacement::DEFAUSSE);
             J.ajouterADefausse(carteRevelee);
         }
-
+        
     }
 
 }
