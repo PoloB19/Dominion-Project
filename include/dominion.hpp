@@ -5,6 +5,7 @@
 #include "joueur.hpp"
 #include "plateau.hpp"
 
+#include "cartes.hpp"
 #include "carte.hpp"
 
 //cartes action
@@ -16,6 +17,7 @@
 #include "espion.hpp"
 #include "milice.hpp"
 #include "sorciere.hpp"
+#include "voleur.hpp"
 
 //actionReaction
 #include "actionReaction.hpp"

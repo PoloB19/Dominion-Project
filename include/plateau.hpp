@@ -12,8 +12,7 @@ class Plateau {
 
     private:
         // vecteur qui recense toutes les compositions de partie qui existent
-        static std::vector<const Composition*> m_compositions;
-
+        static std::vector<Composition> m_compositions;
 
         // A VERIFIER
         std::vector</*const*/ Joueur*> m_joueurs;
@@ -26,16 +25,16 @@ class Plateau {
         ~Plateau();
 
         //Getters
-        static std::vector<const Composition*> getCompositions() {return m_compositions;}
+        static std::vector<Composition> getCompositions() {return m_compositions;}
         std::vector</*const*/ Joueur*> getJoueurs() {return m_joueurs;}
         std::map<const Carte*, unsigned short> getPiles() {return m_piles;}
-        const Carte* getCarteParNom(const std::string& nomCarte) const;
-        bool pileEstVide(const Carte* c) const {return m_piles.at(c) == 0;}
-
+        
         //Setters
-        static void setCompositions(std::vector<const Composition*> compositions) {m_compositions = compositions;}
+        static void setCompositions(std::vector<Composition> compositions) {m_compositions = compositions;}
 
         //Méthodes
+        const Carte* getCarteParNom(const std::string& nomCarte) const;
+        bool pileEstVide(const Carte* c) const {return m_piles.at(c) == 0;}
         void ajoutRebut(const Carte* carteRebutee);
         void retirerCartePlateau(const Carte* carte);
         bool checkerEndCondition();

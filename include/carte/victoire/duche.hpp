@@ -5,5 +5,5 @@
 class Duche : public Victoire {
     public :
         Duche() : Victoire("Duche", 5, 3) {};
-        ~Duche();
+        ~Duche() {};
 };

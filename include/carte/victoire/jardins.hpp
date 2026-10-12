@@ -7,7 +7,7 @@ class Jardins : public Victoire {
 
     public:
         Jardins() : Victoire("Jardins", 4, 0) {};
-        ~Jardins();
+        ~Jardins() {};
 
         short getPointsVictoire(const Joueur& J) const override {
             return J.getTailleDeck() / 10;

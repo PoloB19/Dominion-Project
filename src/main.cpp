@@ -1,7 +1,9 @@
-#include "dominion.hpp" 
+#include "dominion.hpp"
 
 #include <iostream>
+#include <vector>
 #include <string>
+#include <map>
 #include <sstream>
 #include <limits>
 
@@ -35,32 +37,72 @@ bool essayerConvertirNbJoueurs(const std::string& saisie, unsigned short& result
 
 
 int main(){
+       
+    // CREATION COMPOSITIONS
+    std::vector<Composition> compositions;
 
-    // CREATION CARTES DU JEU
-    //Tresor
-    Carte argent = Argent();
-    Carte cuivre = Cuivre();
-    Carte or_ = Or();
+    compositions.push_back(Composition("Les premières parties", "", {
+        {Cartes::atelier(),10},
+        {Cartes::bucheron(),10},
+        {Cartes::cave(),10},
+        {Cartes::douves(),10},
+        {Cartes::forgeron(),10},
+        {Cartes::marche(),10},
+        {Cartes::milice(),10},
+        {Cartes::mine(),10},
+        {Cartes::renovation(),10},
+        {Cartes::village(),10},
+    }));
+    compositions.push_back(Composition("Richesses et trésor", "", { 
+        {Cartes::aventurier(),10},
+        {Cartes::bureaucrate(),10},
+        {Cartes::chancelier(),10},
+        {Cartes::chapelle(),10},
+        {Cartes::festin(),10},
+        {Cartes::laboratoire(),10},
+        {Cartes::marche(),10},
+        {Cartes::mine(),10},
+        {Cartes::preteurSurGages(),10},
+        {Cartes::salleDuTrone(),10}, 
+    }));
+    compositions.push_back(Composition("Interaction", "", { 
+        {Cartes::bibliotheque(),10},
+        {Cartes::bureaucrate(),10},
+        {Cartes::chambreDuConseil(),10},
+        {Cartes::chancelier(),10},
+        {Cartes::douves(),10},
+        {Cartes::espion(),10},
+        {Cartes::festival(),10},
+        {Cartes::milice(),10},
+        {Cartes::village(),10},
+        {Cartes::voleur(),10}, 
+    }));
+    compositions.push_back(Composition("Changement de taille", "", { 
+        {Cartes::atelier(),10},
+        {Cartes::bucheron(),10},
+        {Cartes::cave(),10},
+        {Cartes::chapelle(),10},
+        {Cartes::festin(),10},
+        {Cartes::jardins(),10},
+        {Cartes::laboratoire(),10},
+        {Cartes::sorciere(),10},
+        {Cartes::village(),10},
+        {Cartes::voleur(),10}, 
+    }));
+    compositions.push_back(Composition("Place du village", "", { 
+        {Cartes::bibliotheque(),10},
+        {Cartes::bucheron(),10},
+        {Cartes::bureaucrate(),10},
+        {Cartes::cave(),10},
+        {Cartes::festival(),10},
+        {Cartes::forgeron(),10},
+        {Cartes::marche(),10},
+        {Cartes::renovation(),10},
+        {Cartes::salleDuTrone(),10},
+        {Cartes::village(),10}, 
+    }));
 
-    //Malédiction
-    Carte mal = Malediction();
-
-    //Victoire
-    Carte domaine = Domaine();
-    Carte duche = Duche();
-    Carte jardins = Jardins();
-    Carte province = Province();
-
-    //Action
-    Carte c1 = Atelier();
-    Carte c2 = Aventurier();
-    Carte c3 = Bibliotheque();
-    Carte c4 = Bucheron();
-    Carte c5 = Cave();
-    Carte c6 = Festival();
-    Carte c7 = Forgeron();
-    Carte c8 = Laboratoire();
-    //à finir
+    Plateau::setCompositions(compositions);
 
     // CREATION JOUEURS
     std::string saisie;
@@ -78,7 +120,7 @@ int main(){
         }
     }
 
-    std::vector<Joueur> joueurs;
+    std::vector<Joueur*> joueurs;
 
     for (int i=0; i<nbJoueur ; i++) {
         std::string pseudo;
@@ -86,14 +128,14 @@ int main(){
         std::cout << "Entrez votre pseudo : ";
         std::cin >> pseudo;
         //confirmer ? o/n de UI
-        joueurs.push_back(Joueur(pseudo));
+        //CORRIGER CA CAR JOUEURS EST UN VECTOR DE POINTEURS DONC IL FAUT CREER DE FACON DURABLE LES ADRESSES DES JOUEURS
+        //joueurs.push_back(Joueur(pseudo));
     }
 
-
-    // CREATION COMPOSITION
+    // CHOIX COMPOSITION avant de creer le plateau vu que la compo est passée en paramètre
     
-
-
+    Plateau P = Plateau(joueurs,0);
+    // 7 cuivres et 3 domaines par joueur au début
 
 
     return 0;

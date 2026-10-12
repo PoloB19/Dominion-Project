@@ -4,7 +4,7 @@ Chancelier::Chancelier(): ActionSimple("Chancelier", 3, "Gagnez 2 pièces. Vous 
 
 Chancelier::~Chancelier() {}
 
-void Chancelier::utiliser(Joueur& J, Plateau& P){
+void Chancelier::utiliser(Joueur& J, Plateau&){
 
     J.ajustNbPiece(+2);
 
