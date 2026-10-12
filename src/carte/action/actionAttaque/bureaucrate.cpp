@@ -30,8 +30,6 @@ void Bureaucrate::utiliser(Joueur& J, Plateau& P){
                 j->annonceRevelerCartes({victoireEnMain.at(idCarteChoisie.at(0))});
                 j->annonceCarteVers(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
             }
-
         }
     }
-
 }
