@@ -5,7 +5,9 @@
 //A COMPLETER LES COMPO
 std::vector<const Composition*> Plateau::m_compositions = {};
 
-Plateau::Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie)->getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {};
+Plateau::Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie)->getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {}
+
+Plateau::~Plateau() {}
 
 const Carte* Plateau::getCarteParNom(const std::string& nomCarte) const {
     for (const auto& c : m_piles) {

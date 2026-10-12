@@ -13,7 +13,7 @@ class Composition {
 
 public:
     Composition(std::string nomDeComposition, std::string description, std::map<const Carte*, unsigned short> compositionPartie);
-    ~Composition() {};
+    ~Composition();
 
     //Getters
     std::string getNomDeComposition() const;

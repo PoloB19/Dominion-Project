@@ -1,6 +1,8 @@
 #include "chapelle.hpp"
 
-Chapelle::Chapelle() : ActionSimple("Chappelle", 2, "Écartez jusqu'à 4 cartes de votre main.") {};
+Chapelle::Chapelle() : ActionSimple("Chappelle", 2, "Écartez jusqu'à 4 cartes de votre main.") {}
+
+Chapelle::~Chapelle();
 
 void Chapelle::utiliser(Joueur& J, Plateau& P){
 

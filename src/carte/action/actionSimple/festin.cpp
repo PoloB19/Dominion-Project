@@ -1,6 +1,8 @@
 #include "festin.hpp"
 
-Festin::Festin() : ActionSimple("Festin", 4, "Écartez cette carte. \nObtenez une carte coûtant au plus 5 pièces."){};
+Festin::Festin() : ActionSimple("Festin", 4, "Écartez cette carte. \nObtenez une carte coûtant au plus 5 pièces."){}
+
+Festin::~Festin() {}
 
 void Festin::utiliser(Joueur& J, Plateau& P) {
 

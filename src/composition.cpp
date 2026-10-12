@@ -3,6 +3,7 @@
 // constructeur
 Composition::Composition(std::string nomDeComposition, std::string description, std::map<const Carte*, unsigned short> compositionPartie) : m_nomDeComposition(nomDeComposition), m_description(description), m_compositionPartie(compositionPartie) {}
 
+Composition::~Composition() {}
 
 // Getters
 
