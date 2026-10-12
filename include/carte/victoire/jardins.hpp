@@ -6,7 +6,7 @@
 class Jardins : public Victoire {
 
     public:
-        Jardins() : Victoire("Jardins", 4, NULL) {};
+        Jardins() : Victoire("Jardins", 4, 0) {};
         ~Jardins();
 
         short getPointsVictoire(const Joueur& J) const override {

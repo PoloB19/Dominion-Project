@@ -2,26 +2,10 @@
 
 std::string choix;
 
-// Annule tous les styles
-const std::string RESET = "\033[0m";
-
-// Police
-const std::string BOLD = "\033[1m";
-const std::string UNDERLINE = "\033[4m";
-
-// Couleurs du texte
-const std::string RED = "\033[31m";
-const std::string GREEN = "\033[32m";
-const std::string YELLOW = "\033[33m";
-const std::string BLUE = "\033[34m";
-const std::string PURPLE = "\033[35m";
-
-// Utilitaires de terminal
-const std::string CLEAR_SCREEN = "\033[2J\033[H";
 
 // Choix
 
-inline bool choixOuiNon(const std::string& message) {
+inline bool UI::choixOuiNon(const std::string& message) {
 
     while (true) {
         std::cout << message << std::endl;
@@ -35,7 +19,7 @@ inline bool choixOuiNon(const std::string& message) {
     }
 }
 
-inline std::string getNomCarte() {
+inline std::string UI::getNomCarte() {
 
     while(true){
 
@@ -48,7 +32,7 @@ inline std::string getNomCarte() {
 
 }
 
-std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix){
+std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix){
 
     std::vector<size_t> idChoix = {};
     
@@ -74,7 +58,7 @@ std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes
 
 // Annonces
 
-inline void annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
+inline void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
 
     switch (depuis)
     {
@@ -91,7 +75,7 @@ inline void annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
 
 }
 
-inline void annonceCarteVers(std::string nomCarte, Emplacement vers) {
+inline void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
 
     switch (vers)
     {
@@ -108,7 +92,7 @@ inline void annonceCarteVers(std::string nomCarte, Emplacement vers) {
 
 }
 
-inline void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes) {
+inline void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes) {
 
     std::cout << J.getPseudo() << ", vous révélez : [ ";
 
@@ -120,7 +104,7 @@ inline void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> car
 
 }
 
-inline void annonceErreur(std::string message) {
+inline void UI::annonceErreur(std::string message) {
     std::cout << "Erreur : " << message << "." << std::endl;
 }
 
