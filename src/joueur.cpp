@@ -77,19 +77,36 @@ void Joueur::ajouterADefausse(const Carte* carte){
     }
 }
 
-void Joueur::defausserDepuisMain(const std::string& nomCarte){
+void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
+
+    const Carte* carteEnlevee = nullptr;
 
     for (size_t i = 0; i < m_main.size(); i++) {
-        
-        if (m_main.at(i)->getNom() == nomCarte) {
             
-            const Carte* carteDefausse = m_main.at(i);
-            m_main.erase(m_main.begin() + i);
-            ajouterADefausse(carteDefausse);
-            
-            return; //Pour ne défausser qu'une seule carte
+            if (m_main.at(i)->getNom() == nomCarte) {
+                
+                carteEnlevee = m_main.at(i);
+                m_main.erase(m_main.begin() + i);
+                      
+                break; //Pour n'enlever qu'une seule carte
+            }
         }
+
+
+    switch (vers)
+    {
+    case Emplacement::DEFAUSSE :
+        ajouterADefausse(carteEnlevee);
+        break;
+    
+    case Emplacement::PIOCHE : 
+        ajouterAPioche(carteEnlevee);
+        break;
+
+    default:
+        break;
     }
+    
 };
 
 
@@ -185,6 +202,7 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
         m_defausse.pop();
 
         break;
+
 
     default:
         return carteRevelee;

@@ -64,7 +64,8 @@ class Joueur {
         void ajouterAPioche(const Carte* carte);
         
         void ajouterADefausse(const Carte* carte);
-        void defausserDepuisMain(const std::string& nomCarte);
+
+        void enleverDepuisMain(const std::string& nomCarte, Emplacement vers);
         
         void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);
