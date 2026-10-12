@@ -1,6 +1,8 @@
 #include "forgeron.hpp"
 
-Forgeron::Forgeron() : ActionSimple("Forgeron", 4, "+3 Cartes") {};
+Forgeron::Forgeron() : ActionSimple("Forgeron", 4, "+3 Cartes") {}
+
+Forgeron::~Forgeron() {}
 
 void Forgeron::utiliser(Joueur& J, Plateau&){
     J.piocher(3);
