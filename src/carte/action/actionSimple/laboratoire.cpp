@@ -3,8 +3,7 @@
 
 Laboratoire::Laboratoire() : ActionSimple("Laboratoire", 5, "+2 Cartes \n+1 Action") {}
 
-/* void Laboratoire::utiliser(const Plateau& P, size_t idJoueur){
-    P.getJoueurs().at(idJoueur)->piocher();
-    P.getJoueurs().at(idJoueur)->piocher();
-    P.getJoueurs().at(idJoueur)->augmenterNbAction();
-} */
+void Laboratoire::utiliser(Joueur&J, Plateau&){
+    J.piocher(2);
+    J.ajustNbAction(+1);
+}

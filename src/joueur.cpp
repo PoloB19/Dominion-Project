@@ -77,19 +77,36 @@ void Joueur::ajouterADefausse(const Carte* carte){
     }
 }
 
-void Joueur::defausserDepuisMain(const std::string& nomCarte){
+void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
+
+    const Carte* carteEnlevee = nullptr;
 
     for (size_t i = 0; i < m_main.size(); i++) {
-        
-        if (m_main.at(i)->getNom() == nomCarte) {
             
-            const Carte* carteDefausse = m_main.at(i);
-            m_main.erase(m_main.begin() + i);
-            ajouterADefausse(carteDefausse);
-            
-            return; //Pour ne défausser qu'une seule carte
+            if (m_main.at(i)->getNom() == nomCarte) {
+                
+                carteEnlevee = m_main.at(i);
+                m_main.erase(m_main.begin() + i);
+                      
+                break; //Pour n'enlever qu'une seule carte
+            }
         }
+
+
+    switch (vers)
+    {
+    case Emplacement::DEFAUSSE :
+        ajouterADefausse(carteEnlevee);
+        break;
+    
+    case Emplacement::PIOCHE : 
+        ajouterAPioche(carteEnlevee);
+        break;
+
+    default:
+        break;
     }
+    
 };
 
 
@@ -186,6 +203,7 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
 
         break;
 
+
     default:
         return carteRevelee;
     }
@@ -241,7 +259,9 @@ void Joueur::resetTour() {
     m_nbAction = 1;
 };
 
-//Interactions
+// Interactions
+
+// Choix
 
 bool Joueur::demanderOuiNon(const std::string& question) const {
     return UI::choixOuiNon(m_pseudo + ", " + question);
@@ -250,3 +270,22 @@ bool Joueur::demanderOuiNon(const std::string& question) const {
 std::string Joueur::demanderNomCarte() const {
     return UI::getNomCarte();
 }
+
+std::vector<size_t> Joueur::choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix) {
+    UI::choixParmiCartes(*this, cartes, nbChoix);
+}
+
+// Annonces
+
+void Joueur::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
+    UI::annonceCarteDepuis(nomCarte, depuis);
+}
+
+void Joueur::annonceCarteVers(std::string nomCarte, Emplacement vers) {
+    UI::annoncerCarteVers(nomCarte, vers);
+}
+
+void Joueur::annonceRevelerCartes(std::vector<const Carte*> cartes) {
+    UI::annonceRevelerCartes(*this, cartes);
+}
+
