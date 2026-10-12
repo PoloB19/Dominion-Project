@@ -6,20 +6,14 @@ void Bibliotheque::utiliser(Joueur& J, Plateau&){
 
     while(J.getMain().size() < 7){
 
-        const Carte* prochainePioche = J.revelerCarte(Emplacement::PIOCHE);
+        J.piocher(1);
+
+        const Carte* cartePiochee = J.getMain().back();
         
-        try{
+        if(cartePiochee->getType() == "Action" && J.demanderOuiNon(cartePiochee->getNom() + " est la carte action piochée, souhaitez vous la défausser?")){
 
-            if(prochainePioche->getType() == "Action" && J.demanderOuiNon(prochainePioche->getNom() + " est la carte action piochée, souhaitez vous la défausser?")){
+            J.enleverDepuisMain(cartePiochee->getNom(), Emplacement::DEFAUSSE);
 
-                J.ajouterADefausse(prochainePioche);
-
-            }
-
-        } catch (const std::exception& e){
-
-            std::cout << e.what() << std::endl;
-            
         }
     }
 }
