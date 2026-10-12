@@ -5,7 +5,7 @@
 
 #include "ui_interaction.hpp"
 
-unsigned short m_nextId = 0;
+unsigned short Joueur::m_nextId = 0;
 
 Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
 
@@ -69,7 +69,7 @@ void Joueur::ajouterAPioche(const Carte* carte){
 }
 
 
-//Défausser
+// Défausser
 
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
@@ -91,7 +91,13 @@ void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
                 break; //Pour n'enlever qu'une seule carte
             }
         }
-
+        
+    /*
+    // REVOIR LOGIQUE PIECE
+    if (carteEnlevee->getType()=="Tresor") {
+        m_pieces -= carteEnlevee->getValeur();
+    }
+    */
 
     switch (vers)
     {
@@ -211,7 +217,7 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
     return carteRevelee;
 }
 
-// --- Raffraîchir attributs ---
+// --- Rafraîchir attributs ---
 
 void Joueur::compterPieces() {
 
@@ -282,7 +288,7 @@ void Joueur::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) const 
 }
 
 void Joueur::annonceCarteVers(std::string nomCarte, Emplacement vers) const {
-    UI::annoncerCarteVers(nomCarte, vers);
+    UI::annonceCarteVers(nomCarte, vers);
 }
 
 void Joueur::annonceRevelerCartes(std::vector<const Carte*> cartes) const {
