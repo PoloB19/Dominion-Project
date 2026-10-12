@@ -3,32 +3,31 @@
 #include "cartes.hpp"
 #include "plateau.hpp"
 
-//A COMPLETER LES COMPO
-std::vector<const Composition*> Plateau::m_compositions = {};
+std::vector<Composition> Plateau::m_compositions = {};
 
-Plateau::Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie)->getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {
+Plateau::Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie).getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {
     // CARTES COMMUNES A TOUTES LES COMPOSITIONS :
-    m_idCompositionPartie.insert({Cartes::cuivre(),60-joueurs.size()*7});
-    m_idCompositionPartie.insert({Cartes::argent(),40});
-    m_idCompositionPartie.insert({Cartes::or(),30});
+    m_piles.insert({Cartes::cuivre(),60-joueurs.size()*7});
+    m_piles.insert({Cartes::argent(),40});
+    m_piles.insert({Cartes::or_(),30});
     switch(joueurs.size()) {
         // nb provinces et malédiction en fonction du nb de joueurs
         case 2 :
-            m_idCompositionPartie.insert({Cartes::domaine(),8});
-            m_idCompositionPartie.insert({Cartes::duche(),8});
-            m_idCompositionPartie.insert({Cartes::province(),8});
-            m_idCompositionPartie.insert({Cartes::malediction(),10});
+            m_piles.insert({Cartes::domaine(),8});
+            m_piles.insert({Cartes::duche(),8});
+            m_piles.insert({Cartes::province(),8});
+            m_piles.insert({Cartes::malediction(),10});
             break;
         case 3 :
-            m_idCompositionPartie.insert({Cartes::malediction(),20});
-            // breakthrough volontaire
+            m_piles.insert({Cartes::malediction(),20});
+            // fall through
         case 4 :
-            m_idCompositionPartie.insert({Cartes::domaine(),12});
-            m_idCompositionPartie.insert({Cartes::duche(),12});
-            m_idCompositionPartie.insert({Cartes::province(),12});
-            m_idCompositionPartie.insert({Cartes::malediction(),30});
+            m_piles.insert({Cartes::domaine(),12});
+            m_piles.insert({Cartes::duche(),12});
+            m_piles.insert({Cartes::province(),12});
+            m_piles.insert({Cartes::malediction(),30});
             break;
-        case default :
+        default :
             std::cerr << "Erreur dans le nombre de joueur passé dans le vecteur du constructeur plateau" << std::endl;
             break;
     }    

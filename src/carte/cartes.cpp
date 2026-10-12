@@ -31,4 +31,10 @@ namespace Cartes {
     const Carte* renovation() { static const Renovation c;  return &c; }
     const Carte* salleDuTrone() { static const SalleDuTrone c;  return &c; }
     const Carte* village() { static const Village c;  return &c; }
+    const Carte* milice() { static const Milice c;  return &c; }
+    const Carte* douves() { static const Douves c;  return &c; }
+    const Carte* sorciere() { static const Sorciere c;  return &c; }
+    const Carte* bureaucrate() { static const Bureaucrate c;  return &c; }
+    const Carte* espion() { static const Espion c;  return &c; }
+    const Carte* voleur() { static const Voleur c;  return &c; }
 }

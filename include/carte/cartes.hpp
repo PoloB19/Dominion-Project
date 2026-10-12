@@ -13,23 +13,29 @@ namespace Cartes {
     const Carte* duche();
     const Carte* province();
     // Royaume
-    const Carte* jardins();
     const Carte* atelier();
-    const Carte* bucheron();
     const Carte* aventurier();
     const Carte* bibliotheque();
+    const Carte* bucheron();
+    const Carte* bureaucrate();
     const Carte* cave();
-    const Carte* festival();
-    const Carte* forgeron();
-    const Carte* laboratoire();
     const Carte* chambreDuConseil();
     const Carte* chancelier();
     const Carte* chapelle();
+    const Carte* douves();
+    const Carte* espion();
     const Carte* festin();
+    const Carte* festival();
+    const Carte* forgeron();
+    const Carte* jardins();
+    const Carte* laboratoire();
     const Carte* marche();
+    const Carte* milice();
     const Carte* mine();
     const Carte* preteurSurGages();
     const Carte* renovation();
     const Carte* salleDuTrone();
+    const Carte* sorciere();
     const Carte* village();
+    const Carte* voleur();
 }

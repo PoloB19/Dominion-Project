@@ -20,6 +20,8 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
     m_nbToursJoues = 0;
 };
 
+Joueur::~Joueur() {}
+
 // --- Accès sécurisé ---
 
 bool Joueur::accesMain() const {

@@ -17,6 +17,7 @@
 #include "espion.hpp"
 #include "milice.hpp"
 #include "sorciere.hpp"
+#include "voleur.hpp"
 
 //actionReaction
 #include "actionReaction.hpp"
