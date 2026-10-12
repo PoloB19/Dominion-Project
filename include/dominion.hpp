@@ -5,6 +5,7 @@
 #include "joueur.hpp"
 #include "plateau.hpp"
 
+#include "cartes.hpp"
 #include "carte.hpp"
 
 //cartes action

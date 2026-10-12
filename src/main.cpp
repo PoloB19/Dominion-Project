@@ -1,7 +1,9 @@
-#include "dominion.hpp" 
+#include "dominion.hpp"
 
 #include <iostream>
+#include <vector>
 #include <string>
+#include <map>
 #include <sstream>
 #include <limits>
 
@@ -35,32 +37,45 @@ bool essayerConvertirNbJoueurs(const std::string& saisie, unsigned short& result
 
 
 int main(){
+        ////je vais faire pareil que pour cartes
+    // CREATION COMPOSITIONS
+    std::vector<const Composition*> compositions;
 
-    // CREATION CARTES DU JEU
-    //Tresor
-    Carte argent = Argent();
-    Carte cuivre = Cuivre();
-    Carte or_ = Or();
+    std::map<const Carte*, unsigned short> compoPartie;
 
-    //Malédiction
-    Carte mal = Malediction();
+    // Compo "Les premières parties"
+    compoPartie.insert({Cartes::atelier(),10});
+    compoPartie.insert({Cartes::bucheron(),10});
+    compoPartie.insert({Cartes::cave(),10});
+    compoPartie.insert({Cartes::douves(),10});
+    compoPartie.insert({Cartes::forgeron(),10});
+    compoPartie.insert({Cartes::marche(),10});
+    compoPartie.insert({Cartes::milice(),10});
+    compoPartie.insert({Cartes::mine(),10});
+    compoPartie.insert({Cartes::renovation(),10});
+    compoPartie.insert({Cartes::village(),10});    
 
-    //Victoire
-    Carte domaine = Domaine();
-    Carte duche = Duche();
-    Carte jardins = Jardins();
-    Carte province = Province();
+    compositions.push_back(&Composition("Les premières parties","",compoPartie));
 
-    //Action
-    Carte c1 = Atelier();
-    Carte c2 = Aventurier();
-    Carte c3 = Bibliotheque();
-    Carte c4 = Bucheron();
-    Carte c5 = Cave();
-    Carte c6 = Festival();
-    Carte c7 = Forgeron();
-    Carte c8 = Laboratoire();
-    //à finir
+    // Compo "Richesses et trésor"
+    compoPartie.clear();
+
+    compoPartie.insert({Cartes::aventurier(),10});
+    compoPartie.insert({Cartes::bureaucrate(),10});
+    compoPartie.insert({Cartes::chancelier(),10});
+    compoPartie.insert({Cartes::chapelle(),10});
+    compoPartie.insert({Cartes::festin(),10});
+    compoPartie.insert({Cartes::laboratoire(),10});
+    compoPartie.insert({Cartes::marche(),10});
+    compoPartie.insert({Cartes::mine(),10});
+    compoPartie.insert({Cartes::preteurSurGages(),10});
+    compoPartie.insert({Cartes::salleDuTrone(),10});   
+
+compositions.push_back(&Composition("Richesses et trésor","",compoPartie));   
+
+
+
+
 
     // CREATION JOUEURS
     std::string saisie;
@@ -88,12 +103,9 @@ int main(){
         //confirmer ? o/n de UI
         joueurs.push_back(Joueur(pseudo));
     }
-
-
-    // CREATION COMPOSITION
     
 
-
+    // 7 cuivres et 3 domaines par joueur au début
 
 
     return 0;
