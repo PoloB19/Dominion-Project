@@ -11,19 +11,17 @@ void Espion::utiliser(Joueur& J, Plateau& P){
 
     for (Joueur* j : P.getJoueurs()){
 
-        if(j->accesPioche()){
+        const Carte* carteRevelee = j->revelerCarte(Emplacement::PIOCHE); 
 
-            const Carte* carteRevelee = j->revelerCarte(Emplacement::PIOCHE); 
+        if (carteRevelee != nullptr) {
 
-            if (carteRevelee != nullptr) {
+            if (j->demanderOuiNon("vous avez révélé " + carteRevelee->getNom() + ". Voulez-vous la défausser ?")) {
+                j->ajouterADefausse(carteRevelee);
+            } else {
+                j->ajouterAPioche(carteRevelee);
+            }
 
-                if (j->demanderOuiNon("vous avez révélé " + carteRevelee->getNom() + ". Voulez-vous la défausser ?")) {
-                    j->ajouterADefausse(carteRevelee);
-                } else {
-                    j->ajouterAPioche(carteRevelee);
-                }
-
-            };
         }
+        
     }
 }

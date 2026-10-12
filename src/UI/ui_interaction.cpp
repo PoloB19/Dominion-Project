@@ -3,8 +3,6 @@
 
 std::string choix;
 
-
-
 inline bool choixOuiNon(const std::string& message) {
 
     while (true) {
@@ -25,7 +23,7 @@ inline std::string getNomCarte() {
 
     while(true){
 
-        std::cout << " Quel est son nom : ";
+        std::cout << "Quel est son nom : ";
         std::cin >> choix;
 
         if (choix == "DEBUG") throw std::string("Debug, annulation ");

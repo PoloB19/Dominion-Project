@@ -210,7 +210,7 @@ short Joueur::compterPoints() const {
 
     // On construit le deck total du joueur en regroupant ses cartes
     std::vector<const Carte*> deck = m_main;
-    deck.reserve(m_pioche.size() + m_defausse.size() + m_main.size());
+    deck.reserve(this->getTailleDeck());
 
     std::stack<const Carte*> piocheTmp = m_pioche;
     while (!piocheTmp.empty()) {
@@ -224,7 +224,7 @@ short Joueur::compterPoints() const {
         defausseTmp.pop();
     }
     
-    //On calcul son score
+    //On calcule son score
     for (const Carte* c : deck){
         score += c->getPointsVictoire(*this);
     }
