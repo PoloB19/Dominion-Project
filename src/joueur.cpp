@@ -20,7 +20,7 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
     m_nbToursJoues = 0;
 };
 
-//Accès sécurisé
+// --- Accès sécurisé ---
 
 bool Joueur::accesMain() const {
     return m_main.size() > 0;
@@ -110,7 +110,7 @@ void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
 };
 
 
-//Méthodes
+// --- Méthodes ---
 
 void Joueur::obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination){
     
@@ -211,6 +211,7 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
     return carteRevelee;
 }
 
+// --- Raffraîchir attributs ---
 
 void Joueur::compterPieces() {
 
@@ -250,7 +251,6 @@ short Joueur::compterPoints() const {
     return score;
 };
 
-
 void Joueur::resetTour() {
 
     compterPieces();
@@ -259,7 +259,7 @@ void Joueur::resetTour() {
     m_nbAction = 1;
 };
 
-// Interactions
+// --- Interactions ---
 
 // Choix
 
@@ -272,20 +272,23 @@ std::string Joueur::demanderNomCarte() const {
 }
 
 std::vector<size_t> Joueur::choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix) {
-    UI::choixParmiCartes(*this, cartes, nbChoix);
+    return UI::choixParmiCartes(*this, cartes, nbChoix);
 }
 
 // Annonces
 
-void Joueur::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
+void Joueur::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) const {
     UI::annonceCarteDepuis(nomCarte, depuis);
 }
 
-void Joueur::annonceCarteVers(std::string nomCarte, Emplacement vers) {
+void Joueur::annonceCarteVers(std::string nomCarte, Emplacement vers) const {
     UI::annoncerCarteVers(nomCarte, vers);
 }
 
-void Joueur::annonceRevelerCartes(std::vector<const Carte*> cartes) {
+void Joueur::annonceRevelerCartes(std::vector<const Carte*> cartes) const {
     UI::annonceRevelerCartes(*this, cartes);
 }
 
+void Joueur::annonceErreur(std::string message) const {
+    UI::annonceErreur(message);
+}

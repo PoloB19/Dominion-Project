@@ -27,8 +27,6 @@ inline bool choixOuiNon(const std::string& message) {
         std::cout << message << std::endl;
         std::cout << " Choix (O/N) : ";
         std::cin >> choix;
-
-        if (choix == "DEBUG") throw std::string("DEBUG");
         
         if (choix == "O" || choix == "o" || choix == "Oui" || choix == "oui" || choix == "OUI") return true;
         if (choix == "N" || choix == "n" || choix == "Non" || choix == "non" || choix == "NON") return false;
@@ -43,8 +41,6 @@ inline std::string getNomCarte() {
 
         std::cout << "Quel est son nom : ";
         std::cin >> choix;
-
-        if (choix == "DEBUG") throw std::string("Debug, annulation ");
 
         return choix;
 
@@ -112,7 +108,7 @@ inline void annonceCarteVers(std::string nomCarte, Emplacement vers) {
 
 }
 
-inline void annonceRevelerCartes(Joueur& J, std::vector <const Carte*> cartes) {
+inline void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes) {
 
     std::cout << J.getPseudo() << ", vous révélez : [ ";
 
@@ -122,6 +118,10 @@ inline void annonceRevelerCartes(Joueur& J, std::vector <const Carte*> cartes) {
 
     std::cout << "]" << std::endl;
 
+}
+
+inline void annonceErreur(std::string message) {
+    std::cout << "Erreur : " << message << "." << std::endl;
 }
 
 // std::string demanderCible(const std::vector<Joueur*>& joueurs);
