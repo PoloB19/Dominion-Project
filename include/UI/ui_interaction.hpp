@@ -31,8 +31,8 @@ namespace UI {
 
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
     void annoncerCarteVers(std::string nomCarte, Emplacement vers);
-    void annonceRevelerCartes(Joueur& J, std::vector <const Carte*> cartes);
-
+    void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes);
+    void annonceErreur(std::string message);
 
     // Plus tard
     // int demanderChoix(const std::string& message, int maxChoix);

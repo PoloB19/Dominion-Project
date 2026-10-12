@@ -17,4 +17,3 @@ std::string Composition::getDescription() const {
 std::map<const Carte*, unsigned short> Composition::getCompositionPartie() const {
     return m_compositionPartie;
 }
-
