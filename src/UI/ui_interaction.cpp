@@ -10,7 +10,7 @@ inline bool choixOuiNon(const std::string& message) {
         std::cout << " Choix (O/N) : ";
         std::cin >> choix;
 
-        if (choix == "DEBUG") return NULL;
+        if (choix == "DEBUG") throw std::string("DEBUG");
         
         if (choix == "O" || choix == "o" || choix == "Oui" || choix == "oui" || choix == "OUI") return true;
         if (choix == "N" || choix == "n" || choix == "Non" || choix == "non" || choix == "NON") return false;
@@ -23,10 +23,10 @@ inline std::string getNomCarte() {
 
     while(true){
 
-        std::cout << " Quel est son nom : ";
+        std::cout << "Quel est son nom : ";
         std::cin >> choix;
 
-        if (choix == "DEBUG") return NULL;
+        if (choix == "DEBUG") throw std::string("Debug, annulation ");
 
         return choix;
 

@@ -62,6 +62,8 @@ std::vector<Joueur> Plateau::determinerGagnant(){
 
             //Si le joueur a - de tour joués que les gagnants actuels
             if ((*J)->getNbTourJoues() > gagnantsTmp.at(0).getNbTourJoues()){
+
+                //A MODIF
                 gagnantsTmp.clear(); 
                 gagnantsTmp.at(0) = **J;
 
