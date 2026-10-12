@@ -3,11 +3,8 @@
 // constructeur
 Composition::Composition(std::string nomDeComposition, std::string description, std::map<const Carte*, unsigned short> compositionPartie) : m_nomDeComposition(nomDeComposition), m_description(description), m_compositionPartie(compositionPartie) {}
 
-// destructeur
-Composition::~Composition() {}
 
-
-// getters
+// Getters
 
 std::string Composition::getNomDeComposition() const {
     return m_nomDeComposition;

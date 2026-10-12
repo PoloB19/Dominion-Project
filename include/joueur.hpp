@@ -82,6 +82,11 @@ class Joueur {
         //Interactions
         bool demanderOuiNon(const std::string& question) const;
         std::string demanderNomCarte() const;
+        std::vector<size_t> choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix);
+
+        void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
+        void annonceCarteVers(std::string nomCarte, Emplacement vers);
+        void annonceRevelerCartes(std::vector<const Carte*> cartes);
 
         bool Joueur::operator== (const Joueur& J) const {return m_idJoueur == J.m_idJoueur;}
 };

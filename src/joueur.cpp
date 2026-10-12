@@ -241,7 +241,9 @@ void Joueur::resetTour() {
     m_nbAction = 1;
 };
 
-//Interactions
+// Interactions
+
+// Choix
 
 bool Joueur::demanderOuiNon(const std::string& question) const {
     return UI::choixOuiNon(m_pseudo + ", " + question);
@@ -250,3 +252,22 @@ bool Joueur::demanderOuiNon(const std::string& question) const {
 std::string Joueur::demanderNomCarte() const {
     return UI::getNomCarte();
 }
+
+std::vector<size_t> Joueur::choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix) {
+    UI::choixParmiCartes(*this, cartes, nbChoix);
+}
+
+// Annonces
+
+void Joueur::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
+    UI::annonceCarteDepuis(nomCarte, depuis);
+}
+
+void Joueur::annonceCarteVers(std::string nomCarte, Emplacement vers) {
+    UI::annoncerCarteVers(nomCarte, vers);
+}
+
+void Joueur::annonceRevelerCartes(std::vector<const Carte*> cartes) {
+    UI::annonceRevelerCartes(*this, cartes);
+}
+
