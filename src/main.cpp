@@ -1,10 +1,39 @@
 #include "dominion.hpp" 
 
+#include <iostream>
+
 int main(){
 
-    // TEST 1
+    // CREATION CARTES DU JEU
+    //Tresor
+    Carte argent = Argent();
+    Carte cuivre = Cuivre();
+    Carte or = Or();
+
+    //Malédiction
+    Carte mal = Malediction();
+
+    //Victoire
+    Carte domaine = Domaine();
+    Carte duche = Duche();
+    Carte jardins = Jardins();
+    Carte province = Province();
+
+    //Action
     Carte c1 = Atelier();
     Carte c2 = Aventurier();
+    Carte c3 = Bibliotheque();
+    Carte c4 = Bucheron();
+    Carte c5 = Cave();
+    Carte c6 = Festival();
+    Carte c7 = Forgeron();
+    Carte c8 = Laboratoire();
+    //à finir
+
+    // CREATION COMPOSITION
+    std::cout << "Combien de joueurs êtes-vous ?" << std::endl;
+
+    
 
 
     return 0;

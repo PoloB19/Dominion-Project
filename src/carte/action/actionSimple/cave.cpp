@@ -14,7 +14,7 @@ void Cave::utiliser(Joueur& J,  Plateau&){
         std::string nomCarteSelectionnee = J.demanderNomCarte();
  
         if (!nomCarteSelectionnee.empty() && J.accesMain()) {
-            J.defausserDepuisMain(nomCarteSelectionnee);
+            J.enleverDepuisMain(nomCarteSelectionnee,Emplacement::DEFAUSSE);
         }
 
     }
