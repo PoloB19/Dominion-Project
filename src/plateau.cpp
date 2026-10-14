@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "cartes.hpp"
+#include "listeCartes.hpp"
 #include "plateau.hpp"
 
 std::vector<Composition> Plateau::m_compositions = {};
@@ -74,29 +74,29 @@ bool Plateau::checkerEndCondition(){
     return compteur_tmp >= 3;
 };
 
-std::vector<Joueur> Plateau::determinerGagnant(){
+std::vector<Joueur*> Plateau::determinerGagnant(){
 
-    std::vector<Joueur> gagnantsTmp = {*m_joueurs.at(0)};
+    //On suppose le premier joueur gagnant
+    std::vector<Joueur*> gagnantsTmp = {m_joueurs.at(0)};
 
     for (auto J = m_joueurs.begin() + 1; J != m_joueurs.end(); ++J){
 
         //Si le joueur a un meilleur score que les gagnants actuels
 
-        if((*J)->compterPoints() > gagnantsTmp.at(0).compterPoints()){
-            gagnantsTmp.at(0) = **J;
+        if((*J)->compterPoints() > gagnantsTmp.at(0)->compterPoints()){
+            gagnantsTmp = {*J};
 
         //Si le joueur a un score égal aux gagnants actuels
-        } else if ((*J)->compterPoints() == gagnantsTmp.at(0).compterPoints()){
+        } else if ((*J)->compterPoints() == gagnantsTmp.at(0)->compterPoints()){
 
             //Si le joueur a - de tour joués que les gagnants actuels
-            if ((*J)->getNbTourJoues() < gagnantsTmp.at(0).getNbTourJoues()){
+            if ((*J)->getNbTourJoues() < gagnantsTmp.at(0)->getNbTourJoues()){
 
-                gagnantsTmp.clear(); 
-                gagnantsTmp.push_back(**J);
+                gagnantsTmp = {*J};
 
-            //Si le joueur et les gagnants actuels ont le même score et le même nombre de tour joués
-            } else if ((*J)->getNbTourJoues() == gagnantsTmp.at(0).getNbTourJoues()){
-                gagnantsTmp.push_back(**J);
+            //Si le joueur et les gagnants actuels ont le même score et le même nombre de tours joués
+            } else if ((*J)->getNbTourJoues() == gagnantsTmp.at(0)->getNbTourJoues()){
+                gagnantsTmp.push_back(*J);
             }
 
         }

@@ -1,25 +1,50 @@
-#include "ui_interaction.hpp"
+#include "UI_terminal.hpp"
 
-std::string choix;
+// Outils A MODIFIER DUCOUP
 
+void UI::sautDeLigne(){
+    std::cout << std::endl << std::endl;
+}
+
+void UI::separateurs() {
+    std::cout << "================================================================";
+    sautDeLigne();
+}
+
+void UI::separateurTitre(std::string& titre){
+
+    do {
+        titre = "=" + titre + "=";
+    } while (titre.size() < 64);    
+
+    std::cout << titre;
+
+    sautDeLigne();
+
+}
 
 // Choix
 
-inline bool UI::choixOuiNon(const std::string& message) {
+std::string choix;
+
+// vraiment besoin de "message" en paramètre dans choixOuiNon ?
+bool UI::choixOuiNon(const std::string& message) {
 
     while (true) {
         std::cout << message << std::endl;
-        std::cout << " Choix (O/N) : ";
+        std::cout << " Choix (O/N) > ";
         std::cin >> choix;
         
         if (choix == "O" || choix == "o" || choix == "Oui" || choix == "oui" || choix == "OUI") return true;
         if (choix == "N" || choix == "n" || choix == "Non" || choix == "non" || choix == "NON") return false;
         
-        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'." << std::endl;
+        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'.";
+
+        sautDeLigne();
     }
 }
 
-inline std::string UI::getNomCarte() {
+std::string UI::getNomCarte() {
 
     while(true){
 
@@ -56,9 +81,21 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
 
 }
 
+//Afffichage
+
+void UI::afficherDemarrage() {
+
+    //A DEFINIR
+
+    std::cout << std::endl;
+
+
+}
+
+
 // Annonces
 
-inline void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
+void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
 
     switch (depuis)
     {
@@ -75,7 +112,7 @@ inline void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
 
 }
 
-inline void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
+void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
 
     switch (vers)
     {
@@ -92,7 +129,7 @@ inline void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
 
 }
 
-inline void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes) {
+void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes) {
 
     std::cout << J.getPseudo() << ", vous révélez : [ ";
 
@@ -104,9 +141,6 @@ inline void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*>
 
 }
 
-inline void UI::annonceErreur(std::string message) {
+void UI::annonceErreur(std::string message) {
     std::cout << "Erreur : " << message << "." << std::endl;
 }
-
-// std::string demanderCible(const std::vector<Joueur*>& joueurs);
-

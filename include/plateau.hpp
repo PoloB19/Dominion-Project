@@ -38,6 +38,6 @@ class Plateau {
         void ajoutRebut(const Carte* carteRebutee);
         void retirerCartePlateau(const Carte* carte);
         bool checkerEndCondition();
-        std::vector<Joueur> determinerGagnant();
+        std::vector<Joueur*> determinerGagnant();
 
 };
