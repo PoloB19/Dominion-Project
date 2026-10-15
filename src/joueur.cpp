@@ -3,7 +3,7 @@
 #include "plateau.hpp"
 #include "carte.hpp"
 
-#include "ui_interaction.hpp"
+#include "UI_terminal.hpp"
 
 unsigned short Joueur::m_nextId = 0;
 
@@ -115,8 +115,7 @@ void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
         break;
     }
     
-};
-
+}
 
 // --- Méthodes ---
 
@@ -259,12 +258,25 @@ short Joueur::compterPoints() const {
     return score;
 };
 
-void Joueur::resetTour() {
+void Joueur::finDeTour() {
 
+    //Vide les cartes en Main et en Jeu dans la défausse
+    for(const Carte* c : m_main){
+        enleverDepuisMain(c->getNom(), Emplacement::DEFAUSSE);
+    }
+    for(const Carte* c : m_enJeu){
+        ajouterADefausse(c);
+    }
+    m_enJeu.clear();
+
+    //Pioche et mise à jour des attributs
+    piocher(5);
     compterPieces();
 
     m_nbAchat = 1;
     m_nbAction = 1;
+    m_nbToursJoues++;
+
 };
 
 // --- Interactions ---

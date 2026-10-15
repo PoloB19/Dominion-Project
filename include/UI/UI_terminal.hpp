@@ -40,6 +40,7 @@ namespace UI {
     void annonceErreur(std::string message);
 
     // Outils
+    void retourALigne();
     void sautDeLigne();
     void separateurs();
     void separateurTitre(std::string& titre);

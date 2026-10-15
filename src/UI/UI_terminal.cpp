@@ -1,6 +1,9 @@
 #include "UI_terminal.hpp"
 
 // Outils A MODIFIER DUCOUP
+void UI::retourALigne(){
+    std::cout << std::endl;
+}
 
 void UI::sautDeLigne(){
     std::cout << std::endl << std::endl;
@@ -67,7 +70,8 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
         for (const Carte* c : cartes){
             std::cout << c->getNom() + " ";
         }
-        std::cout << std::endl;
+        
+        retourALigne();
 
         std::string nomCarteChoisieTmp = J.demanderNomCarte();
         for (size_t i = 0; i < cartes.size(); i++){

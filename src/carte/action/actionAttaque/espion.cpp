@@ -1,6 +1,6 @@
 #include "espion.hpp"
 
-#include "ui_interaction.hpp"
+#include "UI_terminal.hpp"
 
 Espion::Espion() : ActionAttaque("Espion", 4, "+1 Carte \n +1 Action \nTous les joueurs (vous incluant) révèlent leur prochaine carte à piocher et décident de la défausser ou non.") {}
 
