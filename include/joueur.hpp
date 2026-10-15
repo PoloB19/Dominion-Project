@@ -48,6 +48,7 @@ class Joueur {
         std::stack<const Carte*> getPioche() const {return m_pioche;}
         std::vector<const Carte*> getMain() const {return m_main;}
         std::stack<const Carte*> getDefausse() const {return m_defausse;}
+        std::vector<const Carte*> getEnJeu() const {return m_enJeu;}
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
         unsigned short getTailleDeck() const {return m_pioche.size() + m_main.size() + m_defausse.size();}
 

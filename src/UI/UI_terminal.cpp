@@ -1,6 +1,6 @@
 #include "UI_terminal.hpp"
 
-// Outils A MODIFIER DUCOUP
+// Outils
 void UI::retourALigne(){
     std::cout << std::endl;
 }
@@ -10,29 +10,67 @@ void UI::sautDeLigne(){
 }
 
 void UI::separateurs() {
-    std::cout << "================================================================";
-    sautDeLigne();
+    std::cout << std::string(longueurMaxLigne, '~');
 }
 
-void UI::separateurTitre(std::string& titre){
+void UI::clearScreen() {
+    std::cout << CLEAR_SCREEN << RESET;
+}
 
-    do {
-        titre = "=" + titre + "=";
-    } while (titre.size() < 64);    
+void UI::afficherInformation(const std::string& info){
 
-    std::cout << titre;
-
-    sautDeLigne();
+    std::cout << info;
 
 }
 
-// Choix
+void UI::afficherTitre(const std::string& titre) {
+
+    size_t tailleTitre = titre.length() + 2;
+
+    // Si le titre est trop grand
+    if (tailleTitre + 6 > longueurMaxLigne) {
+        std::cout << "§ " << titre << " §";
+        return;
+    }
+
+    // 2. On calcule la place disponible pour UN côté (gauche ou droite)
+    size_t espaceParCote = (longueurMaxLigne - tailleTitre) / 2;
+
+    std::string coteGauche;
+    std::string coteDroit;
+
+    // Il faut au moins 11 caractères par côté pour que §~~~~§~~~~§ soit joli
+    if (espaceParCote >= 11) {
+        size_t nbTildesTotal = espaceParCote - 3; // pour mettre §
+        size_t tildesBloc1 = nbTildesTotal / 2;
+        size_t tildesBloc2 = nbTildesTotal - tildesBloc1;
+
+        coteGauche = "§" + std::string(tildesBloc1, '~') + "§" + std::string(tildesBloc2, '~') + "§";
+        coteDroit  = "§" + std::string(tildesBloc2, '~') + "§" + std::string(tildesBloc1, '~') + "§";
+    }
+
+    // Si le titre est trop long : motif simple "§~~~~§"
+    else {
+
+        size_t nbTildes = espaceParCote - 2; // pour mettre §
+        
+        coteGauche = "§" + std::string(nbTildes, '~') + "§";
+        coteDroit  = coteGauche;
+    }
+
+    std::cout << coteGauche << " " << titre << " " << coteDroit;
+
+    sautDeLigne();
+}
+
+
+// Choix A REVOIR
 
 std::string choix;
 
 // vraiment besoin de "message" en paramètre dans choixOuiNon ?
 bool UI::choixOuiNon(const std::string& message) {
-    
+
     while (true) {
         std::cout << message << std::endl;
         std::cout << " Choix (O/N) > ";
@@ -89,13 +127,26 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
 
 void UI::afficherDemarrage() {
 
-    //A DEFINIR
+    clearScreen();
+    afficherTitre("DOMINION");
 
-    std::cout << std::endl;
+    sautDeLigne();
 
+    std::cout << "Bienvenue sur ce deck builder médiéval.";
+    retourALigne();
+    std::cout << "Votre royaume commence ici !";
+
+    sautDeLigne();
+
+    separateurs();
+
+    sautDeLigne();
+
+    std::cout << ITALIC << "Projet de Paul Balensi & Mélodie De Marchi" << RESET;
+
+    sautDeLigne();
 
 }
-
 
 // Annonces
 
