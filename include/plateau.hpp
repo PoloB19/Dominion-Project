@@ -15,18 +15,18 @@ class Plateau {
         static std::vector<Composition> m_compositions;
 
         // A VERIFIER
-        std::vector</*const*/ Joueur*> m_joueurs;
+        std::vector<Joueur*> m_joueurs;
         size_t m_idCompositionPartie;
         std::map<const Carte*, unsigned short> m_piles;
         std::stack<const Carte*> m_rebut;
 
     public:
-        Plateau(std::vector</*const*/ Joueur*> joueurs, size_t idCompositionPartie);
+        Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie);
         ~Plateau();
 
         //Getters
         static std::vector<Composition> getCompositions() {return m_compositions;}
-        std::vector</*const*/ Joueur*> getJoueurs() {return m_joueurs;}
+        std::vector<Joueur*> getJoueurs() {return m_joueurs;}
         std::map<const Carte*, unsigned short> getPiles() {return m_piles;}
         
         //Setters
@@ -38,6 +38,6 @@ class Plateau {
         void ajoutRebut(const Carte* carteRebutee);
         void retirerCartePlateau(const Carte* carte);
         bool checkerEndCondition();
-        std::vector<Joueur> determinerGagnant();
+        std::vector<Joueur*> determinerGagnant();
 
 };
