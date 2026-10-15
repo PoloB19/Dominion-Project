@@ -8,11 +8,15 @@
 
 namespace UI {
 
+    //Taille maximale d'une ligne
+    const size_t longueurMaxLigne = 50;
+
    // Annule tous les styles
     const std::string RESET = "\033[0m";
 
     // Police
     const std::string BOLD = "\033[1m";
+    const std::string ITALIC = "\033[3m";
     const std::string UNDERLINE = "\033[4m";
 
     // Couleurs du texte
@@ -21,6 +25,7 @@ namespace UI {
     const std::string YELLOW = "\033[33m";
     const std::string BLUE = "\033[34m";
     const std::string PURPLE = "\033[35m";
+    const std::string CYAN = "\033[36m";
 
     // Utilitaires de terminal
     const std::string CLEAR_SCREEN = "\033[2J\033[H";
@@ -43,7 +48,9 @@ namespace UI {
     void retourALigne();
     void sautDeLigne();
     void separateurs();
-    void separateurTitre(std::string& titre);
+    void clearScreen();
+    void afficherInformation(const std::string& info);
+    void afficherTitre(const std::string& titre);
 
 
     // Plus tard

@@ -1,6 +1,6 @@
 #include "bucheron.hpp"
 
-Bucheron::Bucheron() : ActionSimple("Bucheron", 3, "+1 Achat \n+2 pièces") {}
+Bucheron::Bucheron() : ActionSimple("Bûcheron", 3, "+1 Achat \n+2 pièces") {}
 
 Bucheron::~Bucheron() {}
 
