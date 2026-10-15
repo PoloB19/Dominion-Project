@@ -31,7 +31,6 @@ class Carte {
         unsigned short getValeur() const {return m_valeur;}
 
         // Méthode
-
-        virtual void utiliser(Joueur&, Plateau&) {};
+        virtual void utiliser(Joueur&, Plateau&) = 0;
         
 };

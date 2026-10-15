@@ -32,7 +32,7 @@ std::string choix;
 
 // vraiment besoin de "message" en paramètre dans choixOuiNon ?
 bool UI::choixOuiNon(const std::string& message) {
-
+    
     while (true) {
         std::cout << message << std::endl;
         std::cout << " Choix (O/N) > ";
