@@ -25,15 +25,26 @@ namespace UI {
     // Utilitaires de terminal
     const std::string CLEAR_SCREEN = "\033[2J\033[H";
 
-    //Interactions
+    // Interactions
     bool choixOuiNon(const std::string& message);
     std::string getNomCarte();
     std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
 
+    // Affichage
+    void afficherDemarrage();
+
+    // Annonces 
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
     void annonceCarteVers(std::string nomCarte, Emplacement vers);
     void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes);
     void annonceErreur(std::string message);
+
+    // Outils
+    void retourALigne();
+    void sautDeLigne();
+    void separateurs();
+    void separateurTitre(std::string& titre);
+
 
     // Plus tard
     // int demanderChoix(const std::string& message, int maxChoix);

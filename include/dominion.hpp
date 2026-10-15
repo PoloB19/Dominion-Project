@@ -5,7 +5,7 @@
 #include "joueur.hpp"
 #include "plateau.hpp"
 
-#include "cartes.hpp"
+#include "listeCartes.hpp"
 #include "carte.hpp"
 
 //cartes action
@@ -61,6 +61,6 @@
 #include "province.hpp"
 
 //UI
-#include "ui_interaction.hpp"
+#include "UI_terminal.hpp"
 
 

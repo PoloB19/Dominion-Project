@@ -30,6 +30,7 @@ class Joueur {
         std::stack<const Carte*> m_pioche;
         std::vector<const Carte*> m_main;
         std::stack<const Carte*> m_defausse;
+        std::vector<const Carte*> m_enJeu;
 
         unsigned short m_nbAction;
         unsigned short m_nbAchat;
@@ -78,7 +79,7 @@ class Joueur {
         void compterPieces();
         short compterPoints() const;
 
-        void resetTour();
+        void finDeTour();
 
         //Interactions
         bool demanderOuiNon(const std::string& question) const;
