@@ -13,12 +13,12 @@ void Milice::utiliser(Joueur& J, Plateau& P) const {
             std::vector<const Carte*> mainj = j->getMain();
             
             while (mainj.size()>3) {
-                /*
+            
                 size_t idCarteChoisie = j->choixParmiCartes(mainj,1).at(0);
-                j->enleverDepuisMain(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
-                j->annonceRevelerCartes({victoireEnMain.at(idCarteChoisie.at(0))});
-                j->annonceCarteVers(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
-            */}
+                j->enleverDepuisMain(mainj.at(idCarteChoisie)->getNom(),Emplacement::DEFAUSSE);
+
+                mainj = j->getMain();
+            }
         }
     }
 }
