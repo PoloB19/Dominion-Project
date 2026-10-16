@@ -6,6 +6,7 @@
 #include "plateau.hpp"
 #include "joueur.hpp"
 #include "carte.hpp"
+#include "listeCartes.hpp"
 
 
 namespace UI {
@@ -37,14 +38,19 @@ namespace UI {
     // Utilitaires de terminal
     const std::string CLEAR_SCREEN = "\033[2J\033[H";
 
-    // Interactions
-    bool choixOuiNon(const std::string& message);
-    std::string getNomCarte();
-    std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
-
     // Affichage
-    size_t ecranAccueil();
-    size_t ecranNouvellePartie(Plateau& P);
+
+        // Écrans
+        size_t ecranAccueil();
+
+        size_t ecranNouvellePartie(Plateau& P);
+
+        size_t ecranCreationComposition();
+
+        // Onglets
+        size_t ongletDescriptionCartes(const std::vector<const Carte*>& cartes);
+        size_t ongletChoixCartesComposition();
+
 
 
     // Annonces 
@@ -64,7 +70,10 @@ namespace UI {
     void afficherListeCarteParNom(std::vector<const Carte*> listeCartes);
 
     //Choix
-
     size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0);
+    std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
+    bool choixOuiNon(const std::string& message);
 
+    //What ?
+     std::string getNomCarte();
 };
