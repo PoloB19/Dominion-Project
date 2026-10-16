@@ -1,15 +1,22 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <ranges>
 
+#include "plateau.hpp"
 #include "joueur.hpp"
 #include "carte.hpp"
 
 
 namespace UI {
 
-    //Taille maximale d'une ligne
+    // Constantes et variables diverses
     const size_t longueurMaxLigne = 50;
+
+    std::vector<std::string> listeChoix;
+    std::string choix0;
+
+    std::string input;
 
    // Annule tous les styles
     const std::string RESET = "\033[0m";
@@ -36,7 +43,9 @@ namespace UI {
     std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
 
     // Affichage
-    void afficherDemarrage();
+    size_t ecranAccueil();
+    size_t ecranNouvellePartie(Plateau& P);
+
 
     // Annonces 
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
@@ -47,14 +56,15 @@ namespace UI {
     // Outils
     void retourALigne();
     void sautDeLigne();
-    void separateurs();
+    void separateursTitre();
+    void separateursChoix();
     void clearScreen();
     void afficherInformation(const std::string& info);
     void afficherTitre(const std::string& titre);
+    void afficherListeCarteParNom(std::vector<const Carte*> listeCartes);
 
+    //Choix
 
-    // Plus tard
-    // int demanderChoix(const std::string& message, int maxChoix);
-    // std::string demanderCible(const std::vector<Joueur*>& joueurs);
+    size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0);
 
 };

@@ -9,8 +9,12 @@ void UI::sautDeLigne(){
     std::cout << std::endl << std::endl;
 }
 
-void UI::separateurs() {
+void UI::separateursTitre() {
     std::cout << std::string(longueurMaxLigne, '~');
+}
+
+void UI::separateursChoix() {
+    std::cout << std::string(longueurMaxLigne, '-');
 }
 
 void UI::clearScreen() {
@@ -18,9 +22,7 @@ void UI::clearScreen() {
 }
 
 void UI::afficherInformation(const std::string& info){
-
     std::cout << info;
-
 }
 
 void UI::afficherTitre(const std::string& titre) {
@@ -33,7 +35,7 @@ void UI::afficherTitre(const std::string& titre) {
         return;
     }
 
-    // 2. On calcule la place disponible pour UN côté (gauche ou droite)
+    // Place disponible pour UN côté (gauche ou droite)
     size_t espaceParCote = (longueurMaxLigne - tailleTitre) / 2;
 
     std::string coteGauche;
@@ -59,45 +61,65 @@ void UI::afficherTitre(const std::string& titre) {
     }
 
     std::cout << coteGauche << " " << titre << " " << coteDroit;
-
-    sautDeLigne();
 }
 
+void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes){
 
-// Choix A REVOIR
+    std::cout << "[";
 
-std::string choix;
+    for (size_t i = 0; i < listeCartes.size(); i++) {
+        std::cout << listeCartes.at(i);
+        if(i != listeCartes.size() - 1 ){
+            std::cout << ", ";
+        }
+    }
 
-// vraiment besoin de "message" en paramètre dans choixOuiNon ?
-bool UI::choixOuiNon(const std::string& message) {
+    std::cout << "]";
+
+}
+
+// Choix
+
+size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0 = "") {
+
+    for (size_t i = 0; i < listeChoix.size(); i++){
+        std::cout << i+1 << " : " << listeChoix.at(i);
+        retourALigne();
+    }
+
+    if (!choix0.empty()) {
+        std::cout << "0 : " << choix0;
+        retourALigne();
+    }
 
     while (true) {
-        std::cout << message << std::endl;
-        std::cout << " Choix (O/N) > ";
-        std::cin >> choix;
-        
-        if (choix == "O" || choix == "o" || choix == "Oui" || choix == "oui" || choix == "OUI") return true;
-        if (choix == "N" || choix == "n" || choix == "Non" || choix == "non" || choix == "NON") return false;
-        
-        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'.";
 
-        sautDeLigne();
+        retourALigne();
+        separateursChoix();
+        std::cout << "> ";
+        std::cin >> input;
+        retourALigne();
+
+        if(input.length() != 1 || !std::isdigit(input.at(0))) {
+            annonceErreur("veuillez entrer un chiffre valide");
+            retourALigne();
+            continue;
+        }
+
+        size_t inputValeur = input.at(0) - '0'; //transforme la saisie en nombre
+
+        if (inputValeur > listeChoix.size() || (inputValeur == 0 && choix0.empty())) {
+            annonceErreur("le choix '" + input + "' n'existe pas." );
+            retourALigne();
+            continue;
+        }
+
+        return inputValeur;
+
     }
 }
 
-std::string UI::getNomCarte() {
-
-    while(true){
-
-        std::cout << "Quel est son nom : ";
-        std::cin >> choix;
-
-        return choix;
-
-    }
-
-}
-
+//A VERIFIER QUE IL CHOISI PAS 2 FOIS LA MEME CARTE
 std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix){
 
     std::vector<size_t> idChoix = {};
@@ -123,9 +145,41 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
 
 }
 
+// Vraiment besoin de "message" en paramètre dans choixOuiNon ?
+bool UI::choixOuiNon(const std::string& message) {
+
+    while (true) {
+        std::cout << message << std::endl;
+        std::cout << " > ";
+        std::cin >> input;
+        
+        if (input == "O" || input == "o" || input == "Oui" || input == "oui" || input == "OUI") return true;
+        if (input == "N" || input == "n" || input == "Non" || input == "non" || input == "NON") return false;
+        
+        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'.";
+
+        sautDeLigne();
+    }
+}
+
+std::string UI::getNomCarte() {
+
+    while(true){
+
+        std::cout << "Quel est son nom : ";
+        std::cin >> input;
+
+        return input;
+
+    }
+
+}
+
+
+
 //Afffichage
 
-void UI::afficherDemarrage() {
+size_t UI::ecranAccueil() {
 
     clearScreen();
     afficherTitre("DOMINION");
@@ -138,13 +192,51 @@ void UI::afficherDemarrage() {
 
     sautDeLigne();
 
-    separateurs();
+    separateursTitre();
 
     sautDeLigne();
 
     std::cout << ITALIC << "Projet de Paul Balensi & Mélodie De Marchi" << RESET;
 
     sautDeLigne();
+
+    listeChoix = {
+        "Commencer une nouvelle partie",
+        "Reprendre la partie sauvegardée",
+    };
+
+    choix0 = "Quitter";
+
+    return choixParmiChiffre(listeChoix, choix0);
+
+}
+
+size_t UI::ecranNouvellePartie(Plateau& P) {
+
+    clearScreen();
+
+    afficherTitre("COMMENCER PARTIE");
+
+    afficherInformation("Avec quelle composition souhaitez-vous jouer?");
+
+    sautDeLigne();
+
+    std::string compoString;
+    listeChoix.clear();
+    for(const Composition& compo : P.getCompositions()){
+
+        compoString = compo.getNom() + " [";
+
+        for (const auto& [c, v] : compo.getCompositionPartie()) {
+            compoString += c->getNom() + ", ";
+        }
+
+        listeChoix.push_back(compoString + "]");
+    }
+
+    choix0 = "Retour";
+    
+    return choixParmiChiffre(listeChoix, choix0);
 
 }
 
