@@ -17,28 +17,28 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
             // IL FAUT GERER LE CAS OU UN JOUEUR POSSEDE DOUVES OU DES REACTIONS EN GENERAL car on ne révèle pas ses cartes
 
             // On révèle les 2 cartes de la pioche d'un joueur
-            carteRevelee = j->revelerCarte(Emplacement::PIOCHE)
-            if (carteRevelee.getType() == "Tresor") {
+            carteRevelee = j->revelerCarte(Emplacement::PIOCHE);
+            if (carteRevelee->getType() == "Tresor") {
                 tresorReveles.push_back(carteRevelee);
             }
             else {
-                j.ajouterADefausse(c);
+                j->ajouterADefausse(carteRevelee);
             }
 
-            carteRevelee = j->revelerCarte(Emplacement::PIOCHE)
-            if (carteRevelee.getType() == "Tresor") {
+            carteRevelee = j->revelerCarte(Emplacement::PIOCHE);
+            if (carteRevelee->getType() == "Tresor") {
                 tresorReveles.push_back(carteRevelee);
             }
             else {
-                j.ajouterADefausse(c);
+                j->ajouterADefausse(carteRevelee);
             }
         
             // Si seulement une des 2 cartes révélées était un trésor, on l'écarte.
-            if (tresorReveles.size()==1) {
+            if (tresorReveles.size() == 1) {
                 cartesEcartees[j] = tresorReveles.at(0);
             }
             // Sinon on laisse au voleur le choix entre les 2
-            else if (tresorReveles.size()==2) {
+            else if (tresorReveles.size() == 2) {
                 //voir pour ce cout comment faire pour que ça passe par UI ou s'il est vrm nécessaire ?
                 std::cout << "Quelle carte de ce joueur écartez-vous ?" << std::endl;
                 size_t idxChoix = J.choixParmiCartes(tresorReveles,1).at(0);
@@ -47,7 +47,7 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
                 // la carte trésor non-selectionnée par le voleur est remise dans la défausse du joueur
                 for (size_t i = 0; i<tresorReveles.size(); i++) {
                     if (i!=idxChoix) {
-                        j.ajouterADefausse(tresorReveles.at(i));
+                        j->ajouterADefausse(tresorReveles.at(i));
                     }
                 }
             }

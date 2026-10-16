@@ -80,7 +80,7 @@ void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
 
 // Choix
 
-size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0 = "") {
+size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0) {
 
     for (size_t i = 0; i < listeChoix.size(); i++){
         std::cout << i+1 << " : " << listeChoix.at(i);
@@ -119,7 +119,7 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
     }
 }
 
-std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = ""){
+std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0) {
 
     afficherInformation(J.getPseudo() + ", choisissez " + std::to_string(nbChoix) + " carte(s) parmi :");
     retourALigne();
@@ -386,15 +386,17 @@ size_t UI::ongletChoixAleatoireCartesComposition() {
     afficherInformation("Voici la composition aléatoire de votre partie :");
     retourALigne();
 
-    std::srand(std::time({}));
+    //std::srand(std::time({}));
 
-    int r = (std::rand() % Cartes::catalogue().size()) - 1; //Une carte au hasard dans le catalogue, mais mettre royaume?
+    //int r = (std::rand() % Cartes::catalogue().size()) - 1; //Une carte au hasard dans le catalogue, mais mettre royaume?
 
     // A FINIR
 
+    return 0;
+
 }
 
-size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes) {
+size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>&) {
     //A FAIRE
     return 0;
 }
