@@ -73,7 +73,7 @@ class Joueur {
         
         void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);
-        void ecarter(Carte* carteRebutee, Plateau& P);
+        void ecarter(std::string nomCarteEcartee, Plateau& P);
 
         void melangerDefausse();
 

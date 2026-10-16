@@ -165,9 +165,14 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
 
 };
 
-void Joueur::ecarter(Carte* carteRebutee, Plateau& P) {
-    m_main.erase(std::find(m_main.begin(), m_main.end(), carteRebutee));
-    P.ajoutRebut(carteRebutee);
+void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P) {
+    for (const Carte* c : m_main) {
+        if (c->getNom()==nomCarteEcartee) {
+            m_main.erase(std::find(m_main.begin(), m_main.end(), c));
+            P.ajoutRebut(c);
+            return;
+        }
+    }
 }
 
 void Joueur::melangerDefausse(){
@@ -296,6 +301,7 @@ std::string Joueur::demanderNomCarte() const {
 }
 
 std::vector<size_t> Joueur::choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix) {
+    if (cartes.empty()) { return {}; }
     return UI::choixParmiCartes(*this, cartes, nbChoix);
 }
 

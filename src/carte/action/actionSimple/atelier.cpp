@@ -6,7 +6,7 @@ Atelier::~Atelier() {}
 
 void Atelier::utiliser(Joueur &J, Plateau &P) const {
 
-    std::cout << "Vous pouvez obtenir une carte du plateau coûtant au plus 4 pièces." << std::endl;
+    // std::cout << "Vous pouvez obtenir une carte du plateau coûtant au plus 4 pièces." << std::endl;
 
     while(true){
 
@@ -19,7 +19,8 @@ void Atelier::utiliser(Joueur &J, Plateau &P) const {
         } else {
 
             J.obtenirCartePlateau(carteVoulue, P, Emplacement::DEFAUSSE);
-
+            return;
+            
         }
 
     }
