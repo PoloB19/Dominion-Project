@@ -299,10 +299,6 @@ bool Joueur::demanderOuiNon(const std::string& question) const {
     return UI::choixOuiNon(m_pseudo + ", " + question);
 }
 
-std::string Joueur::demanderNomCarte() const {
-    return UI::getNomCarte();
-}
-
 std::vector<size_t> Joueur::choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix) {
     if (cartes.empty()) { return {}; }
     return UI::choixParmiCartes(*this, cartes, nbChoix);

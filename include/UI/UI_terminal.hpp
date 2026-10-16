@@ -55,7 +55,7 @@ namespace UI {
 
         // Onglets
         std::vector<size_t> ongletChoixCartesComposition(Joueur &J);
-        size_t UI::ongletChoixAleatoireCartesComposition();
+        size_t ongletChoixAleatoireCartesComposition();
         size_t ongletDescriptionCartes(const std::vector<const Carte*>& cartes);
 
 
@@ -77,9 +77,9 @@ namespace UI {
     void afficherListeCarteParNom(std::vector<const Carte*> listeCartes);
 
     //Choix
-    size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0);
+    size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0 = "");
 
-    std::vector<size_t> choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0);
+    std::vector<size_t> choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = "");
 
     bool choixOuiNon(const std::string& question);
 };
