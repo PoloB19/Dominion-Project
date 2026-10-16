@@ -9,8 +9,12 @@ void UI::sautDeLigne(){
     std::cout << std::endl << std::endl;
 }
 
-void UI::separateurs() {
+void UI::separateursTitre() {
     std::cout << std::string(longueurMaxLigne, '~');
+}
+
+void UI::separateursChoix() {
+    std::cout << std::string(longueurMaxLigne, '-');
 }
 
 void UI::clearScreen() {
@@ -18,9 +22,7 @@ void UI::clearScreen() {
 }
 
 void UI::afficherInformation(const std::string& info){
-
     std::cout << info;
-
 }
 
 void UI::afficherTitre(const std::string& titre) {
@@ -33,7 +35,7 @@ void UI::afficherTitre(const std::string& titre) {
         return;
     }
 
-    // 2. On calcule la place disponible pour UN côté (gauche ou droite)
+    // Place disponible pour UN côté (gauche ou droite)
     size_t espaceParCote = (longueurMaxLigne - tailleTitre) / 2;
 
     std::string coteGauche;
@@ -59,14 +61,59 @@ void UI::afficherTitre(const std::string& titre) {
     }
 
     std::cout << coteGauche << " " << titre << " " << coteDroit;
+}
+
+void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes){
+
+    std::cout << "[";
+
+    for (size_t i = 0; i < listeCartes.size(); i++) {
+        std::cout << listeCartes.at(i);
+        if(i != listeCartes.size() - 1 ){
+            std::cout << ", ";
+        }
+    }
+
+    std::cout << "]";
+
+}
+
+//Choix
+
+char UI::choixParmiChar(std::vector<std::string> listeChoix, std::string choix0){
+
+    for (size_t i = 1; i < listeChoix.size() + 1; i++){
+        std::cout << i << " : " << listeChoix.at(i - 1);
+        retourALigne();
+    }
+
+    if(!choix0.empty()) std::cout << "0 : " << choix0;
 
     sautDeLigne();
+
+    char choix;
+    while(true){
+
+        separateursChoix();
+        std::cout << "> ";
+        std::cin.clear();
+
+        //A TESTER VOIR SI CA FONCTIONNE
+        if(std::cin >> choix && (choix - '0') < listeChoix.size()){
+            return choix;
+        } else {
+            annonceErreur("saisie incorrecte");
+        }
+
+        
+
+    }
 }
 
 
 // Choix A REVOIR
 
-std::string choix;
+
 
 // vraiment besoin de "message" en paramètre dans choixOuiNon ?
 bool UI::choixOuiNon(const std::string& message) {
@@ -94,10 +141,11 @@ std::string UI::getNomCarte() {
 
         return choix;
 
-    }
+}
 
 }
 
+//A VERIFIER QUE IL CHOISI PAS 2 FOIS LA MEME CARTE
 std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix){
 
     std::vector<size_t> idChoix = {};
@@ -125,7 +173,7 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
 
 //Afffichage
 
-void UI::afficherDemarrage() {
+char UI::ecranAccueil() {
 
     clearScreen();
     afficherTitre("DOMINION");
@@ -138,13 +186,46 @@ void UI::afficherDemarrage() {
 
     sautDeLigne();
 
-    separateurs();
+    separateursTitre();
 
     sautDeLigne();
 
     std::cout << ITALIC << "Projet de Paul Balensi & Mélodie De Marchi" << RESET;
 
     sautDeLigne();
+
+    // A CODER LE CHPOIX A RENVOYER
+
+
+}
+
+
+void UI::ecranNouvellePartie(Plateau& P) {
+
+    clearScreen();
+
+    afficherTitre("COMMENCER PARTIE");
+
+    afficherInformation("Avec quelle composition souhaitez-vous jouer?");
+
+    sautDeLigne();
+
+    size_t idx = 1;
+    for(const Composition& compo : P.getCompositions()){
+
+        std::cout << idx << ": " << compo.getNom() << " ";
+
+        std::vector<const Carte*> listeCartes;
+        listeCartes.reserve(compo.getCompositionPartie().size());
+        for (const auto& [c, v] : compo.getCompositionPartie()) {
+            listeCartes.push_back(c);
+        }
+
+        afficherListeCarteParNom(listeCartes);
+        retourALigne();
+
+        idx++;
+    }
 
 }
 

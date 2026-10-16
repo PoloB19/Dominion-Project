@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <ranges>
 
+#include "plateau.hpp"
 #include "joueur.hpp"
 #include "carte.hpp"
 
@@ -36,7 +38,9 @@ namespace UI {
     std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
 
     // Affichage
-    void afficherDemarrage();
+    char ecranAccueil();
+    void ecranNouvellePartie(Plateau& P);
+
 
     // Annonces 
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
@@ -47,14 +51,17 @@ namespace UI {
     // Outils
     void retourALigne();
     void sautDeLigne();
-    void separateurs();
+    void separateursTitre();
+    void separateursChoix();
     void clearScreen();
     void afficherInformation(const std::string& info);
     void afficherTitre(const std::string& titre);
+    void afficherListeCarteParNom(std::vector<const Carte*> listeCartes);
+
+    //Choix
+
+    char choixParmiChar(std::vector<std::string> listeChoix, std::string choix0);
 
 
-    // Plus tard
-    // int demanderChoix(const std::string& message, int maxChoix);
-    // std::string demanderCible(const std::vector<Joueur*>& joueurs);
 
 };
