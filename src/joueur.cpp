@@ -47,7 +47,7 @@ bool Joueur::accesDefausse() const {
 
 
 //Pioche
-
+//APPELER ANNONCE DEPUIS PIOCHE
 void Joueur::piocher(unsigned short nbPioche){
 
     for(size_t i = 0; i < nbPioche; i++){
@@ -64,6 +64,7 @@ void Joueur::piocher(unsigned short nbPioche){
     }
 }
 
+//APPELER ANNONCE VERS PIOCHE
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
@@ -72,7 +73,7 @@ void Joueur::ajouterAPioche(const Carte* carte){
 
 
 // Défausse
-
+//APPELER ANNONCE VERS DEFAUSSE
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
         m_defausse.push(carte);
@@ -165,6 +166,7 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
 
 };
 
+//APPELER ANNONCE VERS REBUT
 void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P) {
     for (const Carte* c : m_main) {
         if (c->getNom()==nomCarteEcartee) {
@@ -198,6 +200,7 @@ void Joueur::melangerDefausse(){
 
 }
 
+//APPELER ANNONCE REVELER CARTE !
 const Carte* Joueur::revelerCarte(Emplacement depuis){
 
     const Carte* carteRevelee = nullptr;
