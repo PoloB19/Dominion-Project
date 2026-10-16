@@ -119,14 +119,19 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
     }
 }
 
-//A VERIFIER QUE IL CHOISI PAS 2 FOIS LA MEME CARTE
+std::string choixParmiString(){
+    //A FAIRE
+}
+
+
+//A VERIFIER QUE IL CHOISI PAS 2 FOIS LA MEME CARTE ET QUE NB CHOIX INUTILE
 std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix){
 
     std::vector<size_t> idChoix = {};
     
     while (idChoix.size() < nbChoix){
 
-        std::cout << "Choisissez " << nbChoix << " carte(s) parmi : ";
+        std::cout << J.getPseudo() << ", choisissez " << nbChoix << " carte(s) parmi : ";
         for (const Carte* c : cartes){
             std::cout << c->getNom() + " ";
         }
@@ -175,9 +180,9 @@ std::string UI::getNomCarte() {
 
 }
 
+// Afffichage
 
-
-//Afffichage
+// Écrans
 
 size_t UI::ecranAccueil() {
 
@@ -227,18 +232,68 @@ size_t UI::ecranNouvellePartie(Plateau& P) {
 
         compoString = compo.getNom() + " [";
 
-        for (const auto& [c, v] : compo.getCompositionPartie()) {
-            compoString += c->getNom() + ", ";
+        for (const auto& pair : compo.getCompositionPartie()) {
+            compoString += pair.first->getNom() + ", ";
         }
 
         listeChoix.push_back(compoString + "]");
     }
 
     choix0 = "Retour";
-    
+
     return choixParmiChiffre(listeChoix, choix0);
 
 }
+
+size_t UI::ecranCreationComposition(){
+
+    clearScreen();
+    afficherTitre("CRÉATION COMPOSITION");
+
+    sautDeLigne();
+
+    afficherInformation("Voici la liste des cartes du royaume :");
+    retourALigne();
+
+    //A COMPLETER QUAND ON AURA LA LISTE DES CARTES SUR LE PLATEAU
+    //afficherListeCarteParNom(listeCarte)
+
+    sautDeLigne();
+
+    listeChoix = {
+        "Sélectionner les cartes",
+        "Composition aléatoire",
+        "Voir la description des cartes du royaume"
+    };
+
+    choix0 = "Retour";
+
+    return choixParmiChiffre(listeChoix, choix0);
+
+}
+
+
+//Onglets
+
+size_t UI::ongletChoixCartesComposition(){
+
+    separateursTitre();
+
+    sautDeLigne();
+
+    afficherInformation("Entrez un à un les noms des 10 cartes :");
+
+   // A COMPLETER AVEC CHOIXPARMISTRING
+
+
+}
+
+size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes){
+    //A FAIRE
+    return 0;
+}
+
+
 
 // Annonces
 
