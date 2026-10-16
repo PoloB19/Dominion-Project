@@ -43,13 +43,20 @@ namespace UI {
         // Écrans
         size_t ecranAccueil();
 
-        size_t ecranNouvellePartie(Plateau& P);
+        size_t ecranNouvellePartie();
 
         size_t ecranCreationComposition();
 
+        std::vector<std::string> ecranChoixJoueurs();
+
+        bool ecranModeRapide();
+
+
+
         // Onglets
+        std::vector<size_t> ongletChoixCartesComposition(Joueur &J);
+        size_t UI::ongletChoixAleatoireCartesComposition();
         size_t ongletDescriptionCartes(const std::vector<const Carte*>& cartes);
-        size_t ongletChoixCartesComposition();
 
 
 
@@ -57,7 +64,7 @@ namespace UI {
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
     void annonceCarteVers(std::string nomCarte, Emplacement vers);
     void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes);
-    void annonceErreur(std::string message);
+    void annonceErreur(const std::string& message);
 
     // Outils
     void retourALigne();
@@ -71,9 +78,8 @@ namespace UI {
 
     //Choix
     size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0);
-    std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
-    bool choixOuiNon(const std::string& message);
 
-    //What ?
-     std::string getNomCarte();
+    std::vector<size_t> choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0);
+
+    bool choixOuiNon(const std::string& question);
 };

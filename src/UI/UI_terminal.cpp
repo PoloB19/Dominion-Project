@@ -1,11 +1,11 @@
 #include "UI_terminal.hpp"
 
 // Outils
-void UI::retourALigne(){
+void UI::retourALigne() {
     std::cout << std::endl;
 }
 
-void UI::sautDeLigne(){
+void UI::sautDeLigne() {
     std::cout << std::endl << std::endl;
 }
 
@@ -21,7 +21,7 @@ void UI::clearScreen() {
     std::cout << CLEAR_SCREEN << RESET;
 }
 
-void UI::afficherInformation(const std::string& info){
+void UI::afficherInformation(const std::string& info) {
     std::cout << info;
 }
 
@@ -63,7 +63,7 @@ void UI::afficherTitre(const std::string& titre) {
     std::cout << coteGauche << " " << titre << " " << coteDroit;
 }
 
-void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes){
+void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
 
     std::cout << "[";
 
@@ -119,65 +119,85 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
     }
 }
 
-std::string choixParmiString(){
-    //A FAIRE
-}
+std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = ""){
 
+    afficherInformation(J.getPseudo() + ", choisissez " + std::to_string(nbChoix) + " carte(s) parmi :");
+    retourALigne();
 
-//A VERIFIER QUE IL CHOISI PAS 2 FOIS LA MEME CARTE ET QUE NB CHOIX INUTILE
-std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix){
+    std::cout << "[ ";
+    for (const Carte* c : cartes){
+        std::cout << c->getNom() + " ";
+    }
+    std::cout << " ]";
+    
+    sautDeLigne();
+
+    if(!choix0.empty()){ 
+        std::cout << "0 : " + choix0;
+        retourALigne();
+    }
+        
+    separateursChoix();
 
     std::vector<size_t> idChoix = {};
-    
     while (idChoix.size() < nbChoix){
-
-        std::cout << J.getPseudo() << ", choisissez " << nbChoix << " carte(s) parmi : ";
-        for (const Carte* c : cartes){
-            std::cout << c->getNom() + " ";
-        }
         
-        retourALigne();
+        std::cout << "> ";
+        std::cin >> input;
 
-        std::string nomCarteChoisieTmp = J.demanderNomCarte();
+        // Si choix0 est possible et demandé
+        if(!choix0.empty() && input.at(0) - '0' == 0) return {};
+
+        // Vérifie que la sélection est possible
         for (size_t i = 0; i < cartes.size(); i++){
-            if (cartes.at(i)->getNom() == nomCarteChoisieTmp){
+
+            // Vérifie que la carte est proposée 
+            if (cartes.at(i)->getNom() == input){
+
+                for(size_t j : idChoix){
+
+                    // Vérifie que la carte n'a pas déjà été sélectionnée
+                    if (i == j){
+                        annonceErreur("cette carte a déjà été sélectionnée");
+                        sautDeLigne();
+                        continue;
+                    }
+                }
+
                 idChoix.push_back(i);
+                continue;
+
             }
         }
+
+        annonceErreur("cette carte n'est pas proposée");
+        sautDeLigne();
+
     }
 
     return idChoix;
 
 }
 
-// Vraiment besoin de "message" en paramètre dans choixOuiNon ?
-bool UI::choixOuiNon(const std::string& message) {
+bool UI::choixOuiNon(const std::string& question) {
 
     while (true) {
-        std::cout << message << std::endl;
+
+        afficherInformation(question);
+        separateursChoix();
+        retourALigne();
         std::cout << " > ";
         std::cin >> input;
         
         if (input == "O" || input == "o" || input == "Oui" || input == "oui" || input == "OUI") return true;
         if (input == "N" || input == "n" || input == "Non" || input == "non" || input == "NON") return false;
         
-        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'.";
+        //retourALigne(); ?
+        annonceErreur("veuillez répondre par 'oui' ou 'non'");
 
         sautDeLigne();
-    }
-}
-
-std::string UI::getNomCarte() {
-
-    while(true){
-
-        std::cout << "Quel est son nom : ";
-        std::cin >> input;
-
-        return input;
 
     }
-
 }
 
 // Afffichage
@@ -216,7 +236,7 @@ size_t UI::ecranAccueil() {
 
 }
 
-size_t UI::ecranNouvellePartie(Plateau& P) {
+size_t UI::ecranNouvellePartie() {
 
     clearScreen();
 
@@ -228,7 +248,7 @@ size_t UI::ecranNouvellePartie(Plateau& P) {
 
     std::string compoString;
     listeChoix.clear();
-    for(const Composition& compo : P.getCompositions()){
+    for(const Composition& compo : Plateau::getCompositions()){
 
         compoString = compo.getNom() + " [";
 
@@ -245,7 +265,7 @@ size_t UI::ecranNouvellePartie(Plateau& P) {
 
 }
 
-size_t UI::ecranCreationComposition(){
+size_t UI::ecranCreationComposition() {
 
     clearScreen();
     afficherTitre("CRÉATION COMPOSITION");
@@ -254,9 +274,6 @@ size_t UI::ecranCreationComposition(){
 
     afficherInformation("Voici la liste des cartes du royaume :");
     retourALigne();
-
-    //A COMPLETER QUAND ON AURA LA LISTE DES CARTES SUR LE PLATEAU
-    //afficherListeCarteParNom(listeCarte)
 
     sautDeLigne();
 
@@ -272,28 +289,115 @@ size_t UI::ecranCreationComposition(){
 
 }
 
+std::vector<std::string> UI::ecranChoixJoueurs() {
+    
+    clearScreen();
+
+    afficherTitre("JOUEURS");
+    sautDeLigne();
+    afficherInformation("Entrez un à un les pseudos des joueurs de la partie.");
+    retourALigne();
+    afficherInformation("Capacité : 2 à 4 joueurs maximum.");
+
+    sautDeLigne();
+
+    std::cout << "1 : Terminer";
+    retourALigne();
+    std::cout << "0 : Retour";
+    separateursChoix();
+    retourALigne();
+
+    std::vector<std::string> pseudosJoueurs;
+    while (true) {
+
+        retourALigne();
+        std::cout << "> ";
+        std::cin >> input;
+
+        // Retour au menu
+        if(input == "0") return {};
+
+        // Sélection terminée
+        if(input == "1"){
+
+            // Vérification nombre de joueurs
+            if(pseudosJoueurs.size() < 2) {
+                annonceErreur("nombre de joueurs insuffisant");
+                sautDeLigne();
+                continue;
+            }
+
+            return pseudosJoueurs;
+
+        }
+
+        // Vérication de l'unicité des pseudos
+        for (std::string pseudo : pseudosJoueurs){
+            if (pseudo == input) {
+                annonceErreur("ce pseudo est déjà choisi");
+                sautDeLigne();
+                continue;
+            }
+        }
+
+        pseudosJoueurs.push_back(input);
+
+        // Atteinte de la limite maximale de joueurs
+        if (pseudosJoueurs.size() == 4) return pseudosJoueurs;
+
+    }
+}
+
+bool UI::ecranModeRapide() {
+
+    clearScreen();
+
+    afficherTitre("MODE RAPIDE");
+
+    sautDeLigne();
+
+    return choixOuiNon("Désirez-vous jouer en mode rapide (1 carte par pile) ?");
+
+}
+
 
 //Onglets
 
-size_t UI::ongletChoixCartesComposition(){
+//VERIFIER QUEL INDICES SONT VRAIMENT RENVOYE
+
+std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
 
     separateursTitre();
 
     sautDeLigne();
 
-    afficherInformation("Entrez un à un les noms des 10 cartes :");
+    afficherInformation("Entrez un à un les noms des 10 cartes sélectionnée :");
+    retourALigne();
 
-   // A COMPLETER AVEC CHOIXPARMISTRING
-
+    return choixParmiCartes(J, Cartes::catalogue(), 10, "Retour");
 
 }
 
-size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes){
+size_t UI::ongletChoixAleatoireCartesComposition() {
+
+    separateursTitre();
+    sautDeLigne();
+
+    afficherInformation("Voici la composition aléatoire de votre partie :");
+    retourALigne();
+
+    std::srand(std::time({}));
+
+    int r = (std::rand() % Cartes::catalogue().size()) - 1; //Une carte au hasard dans le catalogue, mais mettre royaume?
+
+    // A FINIR
+
+}
+
+size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes) {
     //A FAIRE
     return 0;
 }
-
-
 
 // Annonces
 
@@ -302,11 +406,14 @@ void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
     switch (depuis)
     {
     case Emplacement::PIOCHE :
-        std::cout << "Vous avez pioché la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous avez pioché la carte " << nomCarte << ".";
+        retourALigne();
         break;
     
     case Emplacement::DEFAUSSE :
-        std::cout << "Vous avez récupérer de la défausse la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous avez récupérer de la défausse la carte " << nomCarte << ".";
+        retourALigne();
+        break;
 
     default:
         break;
@@ -319,11 +426,11 @@ void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
     switch (vers)
     {
     case Emplacement::PIOCHE :
-        std::cout << "Vous mettez sur la pioche la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous mettez sur la pioche la carte " << nomCarte << ".";
         break;
     
     case Emplacement::DEFAUSSE :
-        std::cout << "Vous défaussez la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous défaussez la carte " << nomCarte << ".";
 
     default:
         break;
@@ -339,10 +446,10 @@ void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes
         std::cout << c->getNom() + " ";
     }
 
-    std::cout << "]" << std::endl;
+    std::cout << "]";
 
 }
 
-void UI::annonceErreur(std::string message) {
-    std::cout << "Erreur : " << message << "." << std::endl;
+void UI::annonceErreur(const std::string& message) {
+    std::cout << RESET << RED << ITALIC << "Erreur : " << RESET << ITALIC << message << "." << RESET;
 }
