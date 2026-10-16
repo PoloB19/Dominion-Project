@@ -23,14 +23,11 @@ void SalleDuTrone::utiliser(Joueur& J, Plateau& P) const {
             return;
         }
 
-        const size_t idCarteChoisie = UI::choixParmiCartes(J, mainAction, 1).at(0);
+        const size_t idCarteChoisie = J.choixParmiCartes(mainAction, 1).at(0);
 
-        //Comment faire si normalement la carte est rebutée sans la dupliquer?
+        mainAction.at(idCarteChoisie)->utiliser(J, P);
         mainAction.at(idCarteChoisie)->utiliser(J, P);
 
-        J.enleverDepuisMain()
-
-        // A FINIR
-
+        J.enleverDepuisMain(mainAction.at(idCarteChoisie)->getNom(),Emplacement::DEFAUSSE);
     }
 }
