@@ -64,7 +64,7 @@ namespace UI {
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
     void annonceCarteVers(std::string nomCarte, Emplacement vers);
     void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes);
-    void annonceErreur(std::string message);
+    void annonceErreur(const std::string& message);
 
     // Outils
     void retourALigne();

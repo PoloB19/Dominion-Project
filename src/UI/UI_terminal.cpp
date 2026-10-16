@@ -1,11 +1,11 @@
 #include "UI_terminal.hpp"
 
 // Outils
-void UI::retourALigne(){
+void UI::retourALigne() {
     std::cout << std::endl;
 }
 
-void UI::sautDeLigne(){
+void UI::sautDeLigne() {
     std::cout << std::endl << std::endl;
 }
 
@@ -21,7 +21,7 @@ void UI::clearScreen() {
     std::cout << CLEAR_SCREEN << RESET;
 }
 
-void UI::afficherInformation(const std::string& info){
+void UI::afficherInformation(const std::string& info) {
     std::cout << info;
 }
 
@@ -63,7 +63,7 @@ void UI::afficherTitre(const std::string& titre) {
     std::cout << coteGauche << " " << titre << " " << coteDroit;
 }
 
-void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes){
+void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
 
     std::cout << "[";
 
@@ -265,7 +265,7 @@ size_t UI::ecranNouvellePartie() {
 
 }
 
-size_t UI::ecranCreationComposition(){
+size_t UI::ecranCreationComposition() {
 
     clearScreen();
     afficherTitre("CRÉATION COMPOSITION");
@@ -289,7 +289,7 @@ size_t UI::ecranCreationComposition(){
 
 }
 
-std::vector<std::string> UI::ecranChoixJoueurs(){
+std::vector<std::string> UI::ecranChoixJoueurs() {
     
     clearScreen();
 
@@ -307,7 +307,6 @@ std::vector<std::string> UI::ecranChoixJoueurs(){
     separateursChoix();
     retourALigne();
 
-
     std::vector<std::string> pseudosJoueurs;
     while (true) {
 
@@ -315,12 +314,15 @@ std::vector<std::string> UI::ecranChoixJoueurs(){
         std::cout << "> ";
         std::cin >> input;
 
+        // Retour au menu
         if(input == "0") return {};
 
+        // Sélection terminée
         if(input == "1"){
 
+            // Vérification nombre de joueurs
             if(pseudosJoueurs.size() < 2) {
-                annonceErreur("il faut être minimum 2 pour jouer");
+                annonceErreur("nombre de joueurs insuffisant");
                 sautDeLigne();
                 continue;
             }
@@ -329,14 +331,24 @@ std::vector<std::string> UI::ecranChoixJoueurs(){
 
         }
 
+        // Vérication de l'unicité des pseudos
+        for (std::string pseudo : pseudosJoueurs){
+            if (pseudo == input) {
+                annonceErreur("ce pseudo est déjà choisi");
+                sautDeLigne();
+                continue;
+            }
+        }
+
         pseudosJoueurs.push_back(input);
 
+        // Atteinte de la limite maximale de joueurs
         if (pseudosJoueurs.size() == 4) return pseudosJoueurs;
 
     }
 }
 
-bool UI::ecranModeRapide(){
+bool UI::ecranModeRapide() {
 
     clearScreen();
 
@@ -349,12 +361,11 @@ bool UI::ecranModeRapide(){
 }
 
 
-
 //Onglets
 
-//NE PAS RENVOYER DES VECTOR MAIS DIRECTEMENT CREER LES COMPOS?
+//VERIFIER QUEL INDICES SONT VRAIMENT RENVOYE
 
-std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J){
+std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
 
     separateursTitre();
 
@@ -367,7 +378,7 @@ std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J){
 
 }
 
-size_t UI::ongletChoixAleatoireCartesComposition(){
+size_t UI::ongletChoixAleatoireCartesComposition() {
 
     separateursTitre();
     sautDeLigne();
@@ -383,9 +394,7 @@ size_t UI::ongletChoixAleatoireCartesComposition(){
 
 }
 
-
-
-size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes){
+size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes) {
     //A FAIRE
     return 0;
 }
@@ -441,6 +450,6 @@ void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes
 
 }
 
-void UI::annonceErreur(std::string message) {
+void UI::annonceErreur(const std::string& message) {
     std::cout << RESET << RED << ITALIC << "Erreur : " << RESET << ITALIC << message << "." << RESET;
 }
