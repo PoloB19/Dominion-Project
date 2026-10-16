@@ -8,5 +8,5 @@ class Bibliotheque : public ActionSimple {
         Bibliotheque();
         ~Bibliotheque();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

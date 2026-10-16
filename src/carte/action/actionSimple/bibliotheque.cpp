@@ -4,7 +4,7 @@ Bibliotheque::Bibliotheque() : ActionSimple("Biblioth√®que", 5, "Piochez jusqu'√
 
 Bibliotheque::~Bibliotheque() {}
 
-void Bibliotheque::utiliser(Joueur& J, Plateau&){
+void Bibliotheque::utiliser(Joueur& J, Plateau&) const {
 
     while(J.getMain().size() < 7){
 

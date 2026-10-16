@@ -7,4 +7,5 @@ class Bucheron : public ActionSimple {
         Bucheron();
         ~Bucheron();
 
-        void utiliser(Joueur& J, Plateau& P);};
+        void utiliser(Joueur& J, Plateau& P) const;
+};

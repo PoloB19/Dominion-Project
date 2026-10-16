@@ -7,5 +7,5 @@ class Village : public ActionSimple {
         Village();
         ~Village();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

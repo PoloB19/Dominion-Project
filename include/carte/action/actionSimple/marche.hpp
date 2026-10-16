@@ -8,5 +8,5 @@ class Marche : public ActionSimple {
         Marche();
         ~Marche();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

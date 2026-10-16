@@ -8,4 +8,5 @@ class Mine : public ActionSimple {
         Mine();
         ~Mine();
         
-        void utiliser(Joueur& J, Plateau& P);};
+        void utiliser(Joueur& J, Plateau& P) const;
+};

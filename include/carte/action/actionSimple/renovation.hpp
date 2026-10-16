@@ -8,5 +8,5 @@ class Renovation : public ActionSimple {
         Renovation();
         ~Renovation();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

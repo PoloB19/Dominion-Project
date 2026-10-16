@@ -8,5 +8,5 @@ class Chapelle : public ActionSimple {
         Chapelle();
         ~Chapelle();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

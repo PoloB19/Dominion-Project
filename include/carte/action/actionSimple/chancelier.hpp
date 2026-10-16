@@ -8,6 +8,6 @@ class Chancelier : public ActionSimple {
         Chancelier();
         ~Chancelier();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };
 

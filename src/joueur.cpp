@@ -46,7 +46,7 @@ bool Joueur::accesDefausse() const {
 }
 
 
-//Piocher
+//Pioche
 
 void Joueur::piocher(unsigned short nbPioche){
 
@@ -71,13 +71,23 @@ void Joueur::ajouterAPioche(const Carte* carte){
 }
 
 
-// Défausser
+// Défausse
 
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
         m_defausse.push(carte);
     }
 }
+
+
+// En jeu
+
+void Joueur::ajouterAEnJeu(const Carte* carte){
+    if(carte != nullptr){
+        m_enJeu.push_back(carte);
+    }
+}
+
 
 void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
 
@@ -93,13 +103,6 @@ void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
                 break; //Pour n'enlever qu'une seule carte
             }
         }
-        
-    /*
-    // REVOIR LOGIQUE PIECE
-    if (carteEnlevee->getType()=="Tresor") {
-        m_pieces -= carteEnlevee->getValeur();
-    }
-    */
 
     switch (vers)
     {
@@ -109,6 +112,10 @@ void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
     
     case Emplacement::PIOCHE : 
         ajouterAPioche(carteEnlevee);
+        break;
+
+    case Emplacement::EN_JEU :
+        ajouterAEnJeu(carteEnlevee);
         break;
 
     default:
@@ -158,9 +165,14 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
 
 };
 
-void Joueur::ecarter(Carte* carteRebutee, Plateau& P) {
-    m_main.erase(std::find(m_main.begin(), m_main.end(), carteRebutee));
-    P.ajoutRebut(carteRebutee);
+void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P) {
+    for (const Carte* c : m_main) {
+        if (c->getNom()==nomCarteEcartee) {
+            m_main.erase(std::find(m_main.begin(), m_main.end(), c));
+            P.ajoutRebut(c);
+            return;
+        }
+    }
 }
 
 void Joueur::melangerDefausse(){
@@ -218,17 +230,13 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
     return carteRevelee;
 }
 
-// --- Rafraîchir attributs ---
 
-void Joueur::compterPieces() {
-
-    m_pieces = 0;
-    
-    for (const Carte* t : m_main){
-        m_pieces += t->getValeur();
-    }
-
+void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
+    enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU);
+    carte->utiliser(*this, P);
 }
+
+// --- Rafraîchir attributs ---
 
 short Joueur::compterPoints() const {
 
@@ -256,14 +264,16 @@ short Joueur::compterPoints() const {
     }
 
     return score;
-};
+}
+
 
 void Joueur::finDeTour() {
 
     //Vide les cartes en Main et en Jeu dans la défausse
     for(const Carte* c : m_main){
-        enleverDepuisMain(c->getNom(), Emplacement::DEFAUSSE);
+        ajouterADefausse(c);
     }
+    m_main.clear();
     for(const Carte* c : m_enJeu){
         ajouterADefausse(c);
     }
@@ -271,13 +281,12 @@ void Joueur::finDeTour() {
 
     //Pioche et mise à jour des attributs
     piocher(5);
-    compterPieces();
 
     m_nbAchat = 1;
     m_nbAction = 1;
+    m_pieces = 0;
     m_nbToursJoues++;
-
-};
+}
 
 // --- Interactions ---
 
@@ -292,6 +301,7 @@ std::string Joueur::demanderNomCarte() const {
 }
 
 std::vector<size_t> Joueur::choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix) {
+    if (cartes.empty()) { return {}; }
     return UI::choixParmiCartes(*this, cartes, nbChoix);
 }
 

@@ -8,5 +8,5 @@ class Aventurier : public ActionSimple {
         Aventurier();
         ~Aventurier();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

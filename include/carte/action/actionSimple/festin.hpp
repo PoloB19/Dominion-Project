@@ -8,5 +8,5 @@ class Festin : public ActionSimple {
         Festin();
         ~Festin();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

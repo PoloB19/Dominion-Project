@@ -8,5 +8,5 @@ class SalleDuTrone : public ActionSimple {
         SalleDuTrone();
         ~SalleDuTrone();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

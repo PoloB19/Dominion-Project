@@ -7,6 +7,6 @@ class Milice : public ActionAttaque {
         Milice();
         ~Milice();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 
 };

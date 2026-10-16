@@ -8,5 +8,5 @@ class Festival : public ActionSimple {
         Festival();
         ~Festival();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

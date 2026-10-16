@@ -4,6 +4,6 @@ Douves::Douves() : ActionReaction("Douves", 2, "+2 Cartes \nLorsqu'un autre joue
 
 Douves::~Douves() {}
 
-/* void Douves::utiliser(const Plateau& P, size_t idJoueur){
+void Douves::utiliser(Joueur&, Plateau&) const {
     //A FAIRE
-} */
+} 

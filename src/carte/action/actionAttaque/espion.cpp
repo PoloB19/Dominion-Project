@@ -6,7 +6,7 @@ Espion::Espion() : ActionAttaque("Espion", 4, "+1 Carte \n +1 Action \nTous les 
 
 Espion::~Espion() {}
 
-void Espion::utiliser(Joueur& J, Plateau& P){
+void Espion::utiliser(Joueur& J, Plateau& P) const {
 
     J.piocher(1);
     J.ajustNbAction(+1);

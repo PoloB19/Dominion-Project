@@ -16,7 +16,8 @@ class Carte;
 enum class Emplacement {
     DEFAUSSE,
     MAIN,
-    PIOCHE
+    PIOCHE,
+    EN_JEU
 };
 
 class Joueur {
@@ -63,21 +64,23 @@ class Joueur {
         bool accesPioche();
 
         void piocher(unsigned short nbPioche);
+
         void ajouterAPioche(const Carte* carte);
-        
         void ajouterADefausse(const Carte* carte);
+        void ajouterAEnJeu(const Carte* carte);
 
         void enleverDepuisMain(const std::string& nomCarte, Emplacement vers);
         
         void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);
-        void ecarter(Carte* carteRebutee, Plateau& P);
+        void ecarter(std::string nomCarteEcartee, Plateau& P);
 
         void melangerDefausse();
 
         const Carte* revelerCarte(Emplacement depuis);
 
-        void compterPieces();
+        void utiliserCarte(Plateau& P, const Carte* carte);
+
         short compterPoints() const;
 
         void finDeTour();

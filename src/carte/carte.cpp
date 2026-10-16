@@ -1,4 +1,5 @@
 #include "carte.hpp"
+#include "joueur.hpp"
 
 unsigned short Carte::m_nextId = 1;
 
@@ -6,6 +7,6 @@ Carte::Carte(std::string nom, std::string type, std::string sousType,unsigned sh
 
 Carte::~Carte() {}
 
-
-
-//CLASSE INUTILE?
+void Carte::utiliser(Joueur& J, Plateau&) const {
+    J.ajustNbPiece(m_valeur);
+}

@@ -4,7 +4,7 @@ Aventurier::Aventurier() : ActionSimple("Aventurier", 6, "Révélez une à une l
 
 Aventurier::~Aventurier() {}
 
-void Aventurier::utiliser(Joueur& J, Plateau&){
+void Aventurier::utiliser(Joueur& J, Plateau&) const {
 
     unsigned short nbTresorTrouveTmp = 0;
     const Carte* carteRevelee;

@@ -12,11 +12,10 @@ class Composition {
     std::map<const Carte*, unsigned short> m_compositionPartie;
 
 public:
-    Composition(std::string nomDeComposition, std::string description, std::map<const Carte*, unsigned short> compositionPartie);
+    Composition(std::string nomDeComposition, std::map<const Carte*, unsigned short> compositionPartie);
     ~Composition();
 
     //Getters
-    std::string getNomDeComposition() const;
-    std::string getDescription() const;
+    std::string getNom() const;
     std::map<const Carte*, unsigned short> getCompositionPartie() const;
 };

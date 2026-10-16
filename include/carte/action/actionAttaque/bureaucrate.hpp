@@ -7,6 +7,6 @@ class Bureaucrate : public ActionAttaque {
         Bureaucrate();
         ~Bureaucrate();
         
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };
 

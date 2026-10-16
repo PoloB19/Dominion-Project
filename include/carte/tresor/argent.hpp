@@ -8,5 +8,4 @@ class Argent : public Tresor {
     
         Argent() : Tresor("Argent", 3, 2) {};
         ~Argent() {};
-
 };

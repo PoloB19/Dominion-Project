@@ -6,7 +6,7 @@ SalleDuTrone::SalleDuTrone() : ActionSimple("Salle du trône", 4, "Choisissez un
 
 SalleDuTrone::~SalleDuTrone() {}
 
-void SalleDuTrone::utiliser(Joueur& J, Plateau& P){
+void SalleDuTrone::utiliser(Joueur& J, Plateau& P) const {
 
     while(true){
 
@@ -23,14 +23,11 @@ void SalleDuTrone::utiliser(Joueur& J, Plateau& P){
             return;
         }
 
-        const size_t idCarteChoisie = UI::choixParmiCartes(J, mainAction, 1).at(0);
+        const size_t idCarteChoisie = J.choixParmiCartes(mainAction, 1).at(0);
 
-        //Comment faire si normalement la carte est rebutée sans la dupliquer?
+        mainAction.at(idCarteChoisie)->utiliser(J, P);
         mainAction.at(idCarteChoisie)->utiliser(J, P);
 
-        J.enleverDepuisMain()
-
-        // A FINIR
-
+        J.enleverDepuisMain(mainAction.at(idCarteChoisie)->getNom(),Emplacement::DEFAUSSE);
     }
 }

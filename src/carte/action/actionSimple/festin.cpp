@@ -4,7 +4,7 @@ Festin::Festin() : ActionSimple("Festin", 4, "Écartez cette carte. \nObtenez un
 
 Festin::~Festin() {}
 
-void Festin::utiliser(Joueur& J, Plateau& P) {
+void Festin::utiliser(Joueur& J, Plateau& P) const {
 
     // Vérification qu'il existe encore une cartes coûtant au plus 5 pièces sur le plateau
 
@@ -27,7 +27,7 @@ void Festin::utiliser(Joueur& J, Plateau& P) {
 
         if (carteVoulue->getPrix() > 5){
 
-            J.annonceErreur("la carte est trop chère");
+            J.annonceErreur("cette carte est trop chère");
 
         } else if (carteVoulue == nullptr){
             
