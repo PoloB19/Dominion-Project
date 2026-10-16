@@ -10,8 +10,13 @@
 
 namespace UI {
 
-    //Taille maximale d'une ligne
+    // Constantes et variables diverses
     const size_t longueurMaxLigne = 50;
+
+    std::vector<std::string> listeChoix;
+    std::string choix0;
+
+    std::string input;
 
    // Annule tous les styles
     const std::string RESET = "\033[0m";
@@ -38,8 +43,8 @@ namespace UI {
     std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
 
     // Affichage
-    char ecranAccueil();
-    void ecranNouvellePartie(Plateau& P);
+    size_t ecranAccueil();
+    size_t ecranNouvellePartie(Plateau& P);
 
 
     // Annonces 
@@ -60,8 +65,6 @@ namespace UI {
 
     //Choix
 
-    char choixParmiChar(std::vector<std::string> listeChoix, std::string choix0);
-
-
+    size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0);
 
 };

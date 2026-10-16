@@ -78,71 +78,45 @@ void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes){
 
 }
 
-//Choix
+// Choix
 
-char UI::choixParmiChar(std::vector<std::string> listeChoix, std::string choix0){
+size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0 = "") {
 
-    for (size_t i = 1; i < listeChoix.size() + 1; i++){
-        std::cout << i << " : " << listeChoix.at(i - 1);
+    for (size_t i = 0; i < listeChoix.size(); i++){
+        std::cout << i+1 << " : " << listeChoix.at(i);
         retourALigne();
     }
 
-    if(!choix0.empty()) std::cout << "0 : " << choix0;
-
-    sautDeLigne();
-
-    char choix;
-    while(true){
-
-        separateursChoix();
-        std::cout << "> ";
-        std::cin.clear();
-
-        //A TESTER VOIR SI CA FONCTIONNE
-        if(std::cin >> choix && (choix - '0') < listeChoix.size()){
-            return choix;
-        } else {
-            annonceErreur("saisie incorrecte");
-        }
-
-        
-
+    if (!choix0.empty()) {
+        std::cout << "0 : " << choix0;
+        retourALigne();
     }
-}
-
-
-// Choix A REVOIR
-
-
-
-// vraiment besoin de "message" en paramètre dans choixOuiNon ?
-bool UI::choixOuiNon(const std::string& message) {
 
     while (true) {
-        std::cout << message << std::endl;
-        std::cout << " Choix (O/N) > ";
-        std::cin >> choix;
-        
-        if (choix == "O" || choix == "o" || choix == "Oui" || choix == "oui" || choix == "OUI") return true;
-        if (choix == "N" || choix == "n" || choix == "Non" || choix == "non" || choix == "NON") return false;
-        
-        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'.";
 
-        sautDeLigne();
+        retourALigne();
+        separateursChoix();
+        std::cout << "> ";
+        std::cin >> input;
+        retourALigne();
+
+        if(input.length() != 1 || !std::isdigit(input.at(0))) {
+            annonceErreur("veuillez entrer un chiffre valide");
+            retourALigne();
+            continue;
+        }
+
+        size_t inputValeur = input.at(0) - '0'; //transforme la saisie en nombre
+
+        if (inputValeur > listeChoix.size() || (inputValeur == 0 && choix0.empty())) {
+            annonceErreur("le choix '" + input + "' n'existe pas." );
+            retourALigne();
+            continue;
+        }
+
+        return inputValeur;
+
     }
-}
-
-std::string UI::getNomCarte() {
-
-    while(true){
-
-        std::cout << "Quel est son nom : ";
-        std::cin >> choix;
-
-        return choix;
-
-}
-
 }
 
 //A VERIFIER QUE IL CHOISI PAS 2 FOIS LA MEME CARTE
@@ -171,9 +145,41 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
 
 }
 
+// Vraiment besoin de "message" en paramètre dans choixOuiNon ?
+bool UI::choixOuiNon(const std::string& message) {
+
+    while (true) {
+        std::cout << message << std::endl;
+        std::cout << " > ";
+        std::cin >> input;
+        
+        if (input == "O" || input == "o" || input == "Oui" || input == "oui" || input == "OUI") return true;
+        if (input == "N" || input == "n" || input == "Non" || input == "non" || input == "NON") return false;
+        
+        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'.";
+
+        sautDeLigne();
+    }
+}
+
+std::string UI::getNomCarte() {
+
+    while(true){
+
+        std::cout << "Quel est son nom : ";
+        std::cin >> input;
+
+        return input;
+
+    }
+
+}
+
+
+
 //Afffichage
 
-char UI::ecranAccueil() {
+size_t UI::ecranAccueil() {
 
     clearScreen();
     afficherTitre("DOMINION");
@@ -194,13 +200,18 @@ char UI::ecranAccueil() {
 
     sautDeLigne();
 
-    // A CODER LE CHPOIX A RENVOYER
+    listeChoix = {
+        "Commencer une nouvelle partie",
+        "Reprendre la partie sauvegardée",
+    };
 
+    choix0 = "Quitter";
+
+    return choixParmiChiffre(listeChoix, choix0);
 
 }
 
-
-void UI::ecranNouvellePartie(Plateau& P) {
+size_t UI::ecranNouvellePartie(Plateau& P) {
 
     clearScreen();
 
@@ -210,22 +221,22 @@ void UI::ecranNouvellePartie(Plateau& P) {
 
     sautDeLigne();
 
-    size_t idx = 1;
+    std::string compoString;
+    listeChoix.clear();
     for(const Composition& compo : P.getCompositions()){
 
-        std::cout << idx << ": " << compo.getNom() << " ";
+        compoString = compo.getNom() + " [";
 
-        std::vector<const Carte*> listeCartes;
-        listeCartes.reserve(compo.getCompositionPartie().size());
         for (const auto& [c, v] : compo.getCompositionPartie()) {
-            listeCartes.push_back(c);
+            compoString += c->getNom() + ", ";
         }
 
-        afficherListeCarteParNom(listeCartes);
-        retourALigne();
-
-        idx++;
+        listeChoix.push_back(compoString + "]");
     }
+
+    choix0 = "Retour";
+    
+    return choixParmiChiffre(listeChoix, choix0);
 
 }
 
