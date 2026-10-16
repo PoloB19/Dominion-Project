@@ -71,7 +71,9 @@ namespace UI {
 
     //Choix
     size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0);
-    std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix);
+
+    std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0);
+
     bool choixOuiNon(const std::string& message);
 
     //What ?

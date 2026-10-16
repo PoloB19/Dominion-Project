@@ -119,38 +119,65 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
     }
 }
 
-std::string choixParmiString(){
-    //A FAIRE
-}
+std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = ""){
 
+    std::cout << J.getPseudo() << ", choisissez " << nbChoix << " carte(s) parmi : ";
+    retourALigne();
 
-//A VERIFIER QUE IL CHOISI PAS 2 FOIS LA MEME CARTE ET QUE NB CHOIX INUTILE
-std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix){
+    std::cout << "[ ";
+    for (const Carte* c : cartes){
+        std::cout << c->getNom() + " ";
+    }
+    std::cout << " ]";
+    
+    sautDeLigne();
+
+    if(!choix0.empty()){ 
+        std::cout << "0 : " + choix0;
+        retourALigne();
+    }
+        
+    separateursChoix();
 
     std::vector<size_t> idChoix = {};
-    
     while (idChoix.size() < nbChoix){
-
-        std::cout << J.getPseudo() << ", choisissez " << nbChoix << " carte(s) parmi : ";
-        for (const Carte* c : cartes){
-            std::cout << c->getNom() + " ";
-        }
         
-        retourALigne();
+        std::cout << "> ";
+        std::cin >> input;
 
-        std::string nomCarteChoisieTmp = J.demanderNomCarte();
+        // Si choix0 est possible et demandé
+        if(!choix0.empty() && input.at(0) - '0' == 0) return {};
+
+        // Vérifie que la sélection est possible
         for (size_t i = 0; i < cartes.size(); i++){
-            if (cartes.at(i)->getNom() == nomCarteChoisieTmp){
+
+            // Vérifie que la carte est proposée 
+            if (cartes.at(i)->getNom() == input){
+
+                for(size_t j : idChoix){
+
+                    // Vérifie que la carte n'a pas déjà été sélectionnée
+                    if (i == j){
+                        annonceErreur("cette carte a déjà été sélectionnée");
+                        continue;
+                    }
+                }
+
                 idChoix.push_back(i);
+                continue;
+
             }
         }
+
+        annonceErreur("cette carte n'est pas proposée");
+
     }
 
     return idChoix;
 
 }
 
-// Vraiment besoin de "message" en paramètre dans choixOuiNon ?
+// Vraiment besoin de "message" en paramètre dans choixOuiNon ? A CHANGER
 bool UI::choixOuiNon(const std::string& message) {
 
     while (true) {
@@ -167,18 +194,7 @@ bool UI::choixOuiNon(const std::string& message) {
     }
 }
 
-std::string UI::getNomCarte() {
 
-    while(true){
-
-        std::cout << "Quel est son nom : ";
-        std::cin >> input;
-
-        return input;
-
-    }
-
-}
 
 // Afffichage
 
@@ -283,6 +299,10 @@ size_t UI::ongletChoixCartesComposition(){
 
     afficherInformation("Entrez un à un les noms des 10 cartes :");
 
+    for (int i = 0; i < 10; i++){
+        
+    }
+
    // A COMPLETER AVEC CHOIXPARMISTRING
 
 
@@ -292,8 +312,6 @@ size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes){
     //A FAIRE
     return 0;
 }
-
-
 
 // Annonces
 
