@@ -41,7 +41,7 @@ int main(){
     // CREATION COMPOSITIONS
     std::vector<Composition> compositions;
 
-    compositions.push_back(Composition("Les premières parties", "", {
+    compositions.push_back(Composition("Les premières parties", {
         {Cartes::atelier(),10},
         {Cartes::bucheron(),10},
         {Cartes::cave(),10},
@@ -53,7 +53,7 @@ int main(){
         {Cartes::renovation(),10},
         {Cartes::village(),10},
     }));
-    compositions.push_back(Composition("Richesses et trésor", "", { 
+    compositions.push_back(Composition("Richesses et trésor", { 
         {Cartes::aventurier(),10},
         {Cartes::bureaucrate(),10},
         {Cartes::chancelier(),10},
@@ -65,7 +65,7 @@ int main(){
         {Cartes::preteurSurGages(),10},
         {Cartes::salleDuTrone(),10}, 
     }));
-    compositions.push_back(Composition("Interaction", "", { 
+    compositions.push_back(Composition("Interaction", { 
         {Cartes::bibliotheque(),10},
         {Cartes::bureaucrate(),10},
         {Cartes::chambreDuConseil(),10},
@@ -77,7 +77,7 @@ int main(){
         {Cartes::village(),10},
         {Cartes::voleur(),10}, 
     }));
-    compositions.push_back(Composition("Changement de taille", "", { 
+    compositions.push_back(Composition("Changement de taille", { 
         {Cartes::atelier(),10},
         {Cartes::bucheron(),10},
         {Cartes::cave(),10},
@@ -89,7 +89,7 @@ int main(){
         {Cartes::village(),10},
         {Cartes::voleur(),10}, 
     }));
-    compositions.push_back(Composition("Place du village", "", { 
+    compositions.push_back(Composition("Place du village", { 
         {Cartes::bibliotheque(),10},
         {Cartes::bucheron(),10},
         {Cartes::bureaucrate(),10},

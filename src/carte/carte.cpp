@@ -6,6 +6,6 @@ Carte::Carte(std::string nom, std::string type, std::string sousType,unsigned sh
 
 Carte::~Carte() {}
 
-
-
-//CLASSE INUTILE?
+void Carte::utiliser(Joueur& J, Plateau&) {
+    J.ajustNbPiece(this->getValeur());
+}

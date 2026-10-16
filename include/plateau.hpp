@@ -8,6 +8,8 @@
 #include "carte.hpp"
 #include "joueur.hpp"
 
+class Carte;
+
 class Plateau {
 
     private:

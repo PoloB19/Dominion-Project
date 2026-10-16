@@ -1,18 +1,14 @@
 #include "composition.hpp"
 
 // constructeur
-Composition::Composition(std::string nomDeComposition, std::string description, std::map<const Carte*, unsigned short> compositionPartie) : m_nomDeComposition(nomDeComposition), m_description(description), m_compositionPartie(compositionPartie) {}
+Composition::Composition(std::string nomDeComposition, std::map<const Carte*, unsigned short> compositionPartie) : m_nomDeComposition(nomDeComposition), m_compositionPartie(compositionPartie) {}
 
 Composition::~Composition() {}
 
 // Getters
 
-std::string Composition::getNomDeComposition() const {
+std::string Composition::getNom() const {
     return m_nomDeComposition;
-}
-
-std::string Composition::getDescription() const {
-    return m_description;
 }
 
 std::map<const Carte*, unsigned short> Composition::getCompositionPartie() const {

@@ -46,7 +46,7 @@ bool Joueur::accesDefausse() const {
 }
 
 
-//Piocher
+//Pioche
 
 void Joueur::piocher(unsigned short nbPioche){
 
@@ -71,13 +71,23 @@ void Joueur::ajouterAPioche(const Carte* carte){
 }
 
 
-// Défausser
+// Défausse
 
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
         m_defausse.push(carte);
     }
 }
+
+
+// En jeu
+
+void Joueur::ajouterAEnJeu(const Carte* carte){
+    if(carte != nullptr){
+        m_enJeu.push_back(carte);
+    }
+}
+
 
 void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
 
@@ -93,13 +103,6 @@ void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
                 break; //Pour n'enlever qu'une seule carte
             }
         }
-        
-    /*
-    // REVOIR LOGIQUE PIECE
-    if (carteEnlevee->getType()=="Tresor") {
-        m_pieces -= carteEnlevee->getValeur();
-    }
-    */
 
     switch (vers)
     {
@@ -109,6 +112,10 @@ void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
     
     case Emplacement::PIOCHE : 
         ajouterAPioche(carteEnlevee);
+        break;
+
+    case Emplacement::EN_JEU :
+        ajouterAEnJeu(carteEnlevee);
         break;
 
     default:
@@ -218,17 +225,13 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
     return carteRevelee;
 }
 
-// --- Rafraîchir attributs ---
 
-void Joueur::compterPieces() {
-
-    m_pieces = 0;
-    
-    for (const Carte* t : m_main){
-        m_pieces += t->getValeur();
-    }
-
+void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
+    carte->utiliser(*this, P);
+    enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU)
 }
+
+// --- Rafraîchir attributs ---
 
 short Joueur::compterPoints() const {
 
@@ -256,7 +259,8 @@ short Joueur::compterPoints() const {
     }
 
     return score;
-};
+}
+
 
 void Joueur::finDeTour() {
 
@@ -271,13 +275,12 @@ void Joueur::finDeTour() {
 
     //Pioche et mise à jour des attributs
     piocher(5);
-    compterPieces();
 
     m_nbAchat = 1;
     m_nbAction = 1;
+    m_pieces = 0;
     m_nbToursJoues++;
-
-};
+}
 
 // --- Interactions ---
 
