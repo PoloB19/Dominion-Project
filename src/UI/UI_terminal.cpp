@@ -119,9 +119,9 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
     }
 }
 
-std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = ""){
+std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = ""){
 
-    std::cout << J.getPseudo() << ", choisissez " << nbChoix << " carte(s) parmi : ";
+    afficherInformation(J.getPseudo() + ", choisissez " + std::to_string(nbChoix) + " carte(s) parmi :");
     retourALigne();
 
     std::cout << "[ ";
@@ -159,6 +159,7 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
                     // Vérifie que la carte n'a pas déjà été sélectionnée
                     if (i == j){
                         annonceErreur("cette carte a déjà été sélectionnée");
+                        sautDeLigne();
                         continue;
                     }
                 }
@@ -170,6 +171,7 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
         }
 
         annonceErreur("cette carte n'est pas proposée");
+        sautDeLigne();
 
     }
 
@@ -177,24 +179,26 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, std::vector<const Carte*> ca
 
 }
 
-// Vraiment besoin de "message" en paramètre dans choixOuiNon ? A CHANGER
-bool UI::choixOuiNon(const std::string& message) {
+bool UI::choixOuiNon(const std::string& question) {
 
     while (true) {
-        std::cout << message << std::endl;
+
+        afficherInformation(question);
+        separateursChoix();
+        retourALigne();
         std::cout << " > ";
         std::cin >> input;
         
         if (input == "O" || input == "o" || input == "Oui" || input == "oui" || input == "OUI") return true;
         if (input == "N" || input == "n" || input == "Non" || input == "non" || input == "NON") return false;
         
-        std::cout << "Choix invalide. Veuillez répondre par 'oui' ou 'non'.";
+        //retourALigne(); ?
+        annonceErreur("veuillez répondre par 'oui' ou 'non'");
 
         sautDeLigne();
+
     }
 }
-
-
 
 // Afffichage
 
@@ -232,7 +236,7 @@ size_t UI::ecranAccueil() {
 
 }
 
-size_t UI::ecranNouvellePartie(Plateau& P) {
+size_t UI::ecranNouvellePartie() {
 
     clearScreen();
 
@@ -244,7 +248,7 @@ size_t UI::ecranNouvellePartie(Plateau& P) {
 
     std::string compoString;
     listeChoix.clear();
-    for(const Composition& compo : P.getCompositions()){
+    for(const Composition& compo : Plateau::getCompositions()){
 
         compoString = compo.getNom() + " [";
 
@@ -271,9 +275,6 @@ size_t UI::ecranCreationComposition(){
     afficherInformation("Voici la liste des cartes du royaume :");
     retourALigne();
 
-    //A COMPLETER QUAND ON AURA LA LISTE DES CARTES SUR LE PLATEAU
-    //afficherListeCarteParNom(listeCarte)
-
     sautDeLigne();
 
     listeChoix = {
@@ -288,25 +289,101 @@ size_t UI::ecranCreationComposition(){
 
 }
 
+std::vector<std::string> UI::ecranChoixJoueurs(){
+    
+    clearScreen();
+
+    afficherTitre("JOUEURS");
+    sautDeLigne();
+    afficherInformation("Entrez un à un les pseudos des joueurs de la partie.");
+    retourALigne();
+    afficherInformation("Capacité : 2 à 4 joueurs maximum.");
+
+    sautDeLigne();
+
+    std::cout << "1 : Terminer";
+    retourALigne();
+    std::cout << "0 : Retour";
+    separateursChoix();
+    retourALigne();
+
+
+    std::vector<std::string> pseudosJoueurs;
+    while (true) {
+
+        retourALigne();
+        std::cout << "> ";
+        std::cin >> input;
+
+        if(input == "0") return {};
+
+        if(input == "1"){
+
+            if(pseudosJoueurs.size() < 2) {
+                annonceErreur("il faut être minimum 2 pour jouer");
+                sautDeLigne();
+                continue;
+            }
+
+            return pseudosJoueurs;
+
+        }
+
+        pseudosJoueurs.push_back(input);
+
+        if (pseudosJoueurs.size() == 4) return pseudosJoueurs;
+
+    }
+}
+
+bool UI::ecranModeRapide(){
+
+    clearScreen();
+
+    afficherTitre("MODE RAPIDE");
+
+    sautDeLigne();
+
+    return choixOuiNon("Désirez-vous jouer en mode rapide (1 carte par pile) ?");
+
+}
+
+
 
 //Onglets
 
-size_t UI::ongletChoixCartesComposition(){
+//NE PAS RENVOYER DES VECTOR MAIS DIRECTEMENT CREER LES COMPOS?
+
+std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J){
 
     separateursTitre();
 
     sautDeLigne();
 
-    afficherInformation("Entrez un à un les noms des 10 cartes :");
+    afficherInformation("Entrez un à un les noms des 10 cartes sélectionnée :");
+    retourALigne();
 
-    for (int i = 0; i < 10; i++){
-        
-    }
-
-   // A COMPLETER AVEC CHOIXPARMISTRING
-
+    return choixParmiCartes(J, Cartes::catalogue(), 10, "Retour");
 
 }
+
+size_t UI::ongletChoixAleatoireCartesComposition(){
+
+    separateursTitre();
+    sautDeLigne();
+
+    afficherInformation("Voici la composition aléatoire de votre partie :");
+    retourALigne();
+
+    std::srand(std::time({}));
+
+    int r = (std::rand() % Cartes::catalogue().size()) - 1; //Une carte au hasard dans le catalogue, mais mettre royaume?
+
+    // A FINIR
+
+}
+
+
 
 size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& cartes){
     //A FAIRE
@@ -320,11 +397,14 @@ void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
     switch (depuis)
     {
     case Emplacement::PIOCHE :
-        std::cout << "Vous avez pioché la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous avez pioché la carte " << nomCarte << ".";
+        retourALigne();
         break;
     
     case Emplacement::DEFAUSSE :
-        std::cout << "Vous avez récupérer de la défausse la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous avez récupérer de la défausse la carte " << nomCarte << ".";
+        retourALigne();
+        break;
 
     default:
         break;
@@ -337,11 +417,11 @@ void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
     switch (vers)
     {
     case Emplacement::PIOCHE :
-        std::cout << "Vous mettez sur la pioche la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous mettez sur la pioche la carte " << nomCarte << ".";
         break;
     
     case Emplacement::DEFAUSSE :
-        std::cout << "Vous défaussez la carte " << nomCarte << "." << std::endl;
+        std::cout << "Vous défaussez la carte " << nomCarte << ".";
 
     default:
         break;
@@ -357,10 +437,10 @@ void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes
         std::cout << c->getNom() + " ";
     }
 
-    std::cout << "]" << std::endl;
+    std::cout << "]";
 
 }
 
 void UI::annonceErreur(std::string message) {
-    std::cout << "Erreur : " << message << "." << std::endl;
+    std::cout << RESET << RED << ITALIC << "Erreur : " << RESET << ITALIC << message << "." << RESET;
 }

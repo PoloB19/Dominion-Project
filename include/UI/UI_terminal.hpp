@@ -43,13 +43,20 @@ namespace UI {
         // Écrans
         size_t ecranAccueil();
 
-        size_t ecranNouvellePartie(Plateau& P);
+        size_t ecranNouvellePartie();
 
         size_t ecranCreationComposition();
 
+        std::vector<std::string> ecranChoixJoueurs();
+
+        bool ecranModeRapide();
+
+
+
         // Onglets
+        std::vector<size_t> ongletChoixCartesComposition(Joueur &J);
+        size_t UI::ongletChoixAleatoireCartesComposition();
         size_t ongletDescriptionCartes(const std::vector<const Carte*>& cartes);
-        size_t ongletChoixCartesComposition();
 
 
 
@@ -72,10 +79,7 @@ namespace UI {
     //Choix
     size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0);
 
-    std::vector<size_t> choixParmiCartes(Joueur& J, std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0);
+    std::vector<size_t> choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0);
 
-    bool choixOuiNon(const std::string& message);
-
-    //What ?
-     std::string getNomCarte();
+    bool choixOuiNon(const std::string& question);
 };
