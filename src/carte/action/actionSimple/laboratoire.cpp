@@ -5,7 +5,7 @@ Laboratoire::Laboratoire() : ActionSimple("Laboratoire", 5, "+2 Cartes \n+1 Acti
 
 Laboratoire::~Laboratoire() {}
 
-void Laboratoire::utiliser(Joueur&J, Plateau&){
+void Laboratoire::utiliser(Joueur&J, Plateau&) const {
     J.piocher(2);
     J.ajustNbAction(+1);
 }

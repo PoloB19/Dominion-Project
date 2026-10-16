@@ -4,7 +4,7 @@ ChambreDuConseil::ChambreDuConseil() : ActionSimple("Chambre du conseil", 5, "+4
 
 ChambreDuConseil::~ChambreDuConseil() {}
 
-void ChambreDuConseil::utiliser(Joueur& J, Plateau& P){
+void ChambreDuConseil::utiliser(Joueur& J, Plateau& P) const {
 
     for (Joueur* j : P.getJoueurs()){
         j->piocher(1);

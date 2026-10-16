@@ -8,5 +8,5 @@ class Espion : public ActionAttaque {
         Espion();
         ~Espion();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

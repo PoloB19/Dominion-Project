@@ -16,5 +16,5 @@ class Voleur : public ActionAttaque {
         Voleur();
         ~Voleur();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

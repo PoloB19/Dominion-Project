@@ -8,5 +8,5 @@ class PreteurSurGages : public ActionSimple {
         PreteurSurGages();
         ~PreteurSurGages();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

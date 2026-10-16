@@ -79,7 +79,9 @@ class Joueur {
 
         const Carte* revelerCarte(Emplacement depuis);
 
-        void utiliserCarte(const Carte* carte);
+        void utiliserCarte(Plateau& P, const Carte* carte);
+
+        short compterPoints() const;
 
         void finDeTour();
 

@@ -227,8 +227,8 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
 
 
 void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
+    enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU);
     carte->utiliser(*this, P);
-    enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU)
 }
 
 // --- Rafraîchir attributs ---
@@ -266,8 +266,9 @@ void Joueur::finDeTour() {
 
     //Vide les cartes en Main et en Jeu dans la défausse
     for(const Carte* c : m_main){
-        enleverDepuisMain(c->getNom(), Emplacement::DEFAUSSE);
+        ajouterADefausse(c);
     }
+    m_main.clear();
     for(const Carte* c : m_enJeu){
         ajouterADefausse(c);
     }

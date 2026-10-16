@@ -8,5 +8,5 @@ class Sorciere : public ActionAttaque {
         Sorciere();
         ~Sorciere();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

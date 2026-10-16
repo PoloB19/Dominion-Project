@@ -6,6 +6,6 @@ Carte::Carte(std::string nom, std::string type, std::string sousType,unsigned sh
 
 Carte::~Carte() {}
 
-void Carte::utiliser(Joueur& J, Plateau&) {
+void Carte::utiliser(Joueur& J, Plateau&) const {
     J.ajustNbPiece(this->getValeur());
 }

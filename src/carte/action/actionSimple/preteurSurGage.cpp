@@ -4,7 +4,7 @@ PreteurSurGages::PreteurSurGages() : ActionSimple("Prêteur sur gages", 4, "Vous
 
 PreteurSurGages::~PreteurSurGages() {}
 /*
-void PreteurSurGages::utiliser(Joueur& J, Plateau& P){
+void PreteurSurGages::utiliser(Joueur& J, Plateau& P) const {
 
     if(J.demanderOuiNon("voulez vous défausser un Cuivre de votre main ?")){
         

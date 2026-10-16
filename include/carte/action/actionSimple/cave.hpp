@@ -7,4 +7,5 @@ class Cave : public ActionSimple {
         Cave();
         ~Cave();
 
-        void utiliser(Joueur& J, Plateau& P);};
+        void utiliser(Joueur& J, Plateau& P) const;
+};

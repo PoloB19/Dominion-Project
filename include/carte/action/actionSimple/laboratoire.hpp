@@ -9,5 +9,5 @@ class Laboratoire : public ActionSimple {
         Laboratoire();
         ~Laboratoire();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

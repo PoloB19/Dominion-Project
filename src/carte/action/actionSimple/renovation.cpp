@@ -4,7 +4,7 @@ Renovation::Renovation() : ActionSimple("Rénovation", 4, "Écartez une carte de
 
 Renovation::~Renovation() {}
 
-void Renovation::utiliser(Joueur& , Plateau &){
+void Renovation::utiliser(Joueur& , Plateau &) const {
 
 
     //while(true){

@@ -4,7 +4,7 @@ Sorciere::Sorciere() : ActionAttaque("Sorcière", 5, "+2 Cartes \nTous les autre
 
 Sorciere::~Sorciere() {}
 
-void Sorciere::utiliser(Joueur& J, Plateau& P){
+void Sorciere::utiliser(Joueur& J, Plateau& P) const {
 
     J.piocher(2);
 

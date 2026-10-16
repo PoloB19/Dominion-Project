@@ -6,7 +6,7 @@ SalleDuTrone::SalleDuTrone() : ActionSimple("Salle du trône", 4, "Choisissez un
 
 SalleDuTrone::~SalleDuTrone() {}
 
-void SalleDuTrone::utiliser(Joueur& J, Plateau& P){
+void SalleDuTrone::utiliser(Joueur& J, Plateau& P) const {
 
     while(true){
 

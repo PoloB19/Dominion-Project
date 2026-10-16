@@ -4,10 +4,8 @@ Mine::Mine() : ActionSimple("Mine", 5, "Écarter une carte de sa main pour recev
 
 Mine::~Mine() {}
 
-/*
-void Mine::utiliser(Joueur& J, Plateau& P){
+void Mine::utiliser(Joueur& J, Plateau& P) const {
 
 
     
 }
-*/

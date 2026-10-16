@@ -8,5 +8,5 @@ class Forgeron : public ActionSimple {
         Forgeron();
         ~Forgeron();
 
-        void utiliser(Joueur& J, Plateau& P);
+        void utiliser(Joueur& J, Plateau& P) const;
 };

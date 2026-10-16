@@ -5,7 +5,7 @@ Milice::Milice() : ActionAttaque("Milice", 4, "+2 pièces \nTous les autres joue
 Milice::~Milice() {}
 
 /* 
-void Milice::utiliser(const Plateau& P, size_t idJoueur){
+void Milice::utiliser(const Plateau& P, size_t idJoueur) const {
     //A FAIRE
 }
  */
