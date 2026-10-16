@@ -37,4 +37,31 @@ namespace Cartes {
     const Carte* bureaucrate() { static const Bureaucrate c;  return &c; }
     const Carte* espion() { static const Espion c;  return &c; }
     const Carte* voleur() { static const Voleur c;  return &c; }
+
+    // Catalogue de toutes les cartes
+    const std::vector<const Carte*>& catalogue() {
+        static const std::vector<const Carte*> v = {
+            // Trésors
+            cuivre(), argent(), or_(),
+            // Malédiction
+            malediction(),
+            // Victoire
+            domaine(), duche(), province(),
+            // Royaume
+            jardins(), atelier(), aventurier(), bibliotheque(), bucheron(), cave(),
+            chambreDuConseil(), chancelier(), chapelle(), douves(),
+            espion(), festin(), festival(), forgeron(), laboratoire(),
+            marche(), milice(), mine(), preteurSurGages(), renovation(),
+            salleDuTrone(), sorciere(), village(), voleur(), bureaucrate()
+        };
+        return v;
+    }
+
+    constexpr size_t NB_CARTES_COMMUNES = 7; // cuivre, argent, or, malédiction, domaine, duché, province
+    
+    // Catalogue des cartes Royaume
+    const std::vector<const Carte*>& royaume() {
+        static const std::vector<const Carte*> v(catalogue().begin() + NB_CARTES_COMMUNES, catalogue().end());
+        return v;
+    }
 }

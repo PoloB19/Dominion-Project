@@ -6,32 +6,20 @@ Milice::~Milice() {}
 
 void Milice::utiliser(Joueur& J, Plateau& P) const {
     J.ajustNbPiece(2);
-    /*
     for (Joueur* j : P.getJoueurs()){
     
         if (!(j == &J)){
             
             std::vector<const Carte*> mainj = j->getMain();
-            std::vector<const Carte*> victoireEnMain;
-            for (const Carte* c : mainj) {
-                if (c->getType()=="Victoire" || c->getSousType() == "ActionVictoire") {
-                    victoireEnMain.push_back(c);
-                }
-            }
             
-            if(victoireEnMain.empty()) {
-                // si le joueur ne possède pas de carte victoire
-                j->annonceRevelerCartes(mainj);
-            }
-            else {
-                // s'il en possède au moins une
-                std::vector<size_t> idCarteChoisie = j->choixParmiCartes(victoireEnMain,1);
+            while (mainj.size()>3) {
+                /*
+                size_t idCarteChoisie = j->choixParmiCartes(mainj,1).at(0);
                 j->enleverDepuisMain(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
                 j->annonceRevelerCartes({victoireEnMain.at(idCarteChoisie.at(0))});
                 j->annonceCarteVers(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
-            }
+            */}
         }
     }
-        */
 }
 

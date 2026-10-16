@@ -38,4 +38,8 @@ namespace Cartes {
     const Carte* sorciere();
     const Carte* village();
     const Carte* voleur();
+
+    const std::vector<const Carte*>& catalogue();
+    
+    const std::vector<const Carte*>& royaume();
 }
