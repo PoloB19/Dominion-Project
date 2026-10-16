@@ -4,6 +4,6 @@ Voleur::Voleur() : ActionAttaque("Voleur", 4, "Tous les autres joueurs révélen
 
 Voleur::~Voleur() {}
 
-/* void Voleur::utiliser(const Plateau& P, size_t idJoueur) const {
+void Voleur::utiliser(Joueur& , Plateau& ) const {
     //A FAIRE
-} */
+}

@@ -6,11 +6,11 @@ Mine::~Mine() {}
 
 void Mine::utiliser(Joueur& J, Plateau& P) const {
 
-    size_t idxChoix = J.choixParmiCartes(J.getMain(),1).at(0);
+    std::vector<size_t> idxChoix = J.choixParmiCartes(J.getMain(),1);
     if (!idxChoix.empty()) {
         //on récupère le prix de la carte avant de l'écarter
-        unsigned short prixMax = J.getMain().at(idxChoix)->getPrix() + 3; 
-        J.ecarter(J.getMain().at(idxChoix)->getNom(), P);
+        unsigned short prixMax = J.getMain().at(idxChoix.at(0))->getPrix() + 3; 
+        J.ecarter(J.getMain().at(idxChoix.at(0))->getNom(), P);
 
         const Carte* carteVoulue;
         while (true){

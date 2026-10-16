@@ -4,7 +4,7 @@ Renovation::Renovation() : ActionSimple("Rénovation", 4, "Écartez une carte de
 
 Renovation::~Renovation() {}
 
-void Renovation::utiliser(Joueur& , Plateau &) const {
+void Renovation::utiliser(Joueur& J, Plateau& P) const {
 
     std::vector<size_t> idxChoix = J.choixParmiCartes(J.getMain(),1);
     if (!idxChoix.empty()) {

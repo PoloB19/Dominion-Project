@@ -8,7 +8,7 @@ void PreteurSurGages::utiliser(Joueur& J, Plateau& P) const {
 
     if(J.demanderOuiNon("Voulez vous écarter un Cuivre de votre main ?")){
         
-        for (Carte* c : J.getMain()){
+        for (const Carte* c : J.getMain()){
 
             if (c->getNom() == "Cuivre"){
                 J.ecarter(c->getNom(), P);
