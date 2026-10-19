@@ -18,7 +18,7 @@ TARGET = $(BUILD_DIR)/dominion	# nom de la cible
 #Trouve récursivement tous les sous-dossiers de include/ et ajouter le flag -I à chacun
 INC_DIRS = $(shell find $(INC_DIR) -type d)
 INC_FLAGS = $(addprefix -I, $(INC_DIRS))
-CXXFLAGS = -Wall -Wextra -Werror -std=c++11 $(INC_FLAGS)
+CXXFLAGS = -Wall -Wextra -Werror -std=c++20 $(INC_FLAGS)
 
 #Trouve récursivement tous les fichiers .cpp dans src/ et ses sous-dossiers
 SRCS = $(shell find $(SRC_DIR) -name '*.cpp')

@@ -24,9 +24,15 @@ void Mine::utiliser(Joueur& J, Plateau& P) const {
 
             if (carteVoulue->getPrix() > prixMax){
 
-                J.annonceErreur("cette carte est trop chère");
+                UI::annonceErreur("cette carte est trop chère");
 
-            } else {
+            } 
+            else if (carteVoulue->getType() != "Tresor") {
+
+                UI::annonceErreur("cette carte n'est pas un Trésor");
+
+            }
+            else {
 
                 J.obtenirCartePlateau(carteVoulue, P, Emplacement::MAIN);
                 return;

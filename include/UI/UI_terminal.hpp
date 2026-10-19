@@ -17,9 +17,9 @@ namespace UI {
     // Constantes et variables diverses
     const size_t longueurMaxLigne = 50;
 
-    std::vector<std::string> listeChoix;
-    std::string choix0;
-    std::string input;
+    inline std::vector<std::string> listeChoix;
+    inline std::string choix0;
+    inline std::string input;
 
    // Annule tous les styles
     const std::string RESET = "\033[0m";
