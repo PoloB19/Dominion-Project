@@ -90,7 +90,7 @@ namespace UI {
 
     std::vector<size_t> choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = "");
 
-    const Carte* UI::choixParmiPiles(Plateau& P);
+    const Carte* choixParmiPiles(Plateau& P);
 
     bool choixOuiNon(const std::string& question);
 };
