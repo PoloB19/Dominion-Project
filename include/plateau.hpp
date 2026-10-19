@@ -30,6 +30,7 @@ class Plateau {
         static std::vector<Composition> getCompositions() {return m_compositions;}
         std::vector<Joueur*> getJoueurs() {return m_joueurs;}
         std::map<const Carte*, unsigned short> getPiles() {return m_piles;}
+        std::stack<const Carte*> getRebut() {return m_rebut;}
         
         //Setters
         static void setCompositions(std::vector<Composition> compositions) {m_compositions = compositions;}

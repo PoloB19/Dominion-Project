@@ -50,7 +50,13 @@ class Joueur {
         std::vector<const Carte*> getMain() const {return m_main;}
         std::stack<const Carte*> getDefausse() const {return m_defausse;}
         std::vector<const Carte*> getEnJeu() const {return m_enJeu;}
+
+        unsigned short getNbAction() const {return m_nbAction;}
+        unsigned short getNbAchat() const {return m_nbAchat;}
+        unsigned short getNbPieces() const {return m_pieces;}
+
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
+
         unsigned short getTailleDeck() const {return m_pioche.size() + m_main.size() + m_defausse.size();}
 
         //Setters
