@@ -3,6 +3,8 @@
 #include "listeCartes.hpp"
 #include "plateau.hpp"
 
+#include "UI_terminal.hpp"
+
 std::vector<Composition> Plateau::m_compositions = {};
 
 Plateau::Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie).getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {
@@ -51,6 +53,8 @@ void Plateau::ajoutRebut(const Carte* carteRebutee) {
 void Plateau::retirerCartePlateau(const Carte* carte){
     if (m_piles.at(carte) > 0) {
         m_piles.at(carte) -= 1;
+    } else {
+        UI::annonceErreur("cette pile est vide");
     }
 };
 

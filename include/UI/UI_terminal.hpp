@@ -2,7 +2,8 @@
 #include <string>
 #include <iostream>
 #include <ranges>
-#include <thread>  // Pour les chargements lents
+
+#include <thread>  // Pour les chargements
 #include <chrono>
 
 #include "plateau.hpp"
@@ -16,9 +17,9 @@ namespace UI {
     // Constantes et variables diverses
     const size_t longueurMaxLigne = 50;
 
-    inline std::vector<std::string> listeChoix;
-    inline std::string choix0;
-    inline std::string input;
+    std::vector<std::string> listeChoix;
+    std::string choix0;
+    std::string input;
 
    // Annule tous les styles
     const std::string RESET = "\033[0m";
@@ -61,8 +62,8 @@ namespace UI {
         std::vector<size_t> ongletChoixCartesComposition(Joueur &J);
         size_t ongletChoixAleatoireCartesComposition(Composition& compoAlea);
         size_t ongletDescriptionCartes(const std::vector<const Carte*>& cartes);
-        size_t UI::ongletPhaseAction();
-        size_t UI::ongletPhaseAchat();
+        size_t ongletPhaseAction();
+        size_t ongletPhaseAchat();
 
     // Annonces 
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
@@ -88,6 +89,8 @@ namespace UI {
     size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0 = "");
 
     std::vector<size_t> choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = "");
+
+    const Carte* UI::choixParmiPiles(Plateau& P);
 
     bool choixOuiNon(const std::string& question);
 };

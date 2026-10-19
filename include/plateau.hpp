@@ -28,7 +28,9 @@ class Plateau {
 
         //Getters
         static std::vector<Composition> getCompositions() {return m_compositions;}
+
         std::vector<Joueur*> getJoueurs() {return m_joueurs;}
+        size_t getIdCompositionPartie() {return m_idCompositionPartie;}
         std::map<const Carte*, unsigned short> getPiles() {return m_piles;}
         std::stack<const Carte*> getRebut() {return m_rebut;}
         
