@@ -21,6 +21,24 @@ void UI::clearScreen() {
     std::cout << CLEAR_SCREEN << RESET;
 }
 
+void UI::animationChargement(size_t temps_attente) {
+    const size_t tailleBarre = 20;
+    const size_t delaiMs = (temps_attente * 1000) / tailleBarre; // découpe le temps pour la barre
+
+    for (size_t i = 0; i <= tailleBarre; i++) {
+        // \r écrase la ligne actuelle, std::flush force l'affichage immédiat
+        std::cout << "\r" << std::string((longueurMaxLigne - tailleBarre - 1)/2, ' ')
+                << "["
+                << std::string(i, '~')
+                << std::string(tailleBarre - i, ' ') 
+                << "]" << std::flush;
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(delaiMs));
+    }
+
+    retourALigne();
+}
+
 void UI::afficherInformation(const std::string& info) {
     std::cout << info;
 }
@@ -75,6 +93,76 @@ void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
     }
 
     std::cout << "]";
+
+}
+
+void UI::afficherPilesPlateau(Plateau& P){
+
+    // Trouve le prix max parmi toutes les cartes du plateau
+    size_t prixMax = 0;
+    for (const auto& pair : P.getPiles()) {
+        if (pair.first->getPrix() > prixMax) {
+            prixMax = pair.first->getPrix();
+        }
+    }
+
+    // Parcourir les prix par ordre décroissant à partir de prixMax
+    for (size_t prix = prixMax; prix >= 0; prix--) {
+        
+        std::string ligne = "";
+
+        for (const auto& pair : P.getPiles()) {
+            if (pair.first->getPrix() == prix) {
+                if (!ligne.empty()) {
+                    ligne += ", ";
+                }
+                ligne += pair.first->getNom() + " (" + std::to_string(pair.second) + ")";
+            }
+        }
+
+        // Empêche l'affichage des prix qui n'ont aucune carte
+        if (!ligne.empty()) {
+            std::cout << prix << " : " << ligne << "\n";
+        }
+    }
+
+    sautDeLigne();
+    std::cout << "Rebut (" << std::to_string(P.getRebut().size()) << ")";
+    retourALigne();
+}
+
+void UI::afficherAttributsJoueur(Joueur& J){
+
+    std::cout << "Nombre d'actions restantes : " << std::to_string(J.getNbAction());
+    retourALigne();
+    std::cout << "Nombre d'achats restants : " << std::to_string(J.getNbAchat());
+    retourALigne();
+    std::cout << "Pièces : " << std::to_string(J.getNbPieces());
+
+    sautDeLigne();
+
+    std::cout << "Pioche (" << J.getPioche().size() << ") | Défausse (" << J.getDefausse().size() << ")";
+    retourALigne();
+
+    std::cout << "Main : ";
+    if (!J.getMain().empty()) {
+        std::cout << "[";
+        for (const Carte* c : J.getMain()) { std::cout << c->getNom(); }
+        std::cout << "]";
+    } else {
+        std::cout << "vide";
+    }
+    retourALigne();
+
+    std::cout << "En jeu : ";
+    if (!J.getEnJeu().empty()) {
+        std::cout << "[";
+        for (const Carte* c : J.getEnJeu()) { std::cout << c->getNom(); }
+        std::cout << "]";
+    } else {
+        std::cout << "aucune carte actuellement en jeu";
+    }
+    retourALigne();
 
 }
 
@@ -360,10 +448,50 @@ bool UI::ecranModeRapide() {
 
 }
 
+void UI::ecranMessageDemarragePartie(bool depuisSauvegarde){
+
+    clearScreen();
+
+    std::cout << "§" << std::string(longueurMaxLigne - 2, '~') << "§";
+    retourALigne();
+    depuisSauvegarde ? std::cout << "REPRISE " : std::cout << "DÉMARRAGE ";
+    std::cout << "DE LA PARTIE, QUE LE MEILLEUR GAGNE !";
+    retourALigne();
+    std::cout << "§" << std::string(longueurMaxLigne - 2, '~') << "§";
+    retourALigne();
+
+    animationChargement(5);
+
+}
+
+size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
+
+    clearScreen();
+    afficherTitre("TOUR " + std::to_string(J.getNbTourJoues() + 1) + " - " + J.getPseudo());
+    sautDeLigne();
+
+    afficherInformation("Piles centrales du plateau (triées par prix) :");
+    sautDeLigne();
+    afficherPilesPlateau(P);
+    retourALigne();
+
+    std::cout << "Nombre d'actions restantes : " << std::to_string(J.getNbAction());
+    retourALigne();
+    std::cout << "Nombre d'achats restants : " << std::to_string(J.getNbAchat());
+    retourALigne();
+    std::cout << "Pièces : " << std::to_string(J.getNbPieces());
+
+    sautDeLigne();
+
+    afficherAttributsJoueur(J);
+    retourALigne();
+
+    return phaseSuivante ? ongletPhaseAchat() : ongletPhaseAction();
+}
 
 //Onglets
 
-//VERIFIER QUEL INDICES SONT VRAIMENT RENVOYE
+//VERIFIER QUEL INDICES SONT VRAIMENT RENVOYE !!!!!
 
 std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
 
@@ -378,6 +506,7 @@ std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
 
 }
 
+//A FINIR
 size_t UI::ongletChoixAleatoireCartesComposition() {
 
     separateursTitre();
@@ -386,19 +515,50 @@ size_t UI::ongletChoixAleatoireCartesComposition() {
     afficherInformation("Voici la composition aléatoire de votre partie :");
     retourALigne();
 
-    //std::srand(std::time({}));
-
-    //int r = (std::rand() % Cartes::catalogue().size()) - 1; //Une carte au hasard dans le catalogue, mais mettre royaume?
-
-    // A FINIR
+    //Continuer
 
     return 0;
 
 }
 
+//A FAIRE
 size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>&) {
-    //A FAIRE
+    
     return 0;
+}
+
+size_t UI::ongletPhaseAction() {
+    
+    std::cout << "!~~~~~~~~!~~~~~~~! PHASE ACTION !~~~~~~~!~~~~~~~~!";
+    sautDeLigne();
+
+    listeChoix = {
+        "Voir la description des cartes du jeu",
+        "Utiliser une carte",
+        "Écarter une carte",
+        "Passer à la phase d'achat",
+    };
+
+    choix0 = "Quitter la partie";
+
+    return choixParmiChiffre(listeChoix, choix0);
+
+}
+
+size_t UI::ongletPhaseAchat() {
+    
+    std::cout << "€~~~~~~~~€~~~~~~~€ PHASE ACHAT €~~~~~~~€~~~~~~~~€";
+
+    listeChoix = {
+        "Voir les descriptions des cartes du jeu",
+        "Acheter une carte",
+        "Finir son tour"
+    };
+
+    choix0 = "Quitter la partie";
+
+    return choixParmiChiffre(listeChoix, choix0);
+
 }
 
 // Annonces

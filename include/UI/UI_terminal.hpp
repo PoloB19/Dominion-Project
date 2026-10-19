@@ -2,6 +2,8 @@
 #include <string>
 #include <iostream>
 #include <ranges>
+#include <thread>  // Pour les chargements lents
+#include <chrono>
 
 #include "plateau.hpp"
 #include "joueur.hpp"
@@ -51,14 +53,17 @@ namespace UI {
 
         bool ecranModeRapide();
 
+        void ecranMessageDemarragePartie(bool depuisSauvegarde);
+
+        size_t ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante);
 
 
         // Onglets
         std::vector<size_t> ongletChoixCartesComposition(Joueur &J);
         size_t ongletChoixAleatoireCartesComposition();
         size_t ongletDescriptionCartes(const std::vector<const Carte*>& cartes);
-
-
+        size_t UI::ongletPhaseAction();
+        size_t UI::ongletPhaseAchat();
 
     // Annonces 
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
@@ -72,9 +77,13 @@ namespace UI {
     void separateursTitre();
     void separateursChoix();
     void clearScreen();
+    void animationChargement(size_t temps_attente);
     void afficherInformation(const std::string& info);
     void afficherTitre(const std::string& titre);
     void afficherListeCarteParNom(std::vector<const Carte*> listeCartes);
+    void ecranMessageDemarragePartie(bool depuisSauvegarde);
+    void afficherPilesPlateau(Plateau& P);
+    void afficherAttributsJoueur(Joueur& J);
 
     //Choix
     size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0 = "");
