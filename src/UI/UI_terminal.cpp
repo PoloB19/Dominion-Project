@@ -96,7 +96,7 @@ void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
 
 }
 
-void UI::afficherPilesPlateau(Plateau& P){
+void UI::afficherPilesPlateau(Plateau& P) {
 
     // Trouve le prix max parmi toutes les cartes du plateau
     size_t prixMax = 0;
@@ -131,7 +131,7 @@ void UI::afficherPilesPlateau(Plateau& P){
     retourALigne();
 }
 
-void UI::afficherAttributsJoueur(Joueur& J){
+void UI::afficherAttributsJoueur(Joueur& J) {
 
     std::cout << "Nombre d'actions restantes : " << std::to_string(J.getNbAction());
     retourALigne();
@@ -146,21 +146,17 @@ void UI::afficherAttributsJoueur(Joueur& J){
 
     std::cout << "Main : ";
     if (!J.getMain().empty()) {
-        std::cout << "[";
-        for (const Carte* c : J.getMain()) { std::cout << c->getNom(); }
-        std::cout << "]";
+        afficherListeCarteParNom(J.getMain());
     } else {
-        std::cout << "vide";
+        std::cout << ITALIC << "vide" << RESET;
     }
     retourALigne();
 
     std::cout << "En jeu : ";
     if (!J.getEnJeu().empty()) {
-        std::cout << "[";
-        for (const Carte* c : J.getEnJeu()) { std::cout << c->getNom(); }
-        std::cout << "]";
+        afficherListeCarteParNom(J.getEnJeu());
     } else {
-        std::cout << "aucune carte actuellement en jeu";
+        std::cout << ITALIC << "aucune carte actuellement en jeu" << RESET;
     }
     retourALigne();
 
@@ -287,8 +283,6 @@ bool UI::choixOuiNon(const std::string& question) {
 
     }
 }
-
-// Afffichage
 
 // Écrans
 
@@ -491,8 +485,6 @@ size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
 
 //Onglets
 
-//VERIFIER QUEL INDICES SONT VRAIMENT RENVOYE !!!!!
-
 std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
 
     separateursTitre();
@@ -502,12 +494,12 @@ std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
     afficherInformation("Entrez un à un les noms des 10 cartes sélectionnée :");
     retourALigne();
 
+    //Renvoie les ID des cartes du catalogue
     return choixParmiCartes(J, Cartes::catalogue(), 10, "Retour");
 
 }
 
-//A FINIR
-size_t UI::ongletChoixAleatoireCartesComposition() {
+size_t UI::ongletChoixAleatoireCartesComposition(Composition& compoAlea) {
 
     separateursTitre();
     sautDeLigne();
@@ -515,16 +507,57 @@ size_t UI::ongletChoixAleatoireCartesComposition() {
     afficherInformation("Voici la composition aléatoire de votre partie :");
     retourALigne();
 
-    //Continuer
+    // 1. Récupération du catalogue complet
+    std::vector<const Carte*> catalogue = Cartes::catalogue();
+    std::map<const Carte*, unsigned short> selectionAleatoire;
+    std::vector<const Carte*> listeCartes;
 
-    return 0;
+    // tirage de 10 cartes uniques au hasard
+    while (selectionAleatoire.size() < 10 ) {
+        size_t indexAleatoire = std::rand() % catalogue.size();
+        const Carte* carteTiree = catalogue[indexAleatoire];
+        selectionAleatoire[carteTiree] = 10;
+    }
+
+    // Création de la composition
+    compoAlea = Composition("Composition Aléatoire", selectionAleatoire);
+
+    // Affichage des 10 cartes tirées
+    for (const auto& pair : compoAlea.getCompositionPartie()) {
+        listeCartes.push_back(pair.first);
+    }
+
+    afficherListeCarteParNom(listeCartes);
+
+    sautDeLigne();
+
+    listeChoix = {
+        "Valider",
+        "Recommencer",
+    };
+
+    choix0 = "Retour";
+
+    return choixParmiChiffre(listeChoix, choix0);
 
 }
 
-//A FAIRE
-size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>&) {
+size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& listeCarte) {
     
-    return 0;
+    afficherTitre("DESCRIPTION CARTES");
+    sautDeLigne();
+
+    sautDeLigne();
+
+    for (const Carte* c : listeCarte){
+
+        std::cout << c->getNom() << " : " << c->getPrix() << "pcs";
+        retourALigne();
+        std::cout << c->getDescription();
+        sautDeLigne();
+    }
+
+    return choixParmiChiffre({}, "Retour");
 }
 
 size_t UI::ongletPhaseAction() {

@@ -16,10 +16,9 @@ namespace UI {
     // Constantes et variables diverses
     const size_t longueurMaxLigne = 50;
 
-    std::vector<std::string> listeChoix;
-    std::string choix0;
-
-    std::string input;
+    inline std::vector<std::string> listeChoix;
+    inline std::string choix0;
+    inline std::string input;
 
    // Annule tous les styles
     const std::string RESET = "\033[0m";
@@ -60,7 +59,7 @@ namespace UI {
 
         // Onglets
         std::vector<size_t> ongletChoixCartesComposition(Joueur &J);
-        size_t ongletChoixAleatoireCartesComposition();
+        size_t ongletChoixAleatoireCartesComposition(Composition& compoAlea);
         size_t ongletDescriptionCartes(const std::vector<const Carte*>& cartes);
         size_t UI::ongletPhaseAction();
         size_t UI::ongletPhaseAchat();
