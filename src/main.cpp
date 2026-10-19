@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <map>
+
+//SERVENT A QUOI??
 #include <sstream>
 #include <limits>
 
@@ -140,3 +142,38 @@ int main(){
 
     return 0;
 }
+
+
+/* ICI UN SKETCH DE COMMENT JE VOIS LE MAIN
+
+int main(){
+
+    ... instanciation de tout ce qui doit être instancié ...
+    A limite appeler la fonction barreChargement de UI pour faire stylé
+
+    while(true){ //Pour faire tourner l'écran de démarrage en boucle
+    
+    switch(ecranDemarrage):
+        case 0 : 
+            exit()
+        case 1 : 
+
+            switch(ecranNouvellePartie):
+                case 0 : 
+                    break; (car retour au menu du démarrage quoi)
+                case 1 :
+                    .....
+                case 2 : 
+                    ...
+    
+    }
+}
+
+OU ALORS on peut aussi faire des "fonctions" qui correspondent aux écrans et qui sont appelées dans les case des switch
+Par exemple au lieu d'avoir un autre switch dans le case 1, on appelrait une fonction qui gererait l'écran de nouvelle partie)
+
+C'est des idées par ci par là mais normalement il y a très peu a coder dans le main : 
+AUCUNE vérification, AUCUNE variable, AUCUN cas bizarre, AUCUNE fonction utile
+--> juste des appels de fonction de UI associé à des switch c'est TOUT
+
+*/

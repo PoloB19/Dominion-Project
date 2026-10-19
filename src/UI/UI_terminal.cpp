@@ -86,7 +86,7 @@ void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
     std::cout << "[";
 
     for (size_t i = 0; i < listeCartes.size(); i++) {
-        std::cout << listeCartes.at(i);
+        std::cout << listeCartes.at(i)->getNom();
         if(i != listeCartes.size() - 1 ){
             std::cout << ", ";
         }
@@ -235,29 +235,36 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Cart
         // Si choix0 est possible et demandé
         if(!choix0.empty() && UI::input.at(0) - '0' == 0) return {};
 
+        bool carteExiste = false;
+        bool carteDoublon = false;
+        bool carteAcceptee = false;
+
         // Vérifie que la sélection est possible
         for (size_t i = 0; i < cartes.size(); i++){
 
             // Vérifie que la carte est proposée 
             if (cartes.at(i)->getNom() == UI::input){
 
-                for(size_t j : idChoix){
+                carteExiste = true;
 
-                    // Vérifie que la carte n'a pas déjà été sélectionnée
+                // Vérifie que la carte n'a pas déjà été sélectionnée
+                for(size_t j : idChoix){
                     if (i == j){
-                        annonceErreur("cette carte a déjà été sélectionnée");
-                        sautDeLigne();
-                        continue;
+                        carteDoublon = true;
+                        break;
                     }
                 }
 
-                idChoix.push_back(i);
-                continue;
-
+                if (!carteDoublon) {
+                    idChoix.push_back(i);
+                    carteAcceptee = true;
+                    break;
+                }
             }
         }
 
-        annonceErreur("cette carte n'est pas proposée");
+        if (!carteExiste) annonceErreur("cette carte n'est pas proposée");
+        else if (!carteAcceptee) annonceErreur("cette carte est déjà sélectionnée");
         sautDeLigne();
 
     }
@@ -359,12 +366,13 @@ size_t UI::ecranNouvellePartie() {
         compoString = compo.getNom() + " [";
 
         for (const auto& pair : compo.getCompositionPartie()) {
-            compoString += pair.first->getNom() + ", ";
+            compoString += pair.first->getNom() + " ";
         }
 
-        listeChoix.push_back(compoString + "]");
+        UI::listeChoix.push_back(compoString + "]");
     }
 
+    UI::listeChoix.push_back("Créer sa propre composition");
     UI::choix0 = "Retour";
 
     return choixParmiChiffre(listeChoix, choix0);
@@ -491,18 +499,12 @@ size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
     afficherInformation("Piles centrales du plateau (triées par prix) :");
     sautDeLigne();
     afficherPilesPlateau(P);
-    retourALigne();
-
-    std::cout << "Nombre d'actions restantes : " << std::to_string(J.getNbAction());
-    retourALigne();
-    std::cout << "Nombre d'achats restants : " << std::to_string(J.getNbAchat());
-    retourALigne();
-    std::cout << "Pièces : " << std::to_string(J.getNbPieces());
 
     sautDeLigne();
 
     afficherAttributsJoueur(J);
-    retourALigne();
+    
+    sautDeLigne();
 
     return phaseSuivante ? ongletPhaseAchat() : ongletPhaseAction();
 }
