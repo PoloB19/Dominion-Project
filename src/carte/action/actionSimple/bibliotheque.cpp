@@ -13,7 +13,7 @@ void Bibliotheque::utiliser(Joueur& J, Plateau&) const {
 
         const Carte* cartePiochee = J.getMain().back();
         
-        if(cartePiochee->getType() == "Action" && UI::choixOuiNon(J,cartePiochee->getNom() + " est la carte action piochée, souhaitez-vous la défausser?")){
+        if(cartePiochee->getType() == "Action" && UI::choixOuiNon(cartePiochee->getNom() + " est la carte action piochée, souhaitez-vous la défausser?")){
 
             J.enleverDepuisMain(cartePiochee->getNom(), Emplacement::DEFAUSSE);
 

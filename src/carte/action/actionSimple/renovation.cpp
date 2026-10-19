@@ -1,4 +1,5 @@
 #include "renovation.hpp"
+#include "UI_terminal.hpp"
 
 Renovation::Renovation() : ActionSimple("Rénovation", 4, "Écartez une carte de votre main. \nObtenez une carte coûtant jusqu'à 2 Pièces de plus que la carte écartée.") {}
 
@@ -6,7 +7,7 @@ Renovation::~Renovation() {}
 
 void Renovation::utiliser(Joueur& J, Plateau& P) const {
 
-    std::vector<size_t> idxChoix = J.choixParmiCartes(J.getMain(),1);
+    std::vector<size_t> idxChoix = UI::choixParmiCartes(J,J.getMain(),1);
     if (!idxChoix.empty()) {
 
         //on récupère le prix max de la nouvelle carte avant d'écarter l'ancienne
@@ -16,15 +17,11 @@ void Renovation::utiliser(Joueur& J, Plateau& P) const {
         const Carte* carteVoulue;
         while (true){
 
-            carteVoulue = P.getCarteParNom(J.demanderNomCarte());
+            carteVoulue = UI::choixParmiPiles(P);
 
             if (carteVoulue->getPrix() > prixMax){
 
-                J.annonceErreur("cette carte est trop chère");
-
-            } else if (carteVoulue == nullptr){
-                
-                J.annonceErreur("cette carte n'existe pas");
+                UI::annonceErreur("cette carte est trop chère");
 
             } else {
 

@@ -107,7 +107,7 @@ void UI::afficherPilesPlateau(Plateau& P) {
     }
 
     // Parcourir les prix par ordre décroissant à partir de prixMax
-    for (size_t prix = prixMax; prix >= 0; prix--) {
+    for (short prix = prixMax; prix >= 0; prix--) {
         
         std::string ligne = "";
 

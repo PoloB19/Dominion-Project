@@ -7,13 +7,15 @@ Atelier::~Atelier() {}
 
 void Atelier::utiliser(Joueur &J, Plateau &P) const {
 
+    const Carte* carteVoulue;
+
     while(true){
 
-        const Carte* carteVoulue = P.getCarteParNom(J.demanderNomCarte());
+        carteVoulue = UI::choixParmiPiles(P);
 
         if (carteVoulue->getPrix() > 4){
 
-            UI::annonceErreur("cette carte dépasse la valeur autorisée (max. 4)");
+            UI::annonceErreur("cette carte dépasse la valeur autorisée (max. 4) ou n'existe pas");
 
         } else {
 
