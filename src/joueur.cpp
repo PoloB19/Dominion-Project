@@ -31,7 +31,8 @@ bool Joueur::accesMain() const {
 bool Joueur::accesPioche() {
     if(m_pioche.empty()) melangerDefausse();
     if(m_pioche.empty()) {
-        std::cout << "La pioche et la défausse sont vide." << std::endl;
+        UI::afficherInformation("La pioche et la défausse sont vide.");
+        UI::retourALigne();
         return false;
     }
     return true;
@@ -39,7 +40,8 @@ bool Joueur::accesPioche() {
 
 bool Joueur::accesDefausse() const {
     if(m_defausse.empty()) {
-        std::cout << "La défausse est vide." << std::endl;
+        UI::afficherInformation("La défausse est vide.");
+        UI::retourALigne();
         return false;
     }
     return true; 
@@ -47,7 +49,6 @@ bool Joueur::accesDefausse() const {
 
 
 //Pioche
-//APPELER ANNONCE DEPUIS PIOCHE
 void Joueur::piocher(unsigned short nbPioche){
 
     for(size_t i = 0; i < nbPioche; i++){
@@ -56,7 +57,7 @@ void Joueur::piocher(unsigned short nbPioche){
             return;
         }
 
-        std::cout << "Vous avez pioché la carte : " << m_pioche.top()->getNom();
+        UI::annonceCarteDepuis(m_pioche.top()->getNom(),Emplacement::PIOCHE);
         
         m_main.push_back(m_pioche.top());
         m_pioche.pop();
@@ -68,15 +69,16 @@ void Joueur::piocher(unsigned short nbPioche){
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
+        UI::annonceCarteVers(carte->getNom(),Emplacement::PIOCHE);
     }
 }
 
 
 // Défausse
-//APPELER ANNONCE VERS DEFAUSSE
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
         m_defausse.push(carte);
+        UI::annonceCarteVers(carte->getNom(),Emplacement::DEFAUSSE);
     }
 }
 
@@ -86,6 +88,7 @@ void Joueur::ajouterADefausse(const Carte* carte){
 void Joueur::ajouterAEnJeu(const Carte* carte){
     if(carte != nullptr){
         m_enJeu.push_back(carte);
+        UI::annonceCarteVers(carte->getNom(),Emplacement::EN_JEU);
     }
 }
 
@@ -159,19 +162,21 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
         ajustNbPiece(-carteAchetee->getPrix());
 
     } else {
-
-        std::cout << "Vous n'avez pas assez de pièces pour acheter cette carte ! " << std::endl;
-
+        UI::annonceErreur("vous n'avez pas assez de pièces pour acheter cette carte");
+        UI::retourALigne();
     }
 
 };
 
-//APPELER ANNONCE VERS REBUT
 void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P) {
     for (const Carte* c : m_main) {
         if (c->getNom()==nomCarteEcartee) {
             m_main.erase(std::find(m_main.begin(), m_main.end(), c));
             P.ajoutRebut(c);
+
+            UI::afficherInformation("Vous rebutez " + c->getNom());
+            UI::sautDeLigne();
+
             return;
         }
     }
@@ -289,35 +294,4 @@ void Joueur::finDeTour() {
     m_nbAction = 1;
     m_pieces = 0;
     m_nbToursJoues++;
-}
-
-// --- Interactions ---
-
-// Choix
-
-bool Joueur::demanderOuiNon(const std::string& question) const {
-    return UI::choixOuiNon(m_pseudo + ", " + question);
-}
-
-std::vector<size_t> Joueur::choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix) {
-    if (cartes.empty()) { return {}; }
-    return UI::choixParmiCartes(*this, cartes, nbChoix);
-}
-
-// Annonces
-
-void Joueur::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) const {
-    UI::annonceCarteDepuis(nomCarte, depuis);
-}
-
-void Joueur::annonceCarteVers(std::string nomCarte, Emplacement vers) const {
-    UI::annonceCarteVers(nomCarte, vers);
-}
-
-void Joueur::annonceRevelerCartes(std::vector<const Carte*> cartes) const {
-    UI::annonceRevelerCartes(*this, cartes);
-}
-
-void Joueur::annonceErreur(std::string message) const {
-    UI::annonceErreur(message);
 }

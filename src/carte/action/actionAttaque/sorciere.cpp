@@ -13,5 +13,4 @@ void Sorciere::utiliser(Joueur& J, Plateau& P) const {
             cible->obtenirCartePlateau(P.getCarteParNom("Malédiction"), P, Emplacement::DEFAUSSE);
         }
     }
-
 }

@@ -1,4 +1,5 @@
 #include "bibliotheque.hpp"
+#include "UI_terminal.hpp"
 
 Bibliotheque::Bibliotheque() : ActionSimple("Bibliothèque", 5, "Piochez jusqu'à avoir 7 cartes dans votre main, en défaussant si vous le souhaitez la carte pioché si c'est une Action ."){}
 
@@ -12,7 +13,7 @@ void Bibliotheque::utiliser(Joueur& J, Plateau&) const {
 
         const Carte* cartePiochee = J.getMain().back();
         
-        if(cartePiochee->getType() == "Action" && J.demanderOuiNon(cartePiochee->getNom() + " est la carte action piochée, souhaitez vous la défausser?")){
+        if(cartePiochee->getType() == "Action" && UI::choixOuiNon(J,cartePiochee->getNom() + " est la carte action piochée, souhaitez-vous la défausser?")){
 
             J.enleverDepuisMain(cartePiochee->getNom(), Emplacement::DEFAUSSE);
 

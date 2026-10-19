@@ -1,4 +1,5 @@
 #include "festin.hpp"
+#include "UI_terminal.hpp"
 
 Festin::Festin() : ActionSimple("Festin", 4, "Écartez cette carte. \nObtenez une carte coûtant au plus 5 pièces."){}
 
@@ -16,29 +17,28 @@ void Festin::utiliser(Joueur& J, Plateau& P) const {
         }
     } 
     if (!gainPossible) {
-        J.annonceErreur("aucune carte coûtant au plus 5 n'est disponible sur le plateau.");
+        UI::annonceErreur("aucune carte coûtant au plus 5 n'est disponible sur le plateau");
         P.ajoutRebut(this);
         return;
     }
 
     while(true){
 
-        const Carte* carteVoulue = P.getCarteParNom(J.demanderNomCarte());
+        const Carte* carteVoulue = UI::choixParmiPiles(P);
 
         if (carteVoulue->getPrix() > 5){
 
-            J.annonceErreur("cette carte est trop chère");
+            UI::annonceErreur("cette carte est trop cher");
 
         } else if (carteVoulue == nullptr){
             
-            J.annonceErreur("cette carte n'existe pas");
+            UI::annonceErreur("cette carte n'existe pas");
 
         } else {
 
             J.obtenirCartePlateau(carteVoulue, P, Emplacement::DEFAUSSE);
             P.ajoutRebut(this);
             return;
-
         }
     }
 }
