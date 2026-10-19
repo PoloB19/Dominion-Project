@@ -81,12 +81,12 @@ void UI::afficherTitre(const std::string& titre) {
     std::cout << coteGauche << " " << titre << " " << coteDroit;
 }
 
-void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
+void UI::afficherListeCarteParNom(const std::vector<const Carte*>& listeCartes) {
 
     std::cout << "[";
 
     for (size_t i = 0; i < listeCartes.size(); i++) {
-        std::cout << listeCartes.at(i);
+        std::cout << listeCartes.at(i)->getNom();
         if(i != listeCartes.size() - 1 ){
             std::cout << ", ";
         }
@@ -96,7 +96,7 @@ void UI::afficherListeCarteParNom(std::vector<const Carte*> listeCartes) {
 
 }
 
-void UI::afficherPilesPlateau(Plateau& P) {
+void UI::afficherPilesPlateau(const Plateau& P) {
 
     // Trouve le prix max parmi toutes les cartes du plateau
     size_t prixMax = 0;
@@ -131,7 +131,7 @@ void UI::afficherPilesPlateau(Plateau& P) {
     retourALigne();
 }
 
-void UI::afficherAttributsJoueur(Joueur& J) {
+void UI::afficherAttributsJoueur(const Joueur& J) {
 
     std::cout << "Nombre d'actions restantes : " << std::to_string(J.getNbAction());
     retourALigne();
@@ -181,7 +181,7 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
         retourALigne();
         separateursChoix();
         std::cout << "> ";
-        std::cin >> UI::input;
+        std::getline(std::cin >> std::ws, UI::input);
         retourALigne();
 
         if(UI::input.length() != 1 || !std::isdigit(UI::input.at(0))) {
@@ -203,7 +203,7 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
     }
 }
 
-std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0) {
+std::vector<size_t> UI::choixParmiCartes(const Joueur& J, const std::vector<const Carte*>& cartes, unsigned short nbChoix, std::string choix0) {
 
     // Sécurité
     if(cartes.empty()) return {};
@@ -230,10 +230,14 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Cart
     while (idChoix.size() < nbChoix){
         
         std::cout << "> ";
-        std::cin >> UI::input;
+        std::getline(std::cin >> std::ws, UI::input);
 
         // Si choix0 est possible et demandé
         if(!choix0.empty() && UI::input.at(0) - '0' == 0) return {};
+
+        bool carteExiste = false;
+        bool carteDoublon = false;
+        bool carteAcceptee = false;
 
         // Vérifie que la sélection est possible
         for (size_t i = 0; i < cartes.size(); i++){
@@ -241,23 +245,26 @@ std::vector<size_t> UI::choixParmiCartes(Joueur& J, const std::vector<const Cart
             // Vérifie que la carte est proposée 
             if (cartes.at(i)->getNom() == UI::input){
 
-                for(size_t j : idChoix){
+                carteExiste = true;
 
-                    // Vérifie que la carte n'a pas déjà été sélectionnée
+                // Vérifie que la carte n'a pas déjà été sélectionnée
+                for(size_t j : idChoix){
                     if (i == j){
-                        annonceErreur("cette carte a déjà été sélectionnée");
-                        sautDeLigne();
-                        continue;
+                        carteDoublon = true;
+                        break;
                     }
                 }
 
-                idChoix.push_back(i);
-                continue;
-
+                if (!carteDoublon) {
+                    idChoix.push_back(i);
+                    carteAcceptee = true;
+                    break;
+                }
             }
         }
 
-        annonceErreur("cette carte n'est pas proposée");
+        if (!carteExiste) annonceErreur("cette carte n'est pas proposée");
+        else if (!carteAcceptee) annonceErreur("cette carte est déjà sélectionnée");
         sautDeLigne();
 
     }
@@ -273,7 +280,7 @@ const Carte* UI::choixParmiPiles(Plateau& P){
         separateursChoix();
         retourALigne();
         std::cout << " > ";
-        std::cin >> UI::input;
+        std::getline(std::cin >> std::ws, UI::input);
 
         for (const auto& pair : P.getPiles()){
             if(pair.first->getNom() == input && pair.second > 0){
@@ -296,7 +303,7 @@ bool UI::choixOuiNon(const std::string& question) {
         separateursChoix();
         retourALigne();
         std::cout << " > ";
-        std::cin >> UI::input;
+        std::getline(std::cin >> std::ws, UI::input);
         
         if (UI::input == "O" || UI::input == "o" || UI::input == "Oui" || UI::input == "oui" || UI::input == "OUI") return true;
         if (UI::input == "N" || UI::input == "n" || UI::input == "Non" || UI::input == "non" || UI::input == "NON") return false;
@@ -359,12 +366,13 @@ size_t UI::ecranNouvellePartie() {
         compoString = compo.getNom() + " [";
 
         for (const auto& pair : compo.getCompositionPartie()) {
-            compoString += pair.first->getNom() + ", ";
+            compoString += pair.first->getNom() + " ";
         }
 
-        listeChoix.push_back(compoString + "]");
+        UI::listeChoix.push_back(compoString + "]");
     }
 
+    UI::listeChoix.push_back("Créer sa propre composition");
     UI::choix0 = "Retour";
 
     return choixParmiChiffre(listeChoix, choix0);
@@ -418,7 +426,7 @@ std::vector<std::string> UI::ecranChoixJoueurs() {
 
         retourALigne();
         std::cout << "> ";
-        std::cin >> UI::input;
+        std::getline(std::cin >> std::ws, UI::input);
 
         // Retour au menu
         if(UI::input == "0") return {};
@@ -438,13 +446,16 @@ std::vector<std::string> UI::ecranChoixJoueurs() {
         }
 
         // Vérication de l'unicité des pseudos
+        bool dejaPris = false;
         for (std::string pseudo : pseudosJoueurs){
             if (pseudo == UI::input) {
                 annonceErreur("ce pseudo est déjà choisi");
                 sautDeLigne();
-                continue;
+                dejaPris = true;
+                break;
             }
         }
+        if (dejaPris) continue;
 
         pseudosJoueurs.push_back(UI::input);
 
@@ -491,18 +502,12 @@ size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
     afficherInformation("Piles centrales du plateau (triées par prix) :");
     sautDeLigne();
     afficherPilesPlateau(P);
-    retourALigne();
-
-    std::cout << "Nombre d'actions restantes : " << std::to_string(J.getNbAction());
-    retourALigne();
-    std::cout << "Nombre d'achats restants : " << std::to_string(J.getNbAchat());
-    retourALigne();
-    std::cout << "Pièces : " << std::to_string(J.getNbPieces());
 
     sautDeLigne();
 
     afficherAttributsJoueur(J);
-    retourALigne();
+    
+    sautDeLigne();
 
     return phaseSuivante ? ongletPhaseAchat() : ongletPhaseAction();
 }
@@ -609,6 +614,8 @@ size_t UI::ongletPhaseAchat() {
     
     std::cout << "€~~~~~~~~€~~~~~~~€ PHASE ACHAT €~~~~~~~€~~~~~~~~€";
 
+    sautDeLigne();
+
     UI::listeChoix = {
         "Voir les descriptions des cartes du jeu",
         "Acheter une carte",
@@ -661,7 +668,7 @@ void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
 
 }
 
-void UI::annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes) {
+void UI::annonceRevelerCartes(const Joueur& J, const std::vector <const Carte*>& cartes) {
 
     std::cout << J.getPseudo() << ", vous révélez : [ ";
 

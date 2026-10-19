@@ -68,7 +68,7 @@ namespace UI {
     // Annonces 
     void annonceCarteDepuis(std::string nomCarte, Emplacement depuis);
     void annonceCarteVers(std::string nomCarte, Emplacement vers);
-    void annonceRevelerCartes(const Joueur& J, std::vector <const Carte*> cartes);
+    void annonceRevelerCartes(const Joueur& J, const std::vector <const Carte*>& cartes);
     void annonceErreur(const std::string& message);
 
     // Outils
@@ -80,15 +80,14 @@ namespace UI {
     void animationChargement(size_t temps_attente);
     void afficherInformation(const std::string& info);
     void afficherTitre(const std::string& titre);
-    void afficherListeCarteParNom(std::vector<const Carte*> listeCartes);
-    void ecranMessageDemarragePartie(bool depuisSauvegarde);
-    void afficherPilesPlateau(Plateau& P);
-    void afficherAttributsJoueur(Joueur& J);
+    void afficherListeCarteParNom(const std::vector<const Carte*>& listeCartes);
+    void afficherPilesPlateau(const Plateau& P);
+    void afficherAttributsJoueur(const Joueur& J);
 
     //Choix
     size_t choixParmiChiffre(const std::vector<std::string>& listeChoix, const std::string& choix0 = "");
 
-    std::vector<size_t> choixParmiCartes(Joueur& J, const std::vector<const Carte*> cartes, unsigned short nbChoix, std::string choix0 = "");
+    std::vector<size_t> choixParmiCartes(const Joueur& J, const std::vector<const Carte*>& cartes, unsigned short nbChoix, std::string choix0 = "");
 
     const Carte* choixParmiPiles(Plateau& P);
 
