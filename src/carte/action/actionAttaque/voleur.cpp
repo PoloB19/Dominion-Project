@@ -42,7 +42,7 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
             // Sinon on laisse au voleur le choix entre les 2
             else if (tresorReveles.size() == 2) {
                 UI::afficherInformation("Quelle carte de " + j->getPseudo() + " écartez-vous ?");
-                size_t idxChoix = J.choixParmiCartes(tresorReveles,1).at(0);
+                size_t idxChoix = UI::choixParmiCartes(J,tresorReveles,1).at(0);
                 cartesEcartees.push_back(tresorReveles.at(idxChoix));
 
                 // la carte trésor non-selectionnée par le voleur est remise dans la défausse du joueur
@@ -59,7 +59,7 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
     }
     else {
         UI::afficherInformation("Voici les cartes que vous venez d'écarter..."); 
-        size_t idxChoix = J.choixParmiCartes(cartesEcartees,1).at(0);
+        size_t idxChoix = UI::choixParmiCartes(J,cartesEcartees,1).at(0);
         J.ajouterADefausse(cartesEcartees.at(idxChoix));
         cartesEcartees.erase(cartesEcartees.begin() + idxChoix);
         for (const Carte* c : cartesEcartees) {

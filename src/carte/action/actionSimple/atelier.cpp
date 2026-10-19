@@ -1,4 +1,5 @@
 #include "atelier.hpp"
+#include "UI_terminal.hpp"
 
 Atelier::Atelier() : ActionSimple("Atelier", 3, "Obtenez une carte coûtant au plus 4 pièces.") {}
 
@@ -6,15 +7,13 @@ Atelier::~Atelier() {}
 
 void Atelier::utiliser(Joueur &J, Plateau &P) const {
 
-    // std::cout << "Vous pouvez obtenir une carte du plateau coûtant au plus 4 pièces." << std::endl;
-
     while(true){
 
         const Carte* carteVoulue = P.getCarteParNom(J.demanderNomCarte());
 
         if (carteVoulue->getPrix() > 4){
 
-            std::cout << "Cette carte dépasse la valeur autorisé (max. 4);" << std::endl;
+            UI::annonceErreur("cette carte dépasse la valeur autorisée (max. 4)");
 
         } else {
 
@@ -24,5 +23,4 @@ void Atelier::utiliser(Joueur &J, Plateau &P) const {
         }
 
     }
-
 }
