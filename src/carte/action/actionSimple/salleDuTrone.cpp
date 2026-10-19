@@ -19,7 +19,7 @@ void SalleDuTrone::utiliser(Joueur& J, Plateau& P) const {
         }
 
         if(mainAction.size() <= 1){
-            UI::annonceErreur("vous n'avez pas de cartes Action dans votre main.");
+            UI::annonceErreur("vous n'avez pas de cartes type Action dans votre main.");
             return;
         }
 
