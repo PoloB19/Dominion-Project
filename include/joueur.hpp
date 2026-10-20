@@ -63,8 +63,6 @@ class Joueur {
         void ajustNbAchat(unsigned short delta) {m_nbAchat += delta;}
         void ajustNbPiece(unsigned short delta) {m_pieces += delta;}
 
-        unsigned short addUnTourJoue() {return ++m_nbToursJoues;}
-        
         //Méthodes
         bool accesMain() const;
         bool accesDefausse() const;
@@ -89,6 +87,8 @@ class Joueur {
         void utiliserCarte(Plateau& P, const Carte* carte);
 
         short compterPoints() const;
+
+        void utiliserCarte();
 
         void finDeTour();
 

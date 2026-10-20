@@ -276,6 +276,11 @@ short Joueur::compterPoints() const {
     return score;
 }
 
+void utiliserCarte() {
+    UI::afficherInformation("Quelle carte souhaitez-vous utiliser ?");
+    std::vector<size_t> idChoix = UI::choixParmiCartes(*this,m_main,1);
+    // à finir
+}
 
 void Joueur::finDeTour() {
 

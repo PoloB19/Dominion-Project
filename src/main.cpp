@@ -11,7 +11,8 @@ enum Ecran {
     CREATION_COMPOSITION,
     COMPO_ALEATOIRE,
     MODE_RAPIDE,
-    TOUR_JOUEUR,
+    TOUR_JOUEUR_ACTION,
+    TOUR_JOUEUR_ACHAT,
     QUITTER_PARTIE,
     QUITTER_JEU
 };
@@ -129,7 +130,7 @@ int main(){
             else {
                 ecran = Ecran::ACCUEIL;
             }
-            /* j'ai pas mis de switch ici parce que redondant :
+            /* j'ai pas mis de switch ici parce que redondant sinon :
             switch (UI::ecranNouvellePartie()) 
             {
                 case 1 :
@@ -219,7 +220,7 @@ int main(){
         }
 
         case Ecran::MODE_RAPIDE :
-        
+
             if (UI::ecranModeRapide()) {
                 P.setModeRapide();
             }
@@ -227,10 +228,52 @@ int main(){
             ecran = Ecran::TOUR_JOUEUR;
             break;
 
-        case Ecran::TOUR_JOUEUR :
+        case Ecran::TOUR_JOUEUR_ACTION :
 
-            UI::ecranTourJoueur(P.getJoueurs().at(numJoueur++),P,0);
+            if (numJoueur == P.getJoueurs().size()) {numJoueur = 0;}
+            switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,0)) 
+            {
+            case 1 :
+                UI::ongletDescriptionCartes(Cartes::catalogue());
+                break;
+            case 2 :
+                // utiliser une carte : créer fonction dans joueur, choixParmiCartes de la main concerné
+                break;
+            case 3 : // ecarter une carte
+                UI::
+                break;
+            case 4 :
+                ecran = Ecran::TOUR_JOUEUR_ACHAT;
+                break;
+            case 0 :
+                ecran = Ecran::QUITTER_PARTIE;
+                break;
+            }
+            break;
 
+        case Ecran::TOUR_JOUEUR_ACHAT :
+
+            switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,1)) 
+            {
+            case 1 :
+                UI::ongletDescriptionCartes(Cartes::catalogue());
+                break;
+            case 2 :
+                // acheter une carte : créer fonction dans joueur ou UI à voir mais c'est choix piles concernés
+                break;
+            case 3 :
+                P.getJoueurs().at(numJoueur).finDeTour();
+                numJoueur++;
+                ecran = Ecran::TOUR_JOUEUR_ACTION;
+                break;
+            case 0 :
+                ecran = Ecran::QUITTER_PARTIE;
+                break;
+            }
+            break;
+
+        case Ecran::QUITTER_PARTIE :
+            // à faire dans UI
             break;
 
         case Ecran::QUITTER_JEU :

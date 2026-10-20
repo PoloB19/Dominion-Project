@@ -496,7 +496,7 @@ void UI::ecranMessageDemarragePartie(bool depuisSauvegarde) {
 size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
 
     clearScreen();
-    afficherTitre("TOUR " + std::to_string(J.addUnTourJoue()) + " - " + J.getPseudo());
+    afficherTitre("TOUR " + std::to_string(J.getNbTourJoues() + 1) + " - " + J.getPseudo());
     sautDeLigne();
 
     afficherInformation("Piles centrales du plateau (triées par prix) :");
