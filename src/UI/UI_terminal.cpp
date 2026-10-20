@@ -173,13 +173,13 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
 
     if (!choix0.empty()) {
         std::cout << "0 : " << choix0;
-        retourALigne();
     }
 
     while (true) {
 
         retourALigne();
         separateursChoix();
+        retourALigne();
         std::cout << "> ";
         std::getline(std::cin >> std::ws, UI::input);
         retourALigne();
@@ -294,12 +294,12 @@ const Carte* UI::choixParmiPiles(Plateau& P){
     }
 }
 
-
 bool UI::choixOuiNon(const std::string& question) {
 
     while (true) {
 
         afficherInformation(question);
+        retourALigne();
         separateursChoix();
         retourALigne();
         std::cout << " > ";
@@ -354,6 +354,7 @@ size_t UI::ecranNouvellePartie() {
     clearScreen();
 
     afficherTitre("COMMENCER PARTIE");
+    sautDeLigne();
 
     afficherInformation("Avec quelle composition souhaitez-vous jouer?");
 
@@ -363,13 +364,13 @@ size_t UI::ecranNouvellePartie() {
     UI::listeChoix.clear();
     for(const Composition& compo : Plateau::getCompositions()){
 
-        compoString = compo.getNom() + " [";
+        compoString = compo.getNom() + " |";
 
         for (const auto& pair : compo.getCompositionPartie()) {
-            compoString += pair.first->getNom() + " ";
+            compoString += pair.first->getNom() + " | ";
         }
 
-        UI::listeChoix.push_back(compoString + "]");
+        UI::listeChoix.push_back(compoString);
     }
 
     UI::listeChoix.push_back("Créer sa propre composition");
@@ -418,6 +419,7 @@ std::vector<std::string> UI::ecranChoixJoueurs() {
     std::cout << "1 : Terminer";
     retourALigne();
     std::cout << "0 : Retour";
+    retourALigne();
     separateursChoix();
     retourALigne();
 
@@ -487,9 +489,9 @@ void UI::ecranMessageDemarragePartie(bool depuisSauvegarde) {
     std::cout << "DE LA PARTIE, QUE LE MEILLEUR GAGNE !";
     retourALigne();
     std::cout << "§" << std::string(longueurMaxLigne - 2, '~') << "§";
-    retourALigne();
+    sautDeLigne();
 
-    animationChargement(5);
+    animationChargement(4);
 
 }
 
@@ -512,6 +514,83 @@ size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
     return phaseSuivante ? ongletPhaseAchat() : ongletPhaseAction();
 }
 
+size_t UI::ecranQuitterPartie() {
+
+    clearScreen();
+    afficherTitre("QUITTER LA PARTIE");
+    sautDeLigne();
+    afficherInformation("Vous vous apprêtez à quitter la partie.");
+    sautDeLigne();
+    separateursTitre();
+    sautDeLigne();
+
+    //A TESTER VOIR SI CA MARCHE
+    std::string avecSauv = "Avec sauvegarde";
+    std::string sansSauv = "Sans sauvegarde";
+
+    avecSauv += GREEN;
+    sansSauv += RED;
+
+    UI::listeChoix = {
+        avecSauv,
+        sansSauv
+
+    };
+
+    UI::choix0 = "Annuler et reprendre";
+
+    return choixParmiChiffre(UI::listeChoix, UI::choix0);
+
+}
+
+size_t UI::ecranFinDePartie(Plateau& P) {
+
+    clearScreen();
+
+    afficherTitre("FIN DE PARTIE");
+
+    sautDeLigne();
+
+    afficherInformation("Le gagnant va être annoncé...");
+
+    sautDeLigne();
+
+    animationChargement(4);
+
+    sautDeLigne();
+
+    std::vector<Joueur *> gagnants = P.determinerGagnant();
+
+    std::cout << GREEN << "Un grand BRAVO à ";
+
+    if(gagnants.size() == 1){
+
+        std::cout << gagnants.at(0)->getPseudo() << " !!!" << RESET;
+        retourALigne();
+        std::cout << "Il a obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points.";
+        retourALigne();
+        std::cout << "Qui viendra le détrôner :) ?";
+
+    } else {
+
+        std::string pseudosGagants;
+        for (const Joueur * J : gagnants){
+            pseudosGagants += J->getPseudo() + ", ";
+        }
+
+        std::cout << pseudosGagants << " !!!" << RESET;
+        std::cout << "Ils ont obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points à égalité";
+        retourALigne();
+        std::cout << "Qui viendra les détrôner :) ?";
+
+    }
+
+    sautDeLigne();
+
+    return choixParmiChiffre({}, "Retour au menu principal");
+
+}
+
 //Onglets
 
 std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
@@ -520,7 +599,7 @@ std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
 
     sautDeLigne();
 
-    afficherInformation("Entrez un à un les noms des 10 cartes sélectionnée :");
+    afficherInformation("Entrez un à un les noms des 10 cartes sélectionnées :");
     retourALigne();
 
     //Renvoie les ID des cartes Royaume du catalogue
@@ -578,10 +657,9 @@ size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& listeCarte) 
     sautDeLigne();
 
     for (const Carte* c : listeCarte){
-
-        std::cout << c->getNom() << " : " << c->getPrix() << "pcs";
+        std::cout << UNDERLINE << c->getNom() << " :" << RESET << ITALIC << c->getPrix() << " pcs" << RESET;
         retourALigne();
-        std::cout << c->getDescription();
+        std::cout << ITALIC << c->getDescription() << RESET;
         sautDeLigne();
     }
 
