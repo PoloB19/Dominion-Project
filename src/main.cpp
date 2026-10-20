@@ -109,7 +109,7 @@ int main(){
             case 2 :
                 // faire ce qui est fait quand reprise de sauvegarde
                 UI::ecranMessageDemarragePartie(true);
-                ecran = Ecran::TOUR_JOUEUR;
+                ecran = Ecran::TOUR_JOUEUR_ACTION;
                 break;
             case 0 :
                 ecran = Ecran::QUITTER_JEU;
@@ -120,47 +120,16 @@ int main(){
         case Ecran::NOUVELLE_PARTIE :
         {
             size_t choix = UI::ecranNouvellePartie();
-            if (choix > 0 && choix < 6) {
+            if (choix > 0 && choix <= Plateau::getCompositions().size()) {
                 P = Plateau(UI::ecranChoixJoueurs(),choix-1);
                 ecran = Ecran::MODE_RAPIDE;
             }
-            else if (choix == 6) {
+            else if (choix == Plateau::getCompositions().size()+1) {
                 ecran = Ecran::CREATION_COMPOSITION;
             }
             else {
                 ecran = Ecran::ACCUEIL;
             }
-            /* j'ai pas mis de switch ici parce que redondant sinon :
-            switch (UI::ecranNouvellePartie()) 
-            {
-                case 1 :
-                    P = Plateau(UI::ecranChoixJoueurs(),0);
-                    ecran = Ecran::MODE_RAPIDE;
-                    break;
-                case 2 :
-                    P = Plateau(UI::ecranChoixJoueurs(),1);
-                    ecran = Ecran::MODE_RAPIDE;
-                    break;
-                case 3 :
-                    P = Plateau(UI::ecranChoixJoueurs(),2);
-                    ecran = Ecran::MODE_RAPIDE;
-                    break;
-                case 4 :
-                    P = Plateau(UI::ecranChoixJoueurs(),3);
-                    ecran = Ecran::MODE_RAPIDE;
-                    break;
-                case 5 :
-                    P = Plateau(UI::ecranChoixJoueurs(),4);
-                    ecran = Ecran::MODE_RAPIDE;
-                    break;
-                case 6 :
-                    ecran = Ecran::CREATION_COMPOSITION;
-                    break;
-                case 0 :
-                    ecran = Ecran::ACCUEIL;
-                    break;
-            }
-            */
             break;
         }
 
@@ -180,7 +149,7 @@ int main(){
                 for (auto idCarte : idCartesCompo) {
                     newCompo.insert({Cartes::royaume().at(idCarte),10});
                 }
-                Plateau::addComposition(Composition("CompoTemporaire",newCompo));
+                Plateau::addComposition(Composition("Composition Personnelle",newCompo));
                 P = Plateau(UI::ecranChoixJoueurs(),Plateau::getCompositions().size()-1);
                 
                 ecran = Ecran::MODE_RAPIDE;
@@ -201,7 +170,7 @@ int main(){
 
         case Ecran::COMPO_ALEATOIRE :
         {
-            Composition newCompo;
+            Composition newCompo = Composition ("tmp",{});
             switch (UI::ongletChoixAleatoireCartesComposition(newCompo))
             {
                 case 1 :
@@ -225,7 +194,7 @@ int main(){
                 P.setModeRapide();
             }
             UI::ecranMessageDemarragePartie();
-            ecran = Ecran::TOUR_JOUEUR;
+            ecran = Ecran::TOUR_JOUEUR_ACTION;
             break;
 
         case Ecran::TOUR_JOUEUR_ACTION :
@@ -237,10 +206,14 @@ int main(){
                 UI::ongletDescriptionCartes(Cartes::catalogue());
                 break;
             case 2 :
-                // utiliser une carte : créer fonction dans joueur, choixParmiCartes de la main concerné
+            {
+                Joueur J = P.getJoueurs().at(numJoueur);
+                size_t idxCarte = UI::choixParmiCartes(J,J.getMain(),1).at(0);
+                J.utiliserCarte(P,J.getMain().at(idxCarte));
                 break;
-            case 3 : // ecarter une carte
-                UI::
+            }
+            case 3 : 
+                // ecarter une carte
                 break;
             case 4 :
                 ecran = Ecran::TOUR_JOUEUR_ACHAT;
