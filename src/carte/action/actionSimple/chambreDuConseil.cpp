@@ -6,8 +6,8 @@ ChambreDuConseil::~ChambreDuConseil() {}
 
 void ChambreDuConseil::utiliser(Joueur& J, Plateau& P) const {
 
-    for (Joueur* j : P.getJoueurs()){
-        j->piocher(1);
+    for (Joueur& j : P.getJoueurs()){
+        j.piocher(1);
     }
 
     // Le joueur a déjà pioché 1 fois à la boucle précédente

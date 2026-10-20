@@ -523,8 +523,8 @@ std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
     afficherInformation("Entrez un à un les noms des 10 cartes sélectionnée :");
     retourALigne();
 
-    //Renvoie les ID des cartes du catalogue
-    return choixParmiCartes(J, Cartes::catalogue(), 10, "Retour");
+    //Renvoie les ID des cartes Royaume du catalogue
+    return choixParmiCartes(J, Cartes::royaume(), 10, "Retour");
 
 }
 

@@ -5,37 +5,17 @@
 #include <string>
 #include <map>
 
-//SERVENT A QUOI??
-#include <sstream>
-#include <limits>
-
-
-// Fonction qui vérifie et convertit la saisie en unsigned short
-bool essayerConvertirNbJoueurs(const std::string& saisie, unsigned short& resultat) {
-    if (saisie.empty()) return false;
-
-    // Vérifier qu'il n'y a que des chiffres (pas de signe négatif '-' ou d'espaces)
-    for (char c : saisie) {
-        if (!std::isdigit(c)) return false;
-    }
-
-    try {
-        // Convertir en valeur numérique plus large pour détecter le dépassement de capacité
-        unsigned long valeur = std::stoul(saisie);
-        
-        // Vérifier si la valeur entre dans les limites d'un unsigned short
-        if (valeur > std::numeric_limits<unsigned short>::max()) {
-            return false;
-        }
-        
-        resultat = static_cast<unsigned short>(valeur);
-        return true;
-    } 
-    catch (...) {
-        // Gère les erreurs si le nombre est trop grand pour un unsigned long
-        return false;
-    }
-}
+enum Ecran {
+    ACCUEIL,
+    NOUVELLE_PARTIE,
+    CREATION_COMPOSITION,
+    COMPO_ALEATOIRE,
+    MODE_RAPIDE,
+    TOUR_JOUEUR_ACTION,
+    TOUR_JOUEUR_ACHAT,
+    QUITTER_PARTIE,
+    QUITTER_JEU
+};
 
 
 int main(){
@@ -106,39 +86,200 @@ int main(){
 
     Plateau::setCompositions(compositions);
 
-    // CREATION JOUEURS
-    std::string saisie;
-    unsigned short nbJoueur = 0;
 
-    bool saisieValide = false;
-    while (!saisieValide) {
-        std::cout << "Entrez le nombre de joueurs : ";
-        std::cin >> saisie;
+    // VARIABLES GLOBALES 
+    Plateau P = Plateau({},0);
+    size_t numJoueur = 0;
 
-        if (essayerConvertirNbJoueurs(saisie, nbJoueur)) {
-            saisieValide = true;
-        } else {
-            std::cout << "Erreur : Saisie invalide (entrez un nombre entier positif valide).\n\n";
+    Ecran ecran = Ecran::ACCUEIL;
+
+
+    // DEMARRAGE DU JEU
+    while (true) {
+
+        switch (ecran) 
+        {
+        case Ecran::ACCUEIL :
+
+            switch (UI::ecranAccueil()) 
+            {
+            case 1 : 
+                ecran = Ecran::NOUVELLE_PARTIE;
+                break;
+            case 2 :
+                // faire ce qui est fait quand reprise de sauvegarde
+                UI::ecranMessageDemarragePartie(true);
+                ecran = Ecran::TOUR_JOUEUR;
+                break;
+            case 0 :
+                ecran = Ecran::QUITTER_JEU;
+                break;
+            }
+            break;
+
+        case Ecran::NOUVELLE_PARTIE :
+        {
+            size_t choix = UI::ecranNouvellePartie();
+            if (choix > 0 && choix < 6) {
+                P = Plateau(UI::ecranChoixJoueurs(),choix-1);
+                ecran = Ecran::MODE_RAPIDE;
+            }
+            else if (choix == 6) {
+                ecran = Ecran::CREATION_COMPOSITION;
+            }
+            else {
+                ecran = Ecran::ACCUEIL;
+            }
+            /* j'ai pas mis de switch ici parce que redondant sinon :
+            switch (UI::ecranNouvellePartie()) 
+            {
+                case 1 :
+                    P = Plateau(UI::ecranChoixJoueurs(),0);
+                    ecran = Ecran::MODE_RAPIDE;
+                    break;
+                case 2 :
+                    P = Plateau(UI::ecranChoixJoueurs(),1);
+                    ecran = Ecran::MODE_RAPIDE;
+                    break;
+                case 3 :
+                    P = Plateau(UI::ecranChoixJoueurs(),2);
+                    ecran = Ecran::MODE_RAPIDE;
+                    break;
+                case 4 :
+                    P = Plateau(UI::ecranChoixJoueurs(),3);
+                    ecran = Ecran::MODE_RAPIDE;
+                    break;
+                case 5 :
+                    P = Plateau(UI::ecranChoixJoueurs(),4);
+                    ecran = Ecran::MODE_RAPIDE;
+                    break;
+                case 6 :
+                    ecran = Ecran::CREATION_COMPOSITION;
+                    break;
+                case 0 :
+                    ecran = Ecran::ACCUEIL;
+                    break;
+            }
+            */
+            break;
+        }
+
+        case Ecran::CREATION_COMPOSITION :
+
+            switch (UI::ecranCreationComposition()) 
+            {
+            case 1 :
+            {
+                Joueur j_tmp = Joueur("Joueurs");
+                std::vector<size_t> idCartesCompo = UI::ongletChoixCartesComposition(j_tmp);
+                if (idCartesCompo.empty()) {
+                    ecran = Ecran::ACCUEIL;
+                    break;
+                }
+                std::map<const Carte*, unsigned short> newCompo;
+                for (auto idCarte : idCartesCompo) {
+                    newCompo.insert({Cartes::royaume().at(idCarte),10});
+                }
+                Plateau::addComposition(Composition("CompoTemporaire",newCompo));
+                P = Plateau(UI::ecranChoixJoueurs(),Plateau::getCompositions().size()-1);
+                
+                ecran = Ecran::MODE_RAPIDE;
+                break;
+            }
+            case 2 :
+                ecran = Ecran::COMPO_ALEATOIRE;
+                break;
+            case 3 :
+                UI::ongletDescriptionCartes(Cartes::royaume());
+                // on ne change pas la valeur de la variable écran pour revenir dans ce menu
+                break;
+            case 0 :
+                ecran = Ecran::ACCUEIL;
+                break;
+            }
+            break;
+
+        case Ecran::COMPO_ALEATOIRE :
+        {
+            Composition newCompo;
+            switch (UI::ongletChoixAleatoireCartesComposition(newCompo))
+            {
+                case 1 :
+                    Plateau::addComposition(newCompo);
+                    P = Plateau(UI::ecranChoixJoueurs(),Plateau::getCompositions().size()-1);
+                    ecran = Ecran::MODE_RAPIDE;
+                    break;
+                case 2 :
+                    // on revient sur l'écran compo_aléatoire
+                    break;
+                case 0 :
+                    ecran = Ecran::ACCUEIL;
+                    break;
+            }
+            break;
+        }
+
+        case Ecran::MODE_RAPIDE :
+
+            if (UI::ecranModeRapide()) {
+                P.setModeRapide();
+            }
+            UI::ecranMessageDemarragePartie();
+            ecran = Ecran::TOUR_JOUEUR;
+            break;
+
+        case Ecran::TOUR_JOUEUR_ACTION :
+
+            if (numJoueur == P.getJoueurs().size()) {numJoueur = 0;}
+            switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,0)) 
+            {
+            case 1 :
+                UI::ongletDescriptionCartes(Cartes::catalogue());
+                break;
+            case 2 :
+                // utiliser une carte : créer fonction dans joueur, choixParmiCartes de la main concerné
+                break;
+            case 3 : // ecarter une carte
+                UI::
+                break;
+            case 4 :
+                ecran = Ecran::TOUR_JOUEUR_ACHAT;
+                break;
+            case 0 :
+                ecran = Ecran::QUITTER_PARTIE;
+                break;
+            }
+            break;
+
+        case Ecran::TOUR_JOUEUR_ACHAT :
+
+            switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,1)) 
+            {
+            case 1 :
+                UI::ongletDescriptionCartes(Cartes::catalogue());
+                break;
+            case 2 :
+                // acheter une carte : créer fonction dans joueur ou UI à voir mais c'est choix piles concernés
+                break;
+            case 3 :
+                P.getJoueurs().at(numJoueur).finDeTour();
+                numJoueur++;
+                ecran = Ecran::TOUR_JOUEUR_ACTION;
+                break;
+            case 0 :
+                ecran = Ecran::QUITTER_PARTIE;
+                break;
+            }
+            break;
+
+        case Ecran::QUITTER_PARTIE :
+            // à faire dans UI
+            break;
+
+        case Ecran::QUITTER_JEU :
+            return 0;
         }
     }
-
-    std::vector<Joueur*> joueurs;
-
-    for (int i=0; i<nbJoueur ; i++) {
-        std::string pseudo;
-
-        std::cout << "Entrez votre pseudo : ";
-        std::cin >> pseudo;
-        //confirmer ? o/n de UI
-        //CORRIGER CA CAR JOUEURS EST UN VECTOR DE POINTEURS DONC IL FAUT CREER DE FACON DURABLE LES ADRESSES DES JOUEURS
-        //joueurs.push_back(Joueur(pseudo));
-    }
-
-    // CHOIX COMPOSITION avant de creer le plateau vu que la compo est passée en paramètre
-    
-    Plateau P = Plateau(joueurs,0);
-    // 7 cuivres et 3 domaines par joueur au début
-
 
     return 0;
 }
@@ -175,5 +316,32 @@ Par exemple au lieu d'avoir un autre switch dans le case 1, on appelrait une fon
 C'est des idées par ci par là mais normalement il y a très peu a coder dans le main : 
 AUCUNE vérification, AUCUNE variable, AUCUN cas bizarre, AUCUNE fonction utile
 --> juste des appels de fonction de UI associé à des switch c'est TOUT
+
+*/
+
+
+//pour moi il faut 3 variables : joueur J, pateau P, size_t numTour
+
+/* CONTRE PROPOSITION POUR NE PAS ÊTRE DANS UN SWITCH DE SWITCH. enum Ecran
+
+    Ecran ecran;
+
+    switch (ecran) :
+        case Ecran::Accueil :
+            switch (ecranAccueil()) {
+                case 1:
+                    ecran = Ecran::NouvellePartie;
+                    break;
+            }
+            break;
+
+        case Ecran::NouvellePartie :
+            switch (ecranNouvellePartie()) {
+                case 1:
+                    ecran = Ecran::NouvellePartie;
+                    break;
+            }
+            break;
+                
 
 */

@@ -53,7 +53,7 @@ namespace UI {
 
         bool ecranModeRapide();
 
-        void ecranMessageDemarragePartie(bool depuisSauvegarde);
+        void ecranMessageDemarragePartie(bool depuisSauvegarde = false);
 
         size_t ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante);
 

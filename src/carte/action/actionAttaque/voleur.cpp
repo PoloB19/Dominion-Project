@@ -12,27 +12,27 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
     std::vector<const Carte*> tresorReveles = {};
     const Carte* carteRevelee;
 
-    for (Joueur* j : P.getJoueurs()) {
+    for (Joueur& j : P.getJoueurs()) {
 
-        if (!(j == &J)){
+        if (&j != &J){
 
             // IL FAUT GERER LE CAS OU UN JOUEUR POSSEDE DOUVES OU DES REACTIONS EN GENERAL car on ne révèle pas ses cartes. gérer par le plateau ?
 
             // On révèle les 2 cartes de la pioche d'un joueur
-            carteRevelee = j->revelerCarte(Emplacement::PIOCHE);
+            carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
             if (carteRevelee->getType() == "Tresor") {
                 tresorReveles.push_back(carteRevelee);
             }
             else {
-                j->ajouterADefausse(carteRevelee);
+                j.ajouterADefausse(carteRevelee);
             }
 
-            carteRevelee = j->revelerCarte(Emplacement::PIOCHE);
+            carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
             if (carteRevelee->getType() == "Tresor") {
                 tresorReveles.push_back(carteRevelee);
             }
             else {
-                j->ajouterADefausse(carteRevelee);
+                j.ajouterADefausse(carteRevelee);
             }
         
             // Si seulement une des 2 cartes révélées était un trésor, on l'écarte.
@@ -41,14 +41,14 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
             }
             // Sinon on laisse au voleur le choix entre les 2
             else if (tresorReveles.size() == 2) {
-                UI::afficherInformation("Quelle carte de " + j->getPseudo() + " écartez-vous ?");
+                UI::afficherInformation("Quelle carte de " + j.getPseudo() + " écartez-vous ?");
                 size_t idxChoix = UI::choixParmiCartes(J,tresorReveles,1).at(0);
                 cartesEcartees.push_back(tresorReveles.at(idxChoix));
 
                 // la carte trésor non-selectionnée par le voleur est remise dans la défausse du joueur
                 for (size_t i = 0; i<tresorReveles.size(); i++) {
                     if (i!=idxChoix) {
-                        j->ajouterADefausse(tresorReveles.at(i));
+                        j.ajouterADefausse(tresorReveles.at(i));
                     }
                 }
             }

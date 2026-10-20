@@ -7,12 +7,17 @@
 
 std::vector<Composition> Plateau::m_compositions = {};
 
-Plateau::Plateau(std::vector<Joueur*> joueurs, size_t idCompositionPartie) : m_joueurs(joueurs), m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie).getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {
+Plateau::Plateau(std::vector<std::string> joueurs, size_t idCompositionPartie) : m_idCompositionPartie(idCompositionPartie), m_piles(Plateau::getCompositions().at(idCompositionPartie).getCompositionPartie()), m_rebut(std::stack<const Carte*>()) {
+    // CREATION JOUEURS
+    for (const std::string& pseudo : joueurs) {
+        m_joueurs.emplace_back(pseudo); // construit le joueur directement dans le vecteur
+    }
+    
     // CARTES COMMUNES A TOUTES LES COMPOSITIONS :
-    m_piles.insert({Cartes::cuivre(),60-joueurs.size()*7});
+    m_piles.insert({Cartes::cuivre(),60-m_joueurs.size()*7});
     m_piles.insert({Cartes::argent(),40});
     m_piles.insert({Cartes::or_(),30});
-    switch(joueurs.size()) {
+    switch(m_joueurs.size()) {
         // nb provinces et malédiction en fonction du nb de joueurs
         case 2 :
             m_piles.insert({Cartes::domaine(),8});
@@ -48,7 +53,7 @@ const Carte* Plateau::getCarteParNom(const std::string& nomCarte) const {
 
 void Plateau::ajoutRebut(const Carte* carteRebutee) {
     m_rebut.push(carteRebutee);
-};
+}
 
 void Plateau::retirerCartePlateau(const Carte* carte){
     if (m_piles.at(carte) > 0) {
@@ -56,7 +61,7 @@ void Plateau::retirerCartePlateau(const Carte* carte){
     } else {
         UI::annonceErreur("cette pile est vide");
     }
-};
+}
 
 bool Plateau::checkerEndCondition(){ 
 
@@ -76,36 +81,45 @@ bool Plateau::checkerEndCondition(){
     }
 
     return compteur_tmp >= 3;
-};
+}
 
 std::vector<Joueur*> Plateau::determinerGagnant(){
 
     //On suppose le premier joueur gagnant
-    std::vector<Joueur*> gagnantsTmp = {m_joueurs.at(0)};
+    std::vector<Joueur*> gagnantsTmp = {&m_joueurs.at(0)};
+    short meilleurScore = m_joueurs.at(0).compterPoints();
 
-    for (auto J = m_joueurs.begin() + 1; J != m_joueurs.end(); ++J){
+    for (size_t i = 1; i < m_joueurs.size(); i++) {
+
+        Joueur& j = m_joueurs.at(i);
+        short score = j.compterPoints();
 
         //Si le joueur a un meilleur score que les gagnants actuels
-
-        if((*J)->compterPoints() > gagnantsTmp.at(0)->compterPoints()){
-            gagnantsTmp = {*J};
+        if(score > meilleurScore){
+            gagnantsTmp = {&j};
+            meilleurScore = score;
 
         //Si le joueur a un score égal aux gagnants actuels
-        } else if ((*J)->compterPoints() == gagnantsTmp.at(0)->compterPoints()){
+        } else if (score == meilleurScore){
 
             //Si le joueur a - de tour joués que les gagnants actuels
-            if ((*J)->getNbTourJoues() < gagnantsTmp.at(0)->getNbTourJoues()){
+            if (j.getNbTourJoues() < gagnantsTmp.at(0)->getNbTourJoues()){
 
-                gagnantsTmp = {*J};
+                gagnantsTmp = {&j};
 
             //Si le joueur et les gagnants actuels ont le même score et le même nombre de tours joués
-            } else if ((*J)->getNbTourJoues() == gagnantsTmp.at(0)->getNbTourJoues()){
-                gagnantsTmp.push_back(*J);
+            } else if (j.getNbTourJoues() == gagnantsTmp.at(0)->getNbTourJoues()){
+                gagnantsTmp.push_back(&j);
             }
 
         }
     }
-
+    
     return gagnantsTmp;
+}
 
-}; 
+void Plateau::setModeRapide() {
+    for (auto& [carte, quantite] : m_piles) {
+        quantite = 1;
+    }
+}

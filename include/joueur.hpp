@@ -54,7 +54,6 @@ class Joueur {
         unsigned short getNbAction() const {return m_nbAction;}
         unsigned short getNbAchat() const {return m_nbAchat;}
         unsigned short getNbPieces() const {return m_pieces;}
-
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
 
         unsigned short getTailleDeck() const {return m_pioche.size() + m_main.size() + m_defausse.size();}
@@ -88,6 +87,8 @@ class Joueur {
         void utiliserCarte(Plateau& P, const Carte* carte);
 
         short compterPoints() const;
+
+        void utiliserCarte();
 
         void finDeTour();
 
