@@ -18,8 +18,6 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
     m_pieces = 0;
     
     m_nbToursJoues = 0;
-
-    // ICI QUE DOIVENT ETRE MISES DANS LA DEFAUSSE LES CARTES DE DEMARRAGE DE CHAQUE JOUEUR : 7cuivres et 3 domaines
 }
 
 Joueur::~Joueur() {}
@@ -242,8 +240,10 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
 
 
 void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
-    enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU);
-    carte->utiliser(*this, P);
+    if (accesMain()) {
+        enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU);
+        carte->utiliser(*this, P);
+    }
 }
 
 // --- Rafraîchir attributs ---
@@ -274,12 +274,6 @@ short Joueur::compterPoints() const {
     }
 
     return score;
-}
-
-void utiliserCarte() {
-    UI::afficherInformation("Quelle carte souhaitez-vous utiliser ?");
-    std::vector<size_t> idChoix = UI::choixParmiCartes(*this,m_main,1);
-    // à finir
 }
 
 void Joueur::finDeTour() {

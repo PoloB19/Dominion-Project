@@ -11,6 +11,9 @@ Plateau::Plateau(std::vector<std::string> joueurs, size_t idCompositionPartie) :
     // CREATION JOUEURS
     for (const std::string& pseudo : joueurs) {
         m_joueurs.emplace_back(pseudo); // construit le joueur directement dans le vecteur
+        Joueur& j = m_joueurs.back();
+        for (int i = 0; i < 7; i++) j.ajouterADefausse(Cartes::cuivre());
+        for (int i = 0; i < 3; i++) j.ajouterADefausse(Cartes::domaine());
     }
     
     // CARTES COMMUNES A TOUTES LES COMPOSITIONS :

@@ -88,8 +88,6 @@ class Joueur {
 
         short compterPoints() const;
 
-        void utiliserCarte();
-
         void finDeTour();
 
         //Interactions
