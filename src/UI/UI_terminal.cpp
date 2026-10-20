@@ -225,6 +225,7 @@ std::vector<size_t> UI::choixParmiCartes(const Joueur& J, const std::vector<cons
     }
         
     separateursChoix();
+    retourALigne();
 
     std::vector<size_t> idChoix = {};
     while (idChoix.size() < nbChoix){
@@ -524,17 +525,15 @@ size_t UI::ecranQuitterPartie() {
     separateursTitre();
     sautDeLigne();
 
-    //A TESTER VOIR SI CA MARCHE
     std::string avecSauv = "Avec sauvegarde";
     std::string sansSauv = "Sans sauvegarde";
 
-    avecSauv += GREEN;
-    sansSauv += RED;
+    avecSauv += GREEN + RESET;
+    sansSauv += RED + RESET;
 
     UI::listeChoix = {
         avecSauv,
         sansSauv
-
     };
 
     UI::choix0 = "Annuler et reprendre";
@@ -657,7 +656,7 @@ size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& listeCarte) 
     sautDeLigne();
 
     for (const Carte* c : listeCarte){
-        std::cout << UNDERLINE << c->getNom() << " :" << RESET << ITALIC << c->getPrix() << " pcs" << RESET;
+        std::cout << UNDERLINE << c->getNom() << " :" << RESET << c->getPrix() << " pcs";
         retourALigne();
         std::cout << ITALIC << c->getDescription() << RESET;
         sautDeLigne();
