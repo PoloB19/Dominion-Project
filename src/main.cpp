@@ -201,7 +201,7 @@ int main(){
         {
             if (numJoueur == P.getJoueurs().size()) {numJoueur = 0;}
             Joueur& J = P.getJoueurs().at(numJoueur);
-            
+
             switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,0)) 
             {
             case 1 :
@@ -216,8 +216,13 @@ int main(){
                 break;
             }
             case 3 : 
-                // ecarter une carte A FAIRE
+            {
+                std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1);
+                if (!idxCarte.empty()) {
+                    J.ecarter(J.getMain().at(idxCarte.at(0))->getNom(),P);
+                }
                 break;
+            }
             case 4 :
                 ecran = Ecran::TOUR_JOUEUR_ACHAT;
                 break;
