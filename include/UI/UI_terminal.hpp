@@ -57,6 +57,9 @@ namespace UI {
 
         size_t ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante);
 
+        size_t ecranQuitterPartie();
+
+        size_t ecranFinDePartie(Plateau& P);
 
         // Onglets
         std::vector<size_t> ongletChoixCartesComposition(Joueur &J);
