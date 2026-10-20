@@ -93,39 +93,38 @@ void Joueur::ajouterAEnJeu(const Carte* carte){
 }
 
 
-void Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
+bool Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
 
     const Carte* carteEnlevee = nullptr;
 
     for (size_t i = 0; i < m_main.size(); i++) {
             
-            if (m_main.at(i)->getNom() == nomCarte) {
-                
-                carteEnlevee = m_main.at(i);
-                m_main.erase(m_main.begin() + i);
-                      
-                break; //Pour n'enlever qu'une seule carte
+        if (m_main.at(i)->getNom() == nomCarte) {
+            
+            carteEnlevee = m_main.at(i);
+            m_main.erase(m_main.begin() + i);
+                    
+            switch (vers)
+            {
+            case Emplacement::DEFAUSSE :
+                ajouterADefausse(carteEnlevee);
+                break;
+            
+            case Emplacement::PIOCHE : 
+                ajouterAPioche(carteEnlevee);
+                break;
+
+            case Emplacement::EN_JEU :
+                ajouterAEnJeu(carteEnlevee);
+                break;
+
+            default:
+                break;
             }
+            return true;
         }
-
-    switch (vers)
-    {
-    case Emplacement::DEFAUSSE :
-        ajouterADefausse(carteEnlevee);
-        break;
-    
-    case Emplacement::PIOCHE : 
-        ajouterAPioche(carteEnlevee);
-        break;
-
-    case Emplacement::EN_JEU :
-        ajouterAEnJeu(carteEnlevee);
-        break;
-
-    default:
-        break;
     }
-    
+    return false; 
 }
 
 // --- Méthodes ---
@@ -241,9 +240,21 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
 
 void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
     if (accesMain()) {
-        enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU);
-        carte->utiliser(*this, P);
+
+        if (enleverDepuisMain(carte->getNom(),Emplacement::EN_JEU)) {
+
+            if (carte->getType()=="Action"){
+                if (m_nbAction < 1) {
+                    UI::annonceErreur("vous n'avez plus d'action disponible");
+                    return;
+                }
+                m_nbAction--;
+            }
+            carte->utiliser(*this, P);
+        }
+        else UI::annonceErreur("bug dans enleverDepuisMain");
     }
+    else UI::annonceErreur("votre main est vide");
 }
 
 // --- Rafraîchir attributs ---

@@ -14,6 +14,7 @@ Plateau::Plateau(std::vector<std::string> joueurs, size_t idCompositionPartie) :
         Joueur& j = m_joueurs.back();
         for (int i = 0; i < 7; i++) j.ajouterADefausse(Cartes::cuivre());
         for (int i = 0; i < 3; i++) j.ajouterADefausse(Cartes::domaine());
+        j.piocher(5);
     }
     
     // CARTES COMMUNES A TOUTES LES COMPOSITIONS :
