@@ -201,6 +201,7 @@ int main(){
         {
             if (numJoueur == P.getJoueurs().size()) {numJoueur = 0;}
             Joueur& J = P.getJoueurs().at(numJoueur);
+            
             switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,0)) 
             {
             case 1 :
