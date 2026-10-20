@@ -74,7 +74,7 @@ class Joueur {
         void ajouterADefausse(const Carte* carte);
         void ajouterAEnJeu(const Carte* carte);
 
-        void enleverDepuisMain(const std::string& nomCarte, Emplacement vers);
+        bool enleverDepuisMain(const std::string& nomCarte, Emplacement vers);
         
         void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);

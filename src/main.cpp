@@ -198,8 +198,9 @@ int main(){
             break;
 
         case Ecran::TOUR_JOUEUR_ACTION :
-
+        {
             if (numJoueur == P.getJoueurs().size()) {numJoueur = 0;}
+            Joueur& J = P.getJoueurs().at(numJoueur);
             switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,0)) 
             {
             case 1 :
@@ -207,13 +208,14 @@ int main(){
                 break;
             case 2 :
             {
-                Joueur J = P.getJoueurs().at(numJoueur);
-                size_t idxCarte = UI::choixParmiCartes(J,J.getMain(),1).at(0);
-                J.utiliserCarte(P,J.getMain().at(idxCarte));
+                std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1);
+                if (!idxCarte.empty()) {
+                    J.utiliserCarte(P,J.getMain().at(idxCarte.at(0)));
+                }
                 break;
             }
             case 3 : 
-                // ecarter une carte
+                // ecarter une carte A FAIRE
                 break;
             case 4 :
                 ecran = Ecran::TOUR_JOUEUR_ACHAT;
@@ -223,6 +225,7 @@ int main(){
                 break;
             }
             break;
+        }
 
         case Ecran::TOUR_JOUEUR_ACHAT :
 
@@ -237,7 +240,11 @@ int main(){
             case 3 :
                 P.getJoueurs().at(numJoueur).finDeTour();
                 numJoueur++;
-                ecran = Ecran::TOUR_JOUEUR_ACTION;
+                if (P.checkerEndCondition()) {
+                    UI::ecranFinDePartie(P);
+                    ecran = Ecran::ACCUEIL;
+                }
+                else ecran = Ecran::TOUR_JOUEUR_ACTION;
                 break;
             case 0 :
                 ecran = Ecran::QUITTER_PARTIE;
@@ -246,7 +253,18 @@ int main(){
             break;
 
         case Ecran::QUITTER_PARTIE :
-            // à faire dans UI
+            switch (UI::ecranQuitterPartie())
+            {
+            case 1 :
+                // sauvegarder A FAIRE
+                // fall through
+            case 2 :
+                ecran = Ecran::QUITTER_JEU;
+                break;
+            case 0 :
+                ecran = Ecran::TOUR_JOUEUR_ACTION;
+                break;
+            }
             break;
 
         case Ecran::QUITTER_JEU :
