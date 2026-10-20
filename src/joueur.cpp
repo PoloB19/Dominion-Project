@@ -18,7 +18,9 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
     m_pieces = 0;
     
     m_nbToursJoues = 0;
-};
+
+    // ICI QUE DOIVENT ETRE MISES DANS LA DEFAUSSE LES CARTES DE DEMARRAGE DE CHAQUE JOUEUR : 7cuivres et 3 domaines
+}
 
 Joueur::~Joueur() {}
 

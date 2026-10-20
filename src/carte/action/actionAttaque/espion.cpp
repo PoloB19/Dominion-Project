@@ -10,16 +10,16 @@ void Espion::utiliser(Joueur& J, Plateau& P) const {
     J.piocher(1);
     J.ajustNbAction(+1);
 
-    for (Joueur* j : P.getJoueurs()){
+    for (Joueur& j : P.getJoueurs()){
 
-        const Carte* carteRevelee = j->revelerCarte(Emplacement::PIOCHE); 
+        const Carte* carteRevelee = j.revelerCarte(Emplacement::PIOCHE); 
 
         if (carteRevelee != nullptr) {
 
             if (UI::choixOuiNon("Vous avez révélé " + carteRevelee->getNom() + ". Voulez-vous la défausser ?")) {
-                j->ajouterADefausse(carteRevelee);
+                j.ajouterADefausse(carteRevelee);
             } else {
-                j->ajouterAPioche(carteRevelee);
+                j.ajouterAPioche(carteRevelee);
             }
 
         }

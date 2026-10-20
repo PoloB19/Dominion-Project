@@ -8,11 +8,11 @@ void Bureaucrate::utiliser(Joueur& J, Plateau& P) const {
 
     J.obtenirCartePlateau(P.getCarteParNom("Argent"), P, Emplacement::PIOCHE);
     
-    for (Joueur* j : P.getJoueurs()){
+    for (Joueur& j : P.getJoueurs()){
         
-        if (!(j == &J)){
+        if (&j != &J){
             
-            std::vector<const Carte*> mainj = j->getMain();
+            std::vector<const Carte*> mainj = j.getMain();
             std::vector<const Carte*> victoireEnMain;
             for (const Carte* c : mainj) {
                 if (c->getType()=="Victoire" || c->getSousType() == "ActionVictoire") {
@@ -26,9 +26,9 @@ void Bureaucrate::utiliser(Joueur& J, Plateau& P) const {
             }
             else {
                 // s'il en possède au moins une
-                std::vector<size_t> idCarteChoisie = UI::choixParmiCartes(*j,victoireEnMain,1);
+                std::vector<size_t> idCarteChoisie = UI::choixParmiCartes(j,victoireEnMain,1);
                 UI::annonceRevelerCartes(J,{victoireEnMain.at(idCarteChoisie.at(0))});
-                j->enleverDepuisMain(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
+                j.enleverDepuisMain(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
             }
         }
     }

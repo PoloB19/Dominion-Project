@@ -54,7 +54,6 @@ class Joueur {
         unsigned short getNbAction() const {return m_nbAction;}
         unsigned short getNbAchat() const {return m_nbAchat;}
         unsigned short getNbPieces() const {return m_pieces;}
-
         unsigned short getNbTourJoues() const {return m_nbToursJoues;}
 
         unsigned short getTailleDeck() const {return m_pioche.size() + m_main.size() + m_defausse.size();}
@@ -64,6 +63,8 @@ class Joueur {
         void ajustNbAchat(unsigned short delta) {m_nbAchat += delta;}
         void ajustNbPiece(unsigned short delta) {m_pieces += delta;}
 
+        unsigned short addUnTourJoue() {return ++m_nbToursJoues;}
+        
         //Méthodes
         bool accesMain() const;
         bool accesDefausse() const;

@@ -496,7 +496,7 @@ void UI::ecranMessageDemarragePartie(bool depuisSauvegarde) {
 size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
 
     clearScreen();
-    afficherTitre("TOUR " + std::to_string(J.getNbTourJoues() + 1) + " - " + J.getPseudo());
+    afficherTitre("TOUR " + std::to_string(J.addUnTourJoue()) + " - " + J.getPseudo());
     sautDeLigne();
 
     afficherInformation("Piles centrales du plateau (triées par prix) :");
@@ -523,8 +523,8 @@ std::vector<size_t> UI::ongletChoixCartesComposition(Joueur &J) {
     afficherInformation("Entrez un à un les noms des 10 cartes sélectionnée :");
     retourALigne();
 
-    //Renvoie les ID des cartes du catalogue
-    return choixParmiCartes(J, Cartes::catalogue(), 10, "Retour");
+    //Renvoie les ID des cartes Royaume du catalogue
+    return choixParmiCartes(J, Cartes::royaume(), 10, "Retour");
 
 }
 

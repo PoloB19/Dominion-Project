@@ -8,9 +8,9 @@ void Sorciere::utiliser(Joueur& J, Plateau& P) const {
 
     J.piocher(2);
 
-    for (Joueur* cible : P.getJoueurs()){
-        if (cible != &J){
-            cible->obtenirCartePlateau(P.getCarteParNom("Malédiction"), P, Emplacement::DEFAUSSE);
+    for (Joueur& cible : P.getJoueurs()){
+        if (&cible != &J){
+            cible.obtenirCartePlateau(P.getCarteParNom("Malédiction"), P, Emplacement::DEFAUSSE);
         }
     }
 }
