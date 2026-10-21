@@ -4,6 +4,6 @@
 
 class Cuivre : public Tresor {
     public :
-        Cuivre() : Tresor("Cuivre", 0, 1) {};
+        Cuivre() : Tresor("Cuivre", 0, "Vaut 1 pièce", 1) {};
         ~Cuivre() {};
 };

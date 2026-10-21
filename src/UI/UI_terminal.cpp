@@ -276,6 +276,7 @@ std::vector<size_t> UI::choixParmiCartes(const Joueur& J, const std::vector<cons
 
 const Carte* UI::choixParmiPiles(Plateau& P){
 
+    retourALigne();
     while (true) {
 
         separateursChoix();
@@ -566,7 +567,7 @@ size_t UI::ecranFinDePartie(Plateau& P) {
 
         std::cout << gagnants.at(0)->getPseudo() << " !!!" << RESET;
         retourALigne();
-        std::cout << "Il a obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points.";
+        std::cout << "Il/Elle a obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points.";
         retourALigne();
         std::cout << "Qui viendra le détrôner :) ?";
 

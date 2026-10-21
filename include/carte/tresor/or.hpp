@@ -4,6 +4,6 @@
 
 class Or : public Tresor {
     public :
-        Or() : Tresor("Or", 6, 3){};
+        Or() : Tresor("Or", 6, "Vaut 3 pièces", 3){};
         ~Or() {};
 };

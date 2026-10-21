@@ -32,7 +32,7 @@ class Plateau {
         std::vector<Joueur>& getJoueurs() {return m_joueurs;}
         const std::vector<Joueur>& getJoueurs() const {return m_joueurs;}
         size_t getIdCompositionPartie() const {return m_idCompositionPartie;}
-        std::map<const Carte*, unsigned short> getPiles() const {return m_piles;}
+        const std::map<const Carte*, unsigned short>& getPiles() const {return m_piles;}
         std::stack<const Carte*> getRebut() const {return m_rebut;}
         
         //Setters

@@ -219,7 +219,7 @@ int main(){
             {
                 std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1);
                 if (!idxCarte.empty()) {
-                    J.ecarter(J.getMain().at(idxCarte.at(0))->getNom(),P);
+                    J.ecarter(J.getMain().at(idxCarte.at(0))->getNom(),P,true);
                 }
                 break;
             }
@@ -234,17 +234,21 @@ int main(){
         }
 
         case Ecran::TOUR_JOUEUR_ACHAT :
+        {
+            Joueur& J = P.getJoueurs().at(numJoueur);
+            J.compterPiecesEnMain(P);
 
-            switch (UI::ecranTourJoueur(P.getJoueurs().at(numJoueur),P,1)) 
+            switch (UI::ecranTourJoueur(J,P,1)) 
             {
             case 1 :
                 UI::ongletDescriptionCartes(Cartes::catalogue());
                 break;
             case 2 :
-                // acheter une carte : créer fonction dans joueur ou UI à voir mais c'est choix piles concernés
+                UI::afficherInformation("Entrez le nom de la carte que vous souhaitez acheter.");
+                J.acheter(UI::choixParmiPiles(P),P);
                 break;
             case 3 :
-                P.getJoueurs().at(numJoueur).finDeTour();
+                J.finDeTour();
                 numJoueur++;
                 if (P.checkerEndCondition()) {
                     UI::ecranFinDePartie(P);
@@ -257,6 +261,7 @@ int main(){
                 break;
             }
             break;
+        }
 
         case Ecran::QUITTER_PARTIE :
             switch (UI::ecranQuitterPartie())
@@ -265,7 +270,7 @@ int main(){
                 // sauvegarder A FAIRE
                 // fall through
             case 2 :
-                ecran = Ecran::QUITTER_JEU;
+                ecran = Ecran::ACCUEIL;
                 break;
             case 0 :
                 ecran = Ecran::TOUR_JOUEUR_ACTION;
@@ -280,42 +285,6 @@ int main(){
 
     return 0;
 }
-
-
-/* ICI UN SKETCH DE COMMENT JE VOIS LE MAIN
-
-int main(){
-
-    ... instanciation de tout ce qui doit être instancié ...
-    A limite appeler la fonction barreChargement de UI pour faire stylé
-
-    while(true){ //Pour faire tourner l'écran de démarrage en boucle
-    
-    switch(ecranDemarrage):
-        case 0 : 
-            exit()
-        case 1 : 
-
-            switch(ecranNouvellePartie):
-                case 0 : 
-                    break; (car retour au menu du démarrage quoi)
-                case 1 :
-                    .....
-                case 2 : 
-                    ...
-    
-    }
-}
-
-OU ALORS on peut aussi faire des "fonctions" qui correspondent aux écrans et qui sont appelées dans les case des switch
-Par exemple au lieu d'avoir un autre switch dans le case 1, on appelrait une fonction qui gererait l'écran de nouvelle partie)
-
-C'est des idées par ci par là mais normalement il y a très peu a coder dans le main : 
-AUCUNE vérification, AUCUNE variable, AUCUN cas bizarre, AUCUNE fonction utile
---> juste des appels de fonction de UI associé à des switch c'est TOUT
-
-*/
-
 
 //pour moi il faut 3 variables : joueur J, pateau P, size_t numTour
 
