@@ -155,19 +155,29 @@ void Joueur::obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement des
 
 void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
     
-    if (m_pieces >= carteAchetee->getPrix()){
+    if (m_nbAchat >= 1) {
 
-        obtenirCartePlateau(carteAchetee, P, Emplacement::DEFAUSSE);
-        ajustNbPiece(-carteAchetee->getPrix());
+        if (m_pieces >= carteAchetee->getPrix()){
 
+            obtenirCartePlateau(carteAchetee, P, Emplacement::DEFAUSSE);
+            ajustNbPiece(-carteAchetee->getPrix());
+            ajustNbAchat(-1);
+
+        } else {
+            UI::annonceErreur("vous n'avez pas assez de pièces pour acheter cette carte");
+            UI::retourALigne();
+        }
     } else {
-        UI::annonceErreur("vous n'avez pas assez de pièces pour acheter cette carte");
+        UI::annonceErreur("vous avez épuisé votre quantité d'achat pour ce tour");
         UI::retourALigne();
     }
+}
 
-};
-
-void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P) {
+void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P, bool phaseAction) {
+    if (phaseAction && m_nbAction < 1) {
+        UI::annonceErreur("vous n'avez plus d'action disponible");
+        return;
+    }
     for (const Carte* c : m_main) {
         if (c->getNom()==nomCarteEcartee) {
             m_main.erase(std::find(m_main.begin(), m_main.end(), c));
@@ -176,6 +186,7 @@ void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P) {
             UI::afficherInformation("Vous rebutez " + c->getNom());
             UI::sautDeLigne();
 
+            if(phaseAction) {m_nbAction--;}
             return;
         }
     }
@@ -198,7 +209,7 @@ void Joueur::melangerDefausse(){
 
     //On remplit la pioche
     while(!tas_temporaire.empty()){
-        m_pioche.push(tas_temporaire.at(0)); //
+        m_pioche.push(tas_temporaire.at(0)); 
         tas_temporaire.erase(tas_temporaire.begin());
     }
 
@@ -258,6 +269,14 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
 }
 
 // --- Rafraîchir attributs ---
+
+void Joueur::compterPiecesEnMain(Plateau& P) {
+    for (const Carte* carteEnMain : m_main) {
+        if (carteEnMain->getType() == "Tresor") {
+            utiliserCarte(P,carteEnMain);
+        }
+    }
+}
 
 short Joueur::compterPoints() const {
 

@@ -78,13 +78,15 @@ class Joueur {
         
         void obtenirCartePlateau(const Carte* carte, Plateau& P, Emplacement destination);
         void acheter(const Carte* carteAchetee, Plateau& P);
-        void ecarter(std::string nomCarteEcartee, Plateau& P);
+        void ecarter(std::string nomCarteEcartee, Plateau& P, bool phaseAction = 0);
 
         void melangerDefausse();
 
         const Carte* revelerCarte(Emplacement depuis);
 
         void utiliserCarte(Plateau& P, const Carte* carte);
+
+        void compterPiecesEnMain(Plateau& P);
 
         short compterPoints() const;
 
