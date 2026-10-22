@@ -123,7 +123,11 @@ int main(){
             size_t choix = UI::ecranNouvellePartie();
             if (choix > 0 && choix <= Plateau::getCompositions().size()) {
                 P = Plateau(UI::ecranChoixJoueurs(),choix-1);
-                ecran = Ecran::MODE_RAPIDE;
+                if (P.getJoueurs().empty()){
+                    ecran = Ecran::NOUVELLE_PARTIE;
+                } else {
+                    ecran = Ecran::MODE_RAPIDE;
+                }
             }
             else if (choix == Plateau::getCompositions().size()+1) {
                 ecran = Ecran::CREATION_COMPOSITION;

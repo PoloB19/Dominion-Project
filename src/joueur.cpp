@@ -22,7 +22,7 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
 
 Joueur::~Joueur() {}
 
-// --- Accès sécurisé ---
+// Accès sécurisé
 
 bool Joueur::accesMain() const {
     return m_main.size() > 0;
@@ -48,17 +48,14 @@ bool Joueur::accesDefausse() const {
 }
 
 
-//Pioche
+// Pioche
 void Joueur::piocher(unsigned short nbPioche){
 
     for(size_t i = 0; i < nbPioche; i++){
 
         if (!accesPioche()){
             return;
-        }
-
-        //UI::annonceCarteDepuis(m_pioche.top()->getNom(),Emplacement::PIOCHE); en vrai il vaut surement mieux l'enlever
-        
+        }        
         m_main.push_back(m_pioche.top());
         m_pioche.pop();
         
@@ -68,7 +65,7 @@ void Joueur::piocher(unsigned short nbPioche){
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
-        UI::annonceCarteVers(carte->getNom(),Emplacement::PIOCHE);
+        //UI::annonceCarteVers(carte->getNom(),Emplacement::PIOCHE); on garde???
     }
 }
 
@@ -77,7 +74,6 @@ void Joueur::ajouterAPioche(const Carte* carte){
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
         m_defausse.push(carte);
-        //UI::annonceCarteVers(carte->getNom(),Emplacement::DEFAUSSE);
     }
 }
 
@@ -90,7 +86,6 @@ void Joueur::ajouterAEnJeu(const Carte* carte){
         UI::annonceCarteVers(carte->getNom(),Emplacement::EN_JEU);
     }
 }
-
 
 bool Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
 
