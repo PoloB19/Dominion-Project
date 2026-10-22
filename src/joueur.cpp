@@ -160,16 +160,20 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
         } else {
             UI::annonceErreur("vous n'avez pas assez de pièces pour acheter cette carte");
             UI::retourALigne();
+            UI::animationChargement(2);
         }
     } else {
         UI::annonceErreur("vous avez épuisé votre quantité d'achat pour ce tour");
         UI::retourALigne();
+        UI::animationChargement(2);
     }
 }
 
 void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P, bool phaseAction) {
     if (phaseAction && m_nbAction < 1) {
         UI::annonceErreur("vous n'avez plus d'action disponible");
+        UI::retourALigne();
+        UI::animationChargement(2);
         return;
     }
     for (const Carte* c : m_main) {
@@ -251,6 +255,8 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
             if (carte->getType()=="Action"){
                 if (m_nbAction < 1) {
                     UI::annonceErreur("vous n'avez plus d'action disponible");
+                    UI::retourALigne();
+                    UI::animationChargement(2);
                     return;
                 }
                 m_nbAction--;
@@ -259,7 +265,11 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
         }
         else UI::annonceErreur("bug dans enleverDepuisMain");
     }
-    else UI::annonceErreur("votre main est vide");
+    else {
+        UI::annonceErreur("votre main est vide");
+        UI::retourALigne();
+        UI::animationChargement(2);
+    }
 }
 
 

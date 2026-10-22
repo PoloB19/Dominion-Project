@@ -278,10 +278,15 @@ const Carte* UI::choixParmiPiles(Plateau& P){
     retourALigne();
     while (true) {
 
+        afficherInformation("Entrez le nom d'une carte.");
+        retourALigne();
+        afficherInformation("0 : Retour");
         separateursChoix();
         retourALigne();
         std::cout << " > ";
         std::getline(std::cin >> std::ws, UI::input);
+
+        if(UI::input == "0") return nullptr;
 
         for (const auto& pair : P.getPiles()){
             if(pair.first->getNom() == input && pair.second > 0){
@@ -365,16 +370,16 @@ size_t UI::ecranNouvellePartie() {
     UI::listeChoix.clear();
     for(const Composition& compo : Plateau::getCompositions()){
 
-        compoString = compo.getNom() + " | ";
+        compoString = UNDERLINE + compo.getNom() + RESET + " | ";
 
         for (const auto& pair : compo.getCompositionPartie()) {
-            compoString += pair.first->getNom() + " | ";
+            compoString += BLUE + pair.first->getNom() + RESET + " | ";
         }
 
         UI::listeChoix.push_back(compoString);
     }
 
-    UI::listeChoix.push_back("Créer sa propre composition");
+    UI::listeChoix.push_back(UNDERLINE + "Créer sa propre composition" + RESET);
     UI::choix0 = "Retour";
 
     return choixParmiChiffre(listeChoix, choix0);
@@ -388,8 +393,10 @@ size_t UI::ecranCreationComposition() {
 
     sautDeLigne();
 
-    afficherInformation("Voici la liste des cartes Royaume :");
-    retourALigne();
+    afficherInformation("Voici la liste des cartes Royaume disponibles :");
+    sautDeLigne();
+
+    afficherListeCarteParNom(Cartes::royaume());
 
     sautDeLigne();
 
@@ -652,8 +659,6 @@ size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& listeCarte) 
     afficherTitre("DESCRIPTION CARTES");
     sautDeLigne();
 
-    sautDeLigne();
-
     for (const Carte* c : listeCarte){
         std::cout << UNDERLINE << c->getNom() << " :" << RESET << c->getPrix() << " pcs";
         retourALigne();
@@ -674,9 +679,9 @@ size_t UI::ongletPhaseAction() {
     sautDeLigne();
 
     UI::listeChoix = {
-        "Voir la description des cartes du jeu",
+        CYAN + "Voir la description des cartes du jeu" + RESET,
         BLUE + "Utiliser une carte" + RESET,
-        "Écarter une carte",
+        YELLOW + "Écarter une carte" + RESET,
         GREEN + "Passer à la phase d'achat" + RESET,
     };
 
@@ -693,9 +698,9 @@ size_t UI::ongletPhaseAchat() {
     sautDeLigne();
 
     UI::listeChoix = {
-        "Voir les descriptions des cartes du jeu",
+        CYAN + "Voir les descriptions des cartes du jeu" + RESET,
         BLUE + "Acheter une carte" + RESET,
-        "Finir son tour"
+        YELLOW + "Finir son tour" + RESET
     };
 
     UI::choix0 = RED + "Quitter la partie" + RESET;
