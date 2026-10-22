@@ -126,7 +126,6 @@ void UI::afficherPilesPlateau(const Plateau& P) {
         }
     }
 
-    sautDeLigne();
     std::cout << "Rebut (" << std::to_string(P.getRebut().size()) << ")";
     retourALigne();
 }
@@ -193,7 +192,7 @@ size_t UI::choixParmiChiffre(const std::vector<std::string>& listeChoix, const s
         size_t inputValeur = UI::input.at(0) - '0'; //transforme la saisie en nombre
 
         if (inputValeur > listeChoix.size() || (inputValeur == 0 && choix0.empty())) {
-            annonceErreur("le choix '" + UI::input + "' n'existe pas." );
+            annonceErreur("le choix '" + UI::input + "' n'existe pas");
             retourALigne();
             continue;
         }
@@ -279,10 +278,15 @@ const Carte* UI::choixParmiPiles(Plateau& P){
     retourALigne();
     while (true) {
 
+        afficherInformation("Entrez le nom d'une carte.");
+        retourALigne();
+        afficherInformation("0 : Retour");
         separateursChoix();
         retourALigne();
         std::cout << " > ";
         std::getline(std::cin >> std::ws, UI::input);
+
+        if(UI::input == "0") return nullptr;
 
         for (const auto& pair : P.getPiles()){
             if(pair.first->getNom() == input && pair.second > 0){
@@ -345,7 +349,7 @@ size_t UI::ecranAccueil() {
         "Reprendre la partie sauvegardée",
     };
 
-    UI::choix0 = "Quitter";
+    UI::choix0 = RED + "Quitter" + RESET;
 
     return choixParmiChiffre(listeChoix, choix0);
 
@@ -366,16 +370,16 @@ size_t UI::ecranNouvellePartie() {
     UI::listeChoix.clear();
     for(const Composition& compo : Plateau::getCompositions()){
 
-        compoString = compo.getNom() + " |";
+        compoString = UNDERLINE + compo.getNom() + RESET + " | ";
 
         for (const auto& pair : compo.getCompositionPartie()) {
-            compoString += pair.first->getNom() + " | ";
+            compoString += BLUE + pair.first->getNom() + RESET + " | ";
         }
 
         UI::listeChoix.push_back(compoString);
     }
 
-    UI::listeChoix.push_back("Créer sa propre composition");
+    UI::listeChoix.push_back(UNDERLINE + "Créer sa propre composition" + RESET);
     UI::choix0 = "Retour";
 
     return choixParmiChiffre(listeChoix, choix0);
@@ -389,8 +393,10 @@ size_t UI::ecranCreationComposition() {
 
     sautDeLigne();
 
-    afficherInformation("Voici la liste des cartes Royaume :");
-    retourALigne();
+    afficherInformation("Voici la liste des cartes Royaume disponibles :");
+    sautDeLigne();
+
+    afficherListeCarteParNom(Cartes::royaume());
 
     sautDeLigne();
 
@@ -418,7 +424,7 @@ std::vector<std::string> UI::ecranChoixJoueurs() {
 
     sautDeLigne();
 
-    std::cout << "1 : Terminer";
+    std::cout << "1 : " << GREEN << "Terminer" << RESET;
     retourALigne();
     std::cout << "0 : Retour";
     retourALigne();
@@ -477,7 +483,7 @@ bool UI::ecranModeRapide() {
 
     sautDeLigne();
 
-    return choixOuiNon("Désirez-vous jouer en mode rapide (1 carte par pile) ?");
+    return choixOuiNon("Désirez-vous jouer en mode " + YELLOW + "rapide" + RESET +" (1 carte par pile) ?");
 
 }
 
@@ -487,8 +493,12 @@ void UI::ecranMessageDemarragePartie(bool depuisSauvegarde) {
 
     std::cout << "§" << std::string(longueurMaxLigne - 2, '~') << "§";
     retourALigne();
+
+    std::cout << BLUE;
     depuisSauvegarde ? std::cout << "REPRISE " : std::cout << "DÉMARRAGE ";
     std::cout << "DE LA PARTIE, QUE LE MEILLEUR GAGNE !";
+
+    std::cout << RESET;
     retourALigne();
     std::cout << "§" << std::string(longueurMaxLigne - 2, '~') << "§";
     sautDeLigne();
@@ -500,10 +510,11 @@ void UI::ecranMessageDemarragePartie(bool depuisSauvegarde) {
 size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
 
     clearScreen();
-    afficherTitre("TOUR " + std::to_string(J.getNbTourJoues() + 1) + " - " + J.getPseudo());
+    afficherTitre(BLUE + "TOUR " + std::to_string(J.getNbTourJoues() + 1) + " - " + J.getPseudo() + RESET);
+
     sautDeLigne();
 
-    afficherInformation("Piles centrales du plateau (triées par prix) :");
+    afficherInformation(ITALIC + "Piles centrales du plateau (triées par prix) :" + RESET);
     sautDeLigne();
     afficherPilesPlateau(P);
 
@@ -526,15 +537,9 @@ size_t UI::ecranQuitterPartie() {
     separateursTitre();
     sautDeLigne();
 
-    std::string avecSauv = "Avec sauvegarde";
-    std::string sansSauv = "Sans sauvegarde";
-
-    avecSauv += GREEN + RESET;
-    sansSauv += RED + RESET;
-
     UI::listeChoix = {
-        avecSauv,
-        sansSauv
+        GREEN + "Avec sauvegarde" + RESET,
+        RED + "Sans sauvegarde" + RESET
     };
 
     UI::choix0 = "Annuler et reprendre";
@@ -654,8 +659,6 @@ size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& listeCarte) 
     afficherTitre("DESCRIPTION CARTES");
     sautDeLigne();
 
-    sautDeLigne();
-
     for (const Carte* c : listeCarte){
         std::cout << UNDERLINE << c->getNom() << " :" << RESET << c->getPrix() << " pcs";
         retourALigne();
@@ -672,17 +675,17 @@ size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& listeCarte) 
 
 size_t UI::ongletPhaseAction() {
     
-    std::cout << "!~~~~~~~~!~~~~~~~! PHASE ACTION !~~~~~~~!~~~~~~~~!";
+    std::cout << PURPLE << "!~~~~~~~~!~~~~~~~! PHASE ACTION !~~~~~~~!~~~~~~~~!" << RESET;
     sautDeLigne();
 
     UI::listeChoix = {
-        "Voir la description des cartes du jeu",
-        "Utiliser une carte",
-        "Écarter une carte",
-        "Passer à la phase d'achat",
+        CYAN + "Voir la description des cartes du jeu" + RESET,
+        BLUE + "Utiliser une carte" + RESET,
+        YELLOW + "Écarter une carte" + RESET,
+        GREEN + "Passer à la phase d'achat" + RESET,
     };
 
-    UI::choix0 = "Quitter la partie";
+    UI::choix0 = RED + "Quitter la partie" + RESET;
 
     return choixParmiChiffre(listeChoix, choix0);
 
@@ -690,17 +693,17 @@ size_t UI::ongletPhaseAction() {
 
 size_t UI::ongletPhaseAchat() {
     
-    std::cout << "€~~~~~~~~€~~~~~~~€ PHASE ACHAT €~~~~~~~€~~~~~~~~€";
+    std::cout << GREEN << "€~~~~~~~~€~~~~~~~€ PHASE ACHAT €~~~~~~~€~~~~~~~~€" << RESET;
 
     sautDeLigne();
 
     UI::listeChoix = {
-        "Voir les descriptions des cartes du jeu",
-        "Acheter une carte",
-        "Finir son tour"
+        CYAN + "Voir les descriptions des cartes du jeu" + RESET,
+        BLUE + "Acheter une carte" + RESET,
+        YELLOW + "Finir son tour" + RESET
     };
 
-    UI::choix0 = "Quitter la partie";
+    UI::choix0 = RED + "Quitter la partie" + RESET;
 
     return choixParmiChiffre(listeChoix, choix0);
 

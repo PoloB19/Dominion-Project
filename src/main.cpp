@@ -94,8 +94,7 @@ int main(){
     size_t numJoueur = 0;
     Ecran ecran = Ecran::ACCUEIL;
 
-
-    // DEMARRAGE DU JEU
+    // DÉMARRAGE DU JEU
     while (true) {
 
         switch (ecran) 
@@ -123,7 +122,11 @@ int main(){
             size_t choix = UI::ecranNouvellePartie();
             if (choix > 0 && choix <= Plateau::getCompositions().size()) {
                 P = Plateau(UI::ecranChoixJoueurs(),choix-1);
-                ecran = Ecran::MODE_RAPIDE;
+                if (P.getJoueurs().empty()){
+                    ecran = Ecran::NOUVELLE_PARTIE;
+                } else {
+                    ecran = Ecran::MODE_RAPIDE;
+                }
             }
             else if (choix == Plateau::getCompositions().size()+1) {
                 ecran = Ecran::CREATION_COMPOSITION;
@@ -152,8 +155,13 @@ int main(){
                 }
                 Plateau::addComposition(Composition("Composition Personnelle",newCompo));
                 P = Plateau(UI::ecranChoixJoueurs(),Plateau::getCompositions().size()-1);
-                
-                ecran = Ecran::MODE_RAPIDE;
+
+                if (P.getJoueurs().empty()){
+                    ecran = Ecran::NOUVELLE_PARTIE;
+                } else {   
+                    ecran = Ecran::MODE_RAPIDE;
+                }
+
                 break;
             }
             case 2 :
@@ -164,7 +172,7 @@ int main(){
                 // on ne change pas la valeur de la variable écran pour revenir dans ce menu
                 break;
             case 0 :
-                ecran = Ecran::ACCUEIL;
+                ecran = Ecran::NOUVELLE_PARTIE;
                 break;
             }
             break;
@@ -177,13 +185,19 @@ int main(){
                 case 1 :
                     Plateau::addComposition(newCompo);
                     P = Plateau(UI::ecranChoixJoueurs(),Plateau::getCompositions().size()-1);
-                    ecran = Ecran::MODE_RAPIDE;
+
+                    if (P.getJoueurs().empty()){
+                    ecran = Ecran::NOUVELLE_PARTIE;
+                    } else {   
+                        ecran = Ecran::MODE_RAPIDE;
+                    }
+                    
                     break;
                 case 2 :
                     // on revient sur l'écran compo_aléatoire donc pas de changement de ecran
                     break;
                 case 0 :
-                    ecran = Ecran::ACCUEIL;
+                    ecran = Ecran::CREATION_COMPOSITION;
                     break;
             }
             break;
@@ -245,9 +259,11 @@ int main(){
                 UI::ongletDescriptionCartes(Cartes::catalogue());
                 break;
             case 2 :
-                UI::afficherInformation("Entrez le nom de la carte que vous souhaitez acheter.");
-                J.acheter(UI::choixParmiPiles(P),P);
+            {
+                const Carte* carteAchat = UI::choixParmiPiles(P);
+                if (carteAchat != nullptr) J.acheter(carteAchat,P);
                 break;
+            }
             case 3 :
                 J.finDeTour();
                 numJoueur++;

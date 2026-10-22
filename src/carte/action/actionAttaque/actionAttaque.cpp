@@ -1,5 +1,3 @@
-#pragma once
-
 #include "actionAttaque.hpp"
 
 std::vector<Joueur*> ActionAttaque::determinerCibles(Joueur& attaquant, Plateau& P) const {

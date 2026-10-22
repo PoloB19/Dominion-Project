@@ -22,7 +22,7 @@ Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
 
 Joueur::~Joueur() {}
 
-// --- Accès sécurisé ---
+// Accès sécurisé
 
 bool Joueur::accesMain() const {
     return m_main.size() > 0;
@@ -48,17 +48,14 @@ bool Joueur::accesDefausse() const {
 }
 
 
-//Pioche
+// Pioche
 void Joueur::piocher(unsigned short nbPioche){
 
     for(size_t i = 0; i < nbPioche; i++){
 
         if (!accesPioche()){
             return;
-        }
-
-        //UI::annonceCarteDepuis(m_pioche.top()->getNom(),Emplacement::PIOCHE); en vrai il vaut surement mieux l'enlever
-        
+        }        
         m_main.push_back(m_pioche.top());
         m_pioche.pop();
         
@@ -68,7 +65,7 @@ void Joueur::piocher(unsigned short nbPioche){
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
-        UI::annonceCarteVers(carte->getNom(),Emplacement::PIOCHE);
+        //UI::annonceCarteVers(carte->getNom(),Emplacement::PIOCHE); on garde???
     }
 }
 
@@ -77,7 +74,6 @@ void Joueur::ajouterAPioche(const Carte* carte){
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
         m_defausse.push(carte);
-        //UI::annonceCarteVers(carte->getNom(),Emplacement::DEFAUSSE);
     }
 }
 
@@ -90,7 +86,6 @@ void Joueur::ajouterAEnJeu(const Carte* carte){
         UI::annonceCarteVers(carte->getNom(),Emplacement::EN_JEU);
     }
 }
-
 
 bool Joueur::enleverDepuisMain(const std::string& nomCarte, Emplacement vers){
 
@@ -165,16 +160,20 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
         } else {
             UI::annonceErreur("vous n'avez pas assez de pièces pour acheter cette carte");
             UI::retourALigne();
+            UI::animationChargement(2);
         }
     } else {
         UI::annonceErreur("vous avez épuisé votre quantité d'achat pour ce tour");
         UI::retourALigne();
+        UI::animationChargement(2);
     }
 }
 
 void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P, bool phaseAction) {
     if (phaseAction && m_nbAction < 1) {
         UI::annonceErreur("vous n'avez plus d'action disponible");
+        UI::retourALigne();
+        UI::animationChargement(2);
         return;
     }
     for (const Carte* c : m_main) {
@@ -256,6 +255,8 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
             if (carte->getType()=="Action"){
                 if (m_nbAction < 1) {
                     UI::annonceErreur("vous n'avez plus d'action disponible");
+                    UI::retourALigne();
+                    UI::animationChargement(2);
                     return;
                 }
                 m_nbAction--;
@@ -264,7 +265,11 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
         }
         else UI::annonceErreur("bug dans enleverDepuisMain");
     }
-    else UI::annonceErreur("votre main est vide");
+    else {
+        UI::annonceErreur("votre main est vide");
+        UI::retourALigne();
+        UI::animationChargement(2);
+    }
 }
 
 
