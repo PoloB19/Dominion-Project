@@ -389,7 +389,7 @@ size_t UI::ecranCreationComposition() {
 
     sautDeLigne();
 
-    afficherInformation("Voici la liste des cartes du royaume :");
+    afficherInformation("Voici la liste des cartes Royaume :");
     retourALigne();
 
     sautDeLigne();
@@ -397,7 +397,7 @@ size_t UI::ecranCreationComposition() {
     UI::listeChoix = {
         "Sélectionner les cartes",
         "Composition aléatoire",
-        "Voir la description des cartes du royaume"
+        "Voir la description des cartes Royaume"
     };
 
     UI::choix0 = "Retour";
@@ -615,7 +615,7 @@ size_t UI::ongletChoixAleatoireCartesComposition(Composition& compoAlea) {
     afficherInformation("Voici la composition aléatoire de votre partie :");
     retourALigne();
 
-    std::vector<const Carte*> catalogue = Cartes::catalogue();
+    std::vector<const Carte*> catalogue = Cartes::royaume();
     std::map<const Carte*, unsigned short> selectionAleatoire;
     std::vector<const Carte*> listeCartes;
 
@@ -713,11 +713,11 @@ void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
     switch (depuis)
     {
     case Emplacement::PIOCHE :
-        std::cout << "Vous piochez la carte " << nomCarte << ".";
+        std::cout << "Vous piochez la carte " << nomCarte << ". ";
         retourALigne();
         break;
     case Emplacement::DEFAUSSE :
-        std::cout << "Vous récupérez de la défausse la carte " << nomCarte << ".";
+        std::cout << "Vous récupérez de la défausse la carte " << nomCarte << ". ";
         retourALigne();
         break;
     default:
@@ -731,14 +731,14 @@ void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
     switch (vers)
     {
     case Emplacement::PIOCHE :
-        std::cout << "Vous mettez sur la pioche la carte " << nomCarte << ".";
+        std::cout << "Vous mettez sur la pioche la carte " << nomCarte << ". ";
         break;
     
     case Emplacement::DEFAUSSE :
-        std::cout << "Vous défaussez la carte " << nomCarte << ".";
+        std::cout << "Vous défaussez la carte " << nomCarte << ". ";
         break;
     case Emplacement::EN_JEU:
-        std::cout << "Vous jouez la carte " << nomCarte << ".";
+        std::cout << "Vous jouez la carte " << nomCarte << ". ";
         break;
     default:
         break;
@@ -755,6 +755,7 @@ void UI::annonceRevelerCartes(const Joueur& J, const std::vector <const Carte*>&
     }
 
     std::cout << "]";
+    retourALigne();
 
 }
 

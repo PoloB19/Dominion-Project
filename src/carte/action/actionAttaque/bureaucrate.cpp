@@ -27,7 +27,7 @@ void Bureaucrate::utiliser(Joueur& J, Plateau& P) const {
             else {
                 // s'il en possède au moins une
                 std::vector<size_t> idCarteChoisie = UI::choixParmiCartes(j,victoireEnMain,1);
-                UI::annonceRevelerCartes(J,{victoireEnMain.at(idCarteChoisie.at(0))});
+                UI::annonceRevelerCartes(j,{victoireEnMain.at(idCarteChoisie.at(0))});
                 j.enleverDepuisMain(victoireEnMain.at(idCarteChoisie.at(0))->getNom(),Emplacement::PIOCHE);
             }
         }
