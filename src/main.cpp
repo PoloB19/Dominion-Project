@@ -17,10 +17,8 @@ enum Ecran {
     QUITTER_JEU
 };
 
-
-int main(){
-       
-    // CREATION COMPOSITIONS
+// CREATION COMPOSITIONS
+void initCompo() {
     std::vector<Composition> compositions;
 
     compositions.push_back(Composition("Les premières parties", {
@@ -85,12 +83,15 @@ int main(){
     }));
 
     Plateau::setCompositions(compositions);
+}
 
+int main(){
+       
+    initCompo();
 
     // VARIABLES GLOBALES 
     Plateau P = Plateau({},0);
     size_t numJoueur = 0;
-
     Ecran ecran = Ecran::ACCUEIL;
 
 
@@ -107,7 +108,7 @@ int main(){
                 ecran = Ecran::NOUVELLE_PARTIE;
                 break;
             case 2 :
-                // faire ce qui est fait quand reprise de sauvegarde
+                // faire ce qui est fait quand reprise de sauvegarde 
                 UI::ecranMessageDemarragePartie(true);
                 ecran = Ecran::TOUR_JOUEUR_ACTION;
                 break;
@@ -179,7 +180,7 @@ int main(){
                     ecran = Ecran::MODE_RAPIDE;
                     break;
                 case 2 :
-                    // on revient sur l'écran compo_aléatoire
+                    // on revient sur l'écran compo_aléatoire donc pas de changement de ecran
                     break;
                 case 0 :
                     ecran = Ecran::ACCUEIL;

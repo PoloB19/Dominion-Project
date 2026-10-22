@@ -57,7 +57,7 @@ void Joueur::piocher(unsigned short nbPioche){
             return;
         }
 
-        UI::annonceCarteDepuis(m_pioche.top()->getNom(),Emplacement::PIOCHE);
+        //UI::annonceCarteDepuis(m_pioche.top()->getNom(),Emplacement::PIOCHE); en vrai il vaut surement mieux l'enlever
         
         m_main.push_back(m_pioche.top());
         m_pioche.pop();
@@ -65,7 +65,6 @@ void Joueur::piocher(unsigned short nbPioche){
     }
 }
 
-//APPELER ANNONCE VERS PIOCHE
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
@@ -78,7 +77,7 @@ void Joueur::ajouterAPioche(const Carte* carte){
 void Joueur::ajouterADefausse(const Carte* carte){
     if(carte != nullptr){
         m_defausse.push(carte);
-        UI::annonceCarteVers(carte->getNom(),Emplacement::DEFAUSSE);
+        //UI::annonceCarteVers(carte->getNom(),Emplacement::DEFAUSSE);
     }
 }
 
@@ -215,7 +214,7 @@ void Joueur::melangerDefausse(){
 
 }
 
-//APPELER ANNONCE REVELER CARTE !
+//APPELER ANNONCE REVELER CARTE ! peut-être pas nécessaire, je crois que ca a été fait dans les cartes. -> vérifier toutes les cartes 
 const Carte* Joueur::revelerCarte(Emplacement depuis){
 
     const Carte* carteRevelee = nullptr;
@@ -266,6 +265,16 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
         else UI::annonceErreur("bug dans enleverDepuisMain");
     }
     else UI::annonceErreur("votre main est vide");
+}
+
+
+bool Joueur::reagirAttaque(const Carte& carteAttaque, Plateau& P) {
+    for (const Carte* c : m_main) {
+        if (c->getSousType() == "Reaction" && c->reagir(*this, carteAttaque, P)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // --- Rafraîchir attributs ---

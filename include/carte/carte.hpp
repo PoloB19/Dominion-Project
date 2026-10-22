@@ -34,5 +34,6 @@ class Carte {
 
         // Méthode
         virtual void utiliser(Joueur& J, Plateau&) const;
+        virtual bool reagir(Joueur&, const Carte&, Plateau&) const { return false; }
         
 };

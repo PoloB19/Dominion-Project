@@ -9,4 +9,5 @@ class Douves : public ActionReaction {
         ~Douves();
 
         void utiliser(Joueur& , Plateau& ) const;
+        bool reagir(Joueur& cible, const Carte& carteAttaque, Plateau&) const;
 };
