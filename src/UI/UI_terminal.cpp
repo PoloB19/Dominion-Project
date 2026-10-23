@@ -132,11 +132,11 @@ void UI::afficherPilesPlateau(const Plateau& P) {
 
 void UI::afficherAttributsJoueur(const Joueur& J) {
 
-    std::cout << "Nombre d'actions restantes : " << std::to_string(J.getNbAction());
+    std::cout << "Nombre d'actions restantes : " << BOLD << std::to_string(J.getNbAction()) << RESET;
     retourALigne();
-    std::cout << "Nombre d'achats restants : " << std::to_string(J.getNbAchat());
+    std::cout << "Nombre d'achats restants : " << BOLD << std::to_string(J.getNbAchat()) << RESET;
     retourALigne();
-    std::cout << "Pièces : " << std::to_string(J.getNbPieces());
+    std::cout << "Pièces : " << BOLD << std::to_string(J.getNbPieces()) << RESET;
 
     sautDeLigne();
 
@@ -208,7 +208,7 @@ std::vector<size_t> UI::choixParmiCartes(const Joueur& J, const std::vector<cons
     if(cartes.empty()) return {};
 
     afficherInformation(J.getPseudo() + ", choisissez " + std::to_string(nbChoix) + " carte(s) parmi :");
-    retourALigne();
+    sautDeLigne();
 
     std::cout << "[ ";
     for (const Carte* c : cartes){
@@ -510,7 +510,7 @@ void UI::ecranMessageDemarragePartie(bool depuisSauvegarde) {
 size_t UI::ecranTourJoueur(Joueur& J, Plateau& P, bool phaseSuivante) {
 
     clearScreen();
-    afficherTitre(BLUE + "TOUR " + std::to_string(J.getNbTourJoues() + 1) + " - " + J.getPseudo() + RESET);
+    afficherTitre(BOLD + BLUE + "TOUR " + std::to_string(J.getNbTourJoues() + 1) + " - " + J.getPseudo() + RESET);
 
     sautDeLigne();
 
@@ -660,7 +660,7 @@ size_t UI::ongletDescriptionCartes(const std::vector<const Carte*>& listeCarte) 
     sautDeLigne();
 
     for (const Carte* c : listeCarte){
-        std::cout << UNDERLINE << c->getNom() << " :" << RESET << c->getPrix() << " pcs";
+        std::cout << UNDERLINE << c->getNom() << " :" << RESET << " " << c->getPrix() << " pcs";
         retourALigne();
         std::cout << ITALIC << c->getDescription() << RESET;
         sautDeLigne();
