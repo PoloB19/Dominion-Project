@@ -1,9 +1,6 @@
 #include "sauvegarde.hpp"
 #include "listeCartes.hpp"
 
-#include <fstream>
-#include <sstream>
-
 // Utilitaires
 
 const Carte* Sauvegarde::trouverCarteParNom(const std::string& nom) {
@@ -40,6 +37,8 @@ void Sauvegarde::ecrirePile(std::ofstream& fichier, const std::string& prefixe, 
     }
     fichier << "\n";
 }
+
+// Sauvegarde
 
 bool Sauvegarde::sauvegarder(const Plateau& P, size_t numJoueur, bool phaseAchat, const std::string& cheminFichier) {
     std::ofstream fichier(cheminFichier);
