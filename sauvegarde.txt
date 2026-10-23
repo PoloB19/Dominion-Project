@@ -1,0 +1,29 @@
+TOUR;1;1
+PILE;Cuivre;1
+PILE;Argent;1
+PILE;Or;1
+PILE;Malediction;1
+PILE;Domaine;1
+PILE;Duche;1
+PILE;Province;1
+PILE;Aventurier;1
+PILE;Laboratoire;1
+PILE;Chancelier;1
+PILE;Chapelle;1
+PILE;Festin;0
+PILE;Marché;1
+PILE;Mine;1
+PILE;Prêteur sur gages;1
+PILE;Salle du trône;1
+PILE;Bureaucrate;1
+REBUT
+JOUEUR;p;1;1;0;1
+MAIN;Domaine;Domaine;Domaine;Cuivre;Cuivre
+EN_JEU
+PIOCHE
+DEFAUSSE;Festin;Cuivre;Cuivre;Cuivre;Cuivre;Cuivre
+JOUEUR;b;1;1;2;0
+MAIN;Domaine;Cuivre;Domaine
+EN_JEU;Cuivre;Cuivre
+PIOCHE;Cuivre;Cuivre;Cuivre;Cuivre;Domaine
+DEFAUSSE

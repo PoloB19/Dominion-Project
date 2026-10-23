@@ -13,6 +13,8 @@ class Carte;
 
 class Plateau {
 
+    friend class Sauvegarde;
+
     private:
         // vecteur qui recense toutes les compositions de partie qui existent
         static std::vector<Composition> m_compositions;

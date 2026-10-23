@@ -93,6 +93,7 @@ int main(){
     Plateau P = Plateau({},0);
     size_t numJoueur = 0;
     Ecran ecran = Ecran::ACCUEIL;
+    Ecran dernierEcranTour = Ecran::TOUR_JOUEUR_ACTION;
 
     // DÉMARRAGE DU JEU
     while (true) {
@@ -106,11 +107,22 @@ int main(){
             case 1 : 
                 ecran = Ecran::NOUVELLE_PARTIE;
                 break;
-            case 2 :
-                // faire ce qui est fait quand reprise de sauvegarde 
-                UI::ecranMessageDemarragePartie(true);
-                ecran = Ecran::TOUR_JOUEUR_ACTION;
+            case 2 : {
+                size_t chargementNumJoueur = 0;
+                bool chargementPhase = false;
+
+                if (Sauvegarde::charger(P, chargementNumJoueur, chargementPhase, "sauvegarde.txt")) {
+                    numJoueur = chargementNumJoueur;
+                    UI::ecranMessageDemarragePartie(true);
+                    ecran = chargementPhase ? Ecran::TOUR_JOUEUR_ACHAT : Ecran::TOUR_JOUEUR_ACTION;
+                } else {
+                    UI::annonceErreur("aucune sauvegarde valide trouvée");
+                    UI::sautDeLigne();
+                    UI::animationChargement(2);
+                    ecran = Ecran::ACCUEIL;
+                }
                 break;
+                }
             case 0 :
                 ecran = Ecran::QUITTER_JEU;
                 break;
@@ -214,6 +226,8 @@ int main(){
 
         case Ecran::TOUR_JOUEUR_ACTION :
         {
+            dernierEcranTour = Ecran::TOUR_JOUEUR_ACTION;
+
             if (numJoueur == P.getJoueurs().size()) {numJoueur = 0;}
             Joueur& J = P.getJoueurs().at(numJoueur);
 
@@ -250,6 +264,8 @@ int main(){
 
         case Ecran::TOUR_JOUEUR_ACHAT :
         {
+            dernierEcranTour = Ecran::TOUR_JOUEUR_ACHAT;
+
             Joueur& J = P.getJoueurs().at(numJoueur);
             J.compterPiecesEnMain(P);
 
@@ -283,9 +299,20 @@ int main(){
         case Ecran::QUITTER_PARTIE :
             switch (UI::ecranQuitterPartie())
             {
-            case 1 :
-                // sauvegarder A FAIRE
-                // fall through
+            case 1 : {
+                bool phaseAchat = (dernierEcranTour == Ecran::TOUR_JOUEUR_ACHAT);
+                if (Sauvegarde::sauvegarder(P, numJoueur, phaseAchat, "sauvegarde.txt")) {
+                    UI::afficherInformation("Partie sauvegardee avec succès !");
+                    UI::sautDeLigne();
+                    UI::animationChargement(2);
+                } else {
+                    UI::annonceErreur("Échec de la sauvegarde.");
+                    UI::sautDeLigne();
+                    UI::animationChargement(2);
+                }
+                ecran = Ecran::ACCUEIL;
+                break;
+            }
             case 2 :
                 ecran = Ecran::ACCUEIL;
                 break;
