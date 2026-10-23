@@ -279,8 +279,9 @@ const Carte* UI::choixParmiPiles(Plateau& P){
     while (true) {
 
         afficherInformation("Entrez le nom d'une carte.");
-        retourALigne();
+        sautDeLigne();
         afficherInformation("0 : Retour");
+        sautDeLigne();
         separateursChoix();
         retourALigne();
         std::cout << " > ";

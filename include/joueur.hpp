@@ -21,6 +21,9 @@ enum class Emplacement {
 };
 
 class Joueur {
+
+    friend class Sauvegarde;
+
     private:
 
         static unsigned short m_nextId;

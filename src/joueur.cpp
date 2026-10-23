@@ -246,7 +246,6 @@ const Carte* Joueur::revelerCarte(Emplacement depuis){
     return carteRevelee;
 }
 
-
 void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
     if (accesMain()) {
 
@@ -271,7 +270,6 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
         UI::animationChargement(2);
     }
 }
-
 
 bool Joueur::reagirAttaque(const Carte& carteAttaque, Plateau& P) {
     for (const Carte* c : m_main) {
