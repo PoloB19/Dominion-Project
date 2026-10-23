@@ -26,7 +26,7 @@ std::vector<std::string> Sauvegarde::decouperLigne(const std::string& ligne) {
     return elements;
 }
 
-static void ecrirePile(std::ofstream& fichier, const std::string& prefixe, std::stack<const Carte*> copiePile) {
+void Sauvegarde::ecrirePile(std::ofstream& fichier, const std::string& prefixe, std::stack<const Carte*> copiePile) {
     std::vector<const Carte*> temp;
     while (!copiePile.empty()) {
         temp.push_back(copiePile.top());
