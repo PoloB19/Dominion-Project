@@ -1,9 +1,6 @@
 #include "sauvegarde.hpp"
 #include "listeCartes.hpp"
 
-#include <fstream>
-#include <sstream>
-
 // Utilitaires
 
 const Carte* Sauvegarde::trouverCarteParNom(const std::string& nom) {
@@ -26,7 +23,7 @@ std::vector<std::string> Sauvegarde::decouperLigne(const std::string& ligne) {
     return elements;
 }
 
-static void ecrirePile(std::ofstream& fichier, const std::string& prefixe, std::stack<const Carte*> copiePile) {
+void Sauvegarde::ecrirePile(std::ofstream& fichier, const std::string& prefixe, std::stack<const Carte*> copiePile) {
     std::vector<const Carte*> temp;
     while (!copiePile.empty()) {
         temp.push_back(copiePile.top());
@@ -40,6 +37,8 @@ static void ecrirePile(std::ofstream& fichier, const std::string& prefixe, std::
     }
     fichier << "\n";
 }
+
+// Sauvegarde
 
 bool Sauvegarde::sauvegarder(const Plateau& P, size_t numJoueur, bool phaseAchat, const std::string& cheminFichier) {
     std::ofstream fichier(cheminFichier);
