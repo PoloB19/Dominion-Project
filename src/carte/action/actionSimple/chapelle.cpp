@@ -15,7 +15,7 @@ void Chapelle::utiliser(Joueur& J, Plateau& P) const {
             std::vector<size_t> idxChoix = UI::choixParmiCartes(J,J.getMain(), 1);
             if (!idxChoix.empty()) {
 
-                J.ecarter(J.getMain().at(idxChoix.at(0))->getNom(), P);
+                J.ecarter(J.getMain().at(idxChoix.at(0))->getNom(), P, Emplacement::MAIN);
                 nbCartesEcartees++;
             }
 

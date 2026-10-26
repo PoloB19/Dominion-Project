@@ -89,7 +89,7 @@ class Joueur {
 
         void utiliserCarte(Plateau& P, const Carte* carte);
 
-        bool reagirAttaque(const Carte& attaque, Plateau& P);
+        bool reagirAttaque(const Carte* attaque, Plateau& P);
 
         void compterPiecesEnMain(Plateau& P);
 

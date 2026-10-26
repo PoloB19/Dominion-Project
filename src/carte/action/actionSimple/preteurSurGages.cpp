@@ -12,7 +12,7 @@ void PreteurSurGages::utiliser(Joueur& J, Plateau& P) const {
         for (const Carte* c : J.getMain()){
 
             if (c->getNom() == "Cuivre"){
-                J.ecarter(c->getNom(), P);
+                J.ecarter(c->getNom(), P, Emplacement::MAIN);
                 J.ajustNbPiece(3);
                 return;
             }

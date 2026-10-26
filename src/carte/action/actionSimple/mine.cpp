@@ -14,7 +14,7 @@ void Mine::utiliser(Joueur& J, Plateau& P) const {
     if (!idxChoix.empty()) {
         //on récupère le prix de la carte avant de l'écarter
         unsigned short prixMax = J.getMain().at(idxChoix.at(0))->getPrix() + 3; 
-        J.ecarter(J.getMain().at(idxChoix.at(0))->getNom(), P);
+        J.ecarter(J.getMain().at(idxChoix.at(0))->getNom(), P, Emplacement::MAIN);
 
         const Carte* carteVoulue;
 

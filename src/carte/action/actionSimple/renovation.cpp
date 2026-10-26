@@ -12,7 +12,7 @@ void Renovation::utiliser(Joueur& J, Plateau& P) const {
 
         //on récupère le prix max de la nouvelle carte avant d'écarter l'ancienne
         unsigned short prixMax = J.getMain().at(idxChoix.at(0))->getPrix() + 2; 
-        J.ecarter(J.getMain().at(idxChoix.at(0))->getNom(), P);
+        J.ecarter(J.getMain().at(idxChoix.at(0))->getNom(), P, Emplacement::MAIN);
 
         const Carte* carteVoulue;
         while (true){
