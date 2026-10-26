@@ -261,7 +261,7 @@ int main(){
             {
                 std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1);
                 if (!idxCarte.empty()) {
-                    J.ecarter(J.getMain().at(idxCarte.at(0))->getNom(),P,true);
+                    J.ecarter(J.getMain().at(idxCarte.at(0))->getNom(),P,Emplacement::MAIN,true);
                 }
                 break;
             }
