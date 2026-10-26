@@ -124,7 +124,6 @@ int main(){
                 break;
                 }
             case 3 :
-
                 if (Sauvegarde::effacer()){
                     UI::afficherInformation("Votre sauvegarde a bien été effacée.");
                     UI::sautDeLigne();
@@ -136,8 +135,7 @@ int main(){
                     UI::animationChargement(2);
                     ecran = Ecran::ACCUEIL;
                 }
-
-
+                break;
             case 0 :
                 ecran = Ecran::QUITTER_JEU;
                 break;

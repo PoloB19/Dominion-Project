@@ -352,7 +352,7 @@ size_t UI::ecranAccueil() {
 
     //Test si une sauvegarde existe pour proposer de la supprimer
     std::ifstream fichier("sauvegarde.txt");
-    if (!fichier.peek() == std::ifstream::traits_type::eof()) {
+    if (!(fichier.peek() == std::ifstream::traits_type::eof())) {
         UI::listeChoix.push_back("Supprimer la partie actuellement sauvegardée");
     };
 
@@ -546,7 +546,7 @@ size_t UI::ecranQuitterPartie() {
 
     //Test si une sauvegarde existe pour proposer de la supprimer
     std::ifstream fichier("sauvegarde.txt");
-    if (!fichier.peek() == std::ifstream::traits_type::eof()) {
+    if (!(fichier.peek() == std::ifstream::traits_type::eof())) {
         afficherInformation(ITALIC + "Attention, une nouvelle sauvegarde supprimera la précédente !" + RESET);
         sautDeLigne();
     };
