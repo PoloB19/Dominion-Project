@@ -548,6 +548,7 @@ size_t UI::ecranQuitterPartie() {
     std::ifstream fichier("sauvegarde.txt");
     if (!fichier.peek() == std::ifstream::traits_type::eof()) {
         afficherInformation(ITALIC + "Attention, une nouvelle sauvegarde supprimera la précédente !" + RESET);
+        sautDeLigne();
     };
 
 
