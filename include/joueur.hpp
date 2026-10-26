@@ -62,9 +62,9 @@ class Joueur {
         unsigned short getTailleDeck() const {return m_pioche.size() + m_main.size() + m_defausse.size();}
 
         //Setters
-        void ajustNbAction(unsigned short delta) {m_nbAction += delta;}
-        void ajustNbAchat(unsigned short delta) {m_nbAchat += delta;}
-        void ajustNbPiece(unsigned short delta) {m_pieces += delta;}
+        void ajustNbAction(short delta) {m_nbAction += delta;}
+        void ajustNbAchat(short delta) {m_nbAchat += delta;}
+        void ajustNbPiece(short delta) {m_pieces += delta;}
 
         //Méthodes
         bool accesMain() const;
@@ -97,15 +97,6 @@ class Joueur {
 
         void finDeTour();
 
-        //Interactions
-        bool demanderOuiNon(const std::string& question) const;
-        std::string demanderNomCarte() const;
-        std::vector<size_t> choixParmiCartes(std::vector<const Carte*> cartes, unsigned short nbChoix);
-
-        void annonceCarteDepuis(std::string nomCarte, Emplacement depuis) const ;
-        void annonceCarteVers(std::string nomCarte, Emplacement vers) const ;
-        void annonceRevelerCartes(std::vector<const Carte*> cartes) const ;
-        void annonceErreur(std::string message) const ;
-
+        
         bool operator== (const Joueur& J) const {return m_idJoueur == J.m_idJoueur;}
 };
