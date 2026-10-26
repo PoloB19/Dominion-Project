@@ -169,23 +169,41 @@ void Joueur::acheter(const Carte* carteAchetee, Plateau& P){
     }
 }
 
-void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P, bool phaseAction) {
-    if (phaseAction && m_nbAction < 1) {
+void Joueur::ecarter(std::string nomCarteEcartee, Plateau& P, Emplacement depuis, bool actionJoueur) {
+    if (actionJoueur && m_nbAction < 1) {
         UI::annonceErreur("vous n'avez plus d'action disponible");
         UI::retourALigne();
         UI::animationChargement(2);
         return;
     }
-    for (const Carte* c : m_main) {
-        if (c->getNom()==nomCarteEcartee) {
-            m_main.erase(std::find(m_main.begin(), m_main.end(), c));
-            P.ajoutRebut(c);
 
-            UI::afficherInformation("Vous rebutez " + c->getNom());
-            UI::sautDeLigne();
+    if (depuis == Emplacement::MAIN) {
 
-            if(phaseAction) {m_nbAction--;}
-            return;
+        for (const Carte* c : m_main) {
+            if (c->getNom()==nomCarteEcartee) {
+                m_main.erase(std::find(m_main.begin(), m_main.end(), c));
+                P.ajoutRebut(c);
+
+                UI::afficherInformation("Vous rebutez " + c->getNom());
+                UI::sautDeLigne();
+
+                if(actionJoueur) {m_nbAction--;}
+                return;
+            }
+        }
+    }
+    else if (depuis == Emplacement::EN_JEU) {
+        for (const Carte* c : m_enJeu) {
+            if (c->getNom()==nomCarteEcartee) {
+                m_enJeu.erase(std::find(m_enJeu.begin(), m_enJeu.end(), c));
+                P.ajoutRebut(c);
+
+                UI::afficherInformation("Vous rebutez " + c->getNom());
+                UI::sautDeLigne();
+
+                if(actionJoueur) {m_nbAction--;}
+                return;
+            }
         }
     }
 }
