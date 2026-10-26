@@ -107,7 +107,8 @@ int main(){
             case 1 : 
                 ecran = Ecran::NOUVELLE_PARTIE;
                 break;
-            case 2 : {
+            case 2 : 
+            {
                 size_t chargementNumJoueur = 0;
                 bool chargementPhase = false;
 
@@ -122,7 +123,7 @@ int main(){
                     ecran = Ecran::ACCUEIL;
                 }
                 break;
-                }
+            }
             case 3 :
                 if (Sauvegarde::effacer()){
                     UI::afficherInformation("Votre sauvegarde a bien été effacée.");
@@ -342,29 +343,3 @@ int main(){
 
     return 0;
 }
-
-//pour moi il faut 3 variables : joueur J, pateau P, size_t numTour
-
-/* CONTRE PROPOSITION POUR NE PAS ÊTRE DANS UN SWITCH DE SWITCH. enum Ecran
-
-    Ecran ecran;
-
-    switch (ecran) :
-        case Ecran::Accueil :
-            switch (ecranAccueil()) {
-                case 1:
-                    ecran = Ecran::NouvellePartie;
-                    break;
-            }
-            break;
-
-        case Ecran::NouvellePartie :
-            switch (ecranNouvellePartie()) {
-                case 1:
-                    ecran = Ecran::NouvellePartie;
-                    break;
-            }
-            break;
-                
-
-*/

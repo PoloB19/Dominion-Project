@@ -103,11 +103,11 @@ bool Sauvegarde::charger(Plateau& P, size_t& numJoueur, bool& phaseAchat, const 
 
         const std::string& prefixe = elements.at(0);
 
-        if (prefixe == "TOUR" && elements.size() >= 3) {
+        if (prefixe == "TOUR" && elements.size() == 3) {
             numJoueur = std::stoul(elements.at(1));
             phaseAchat = (std::stoul(elements.at(2)) != 0);
         }
-        else if (prefixe == "PILE" && elements.size() >= 3) {
+        else if (prefixe == "PILE" && elements.size() == 3) {
             const Carte* c = trouverCarteParNom(elements.at(1));
             unsigned short qte = std::stoul(elements.at(2));
             if (c != nullptr) {
