@@ -549,8 +549,7 @@ size_t UI::ecranQuitterPartie() {
     if (!(fichier.peek() == std::ifstream::traits_type::eof())) {
         afficherInformation(ITALIC + "Attention, une nouvelle sauvegarde supprimera la précédente !" + RESET);
         sautDeLigne();
-    };
-
+    }
 
     UI::listeChoix = {
         GREEN + "Avec sauvegarde" + RESET,
