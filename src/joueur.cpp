@@ -289,7 +289,7 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
     }
 }
 
-bool Joueur::reagirAttaque(const Carte& carteAttaque, Plateau& P) {
+bool Joueur::reagirAttaque(const Carte* carteAttaque, Plateau& P) {
     for (const Carte* c : m_main) {
         if (c->getSousType() == "Reaction" && c->reagir(*this, carteAttaque, P)) {
             return true;

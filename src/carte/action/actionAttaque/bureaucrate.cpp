@@ -8,10 +8,13 @@ void Bureaucrate::utiliser(Joueur& J, Plateau& P) const {
 
     J.obtenirCartePlateau(P.getCarteParNom("Argent"), P, Emplacement::PIOCHE);
     
-    std::vector<Joueur*> ciblesAttaque = ActionAttaque::determinerCibles(J, P);
+    std::vector<Joueur*> ciblesAttaque = ActionAttaque::determinerCibles(J, P, this);
 
-    for (Joueur& j : ciblesAttaque){
-        
+    for (Joueur* ptr_j : ciblesAttaque){
+
+        if (ptr_j == nullptr) continue; // Sécurité
+        Joueur& j = *ptr_j; // On transforme le pointeur en référence
+
         std::vector<const Carte*> mainj = j.getMain();
         std::vector<const Carte*> victoireEnMain;
         for (const Carte* c : mainj) {
