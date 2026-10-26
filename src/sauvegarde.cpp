@@ -163,3 +163,9 @@ bool Sauvegarde::charger(Plateau& P, size_t& numJoueur, bool& phaseAchat, const 
     // Vérifie que la sauvegarde est correcte
     return !P.m_joueurs.empty() && !P.m_piles.empty();
 }
+
+bool Sauvegarde::effacer(const std::string& cheminFichier) {
+    // std::ofstream::trunc vide intégralement le fichier à l'ouverture
+    std::ofstream fichier(cheminFichier, std::ofstream::out | std::ofstream::trunc);
+    return fichier.is_open();
+}

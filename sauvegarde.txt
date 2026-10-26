@@ -22,8 +22,8 @@ MAIN;Domaine;Domaine;Domaine;Cuivre;Cuivre
 EN_JEU
 PIOCHE
 DEFAUSSE;Festin;Cuivre;Cuivre;Cuivre;Cuivre;Cuivre
-JOUEUR;b;1;1;2;0
-MAIN;Domaine;Cuivre;Domaine
-EN_JEU;Cuivre;Cuivre
+JOUEUR;b;1;1;3;0
+MAIN;Domaine;Domaine
+EN_JEU;Cuivre;Cuivre;Cuivre
 PIOCHE;Cuivre;Cuivre;Cuivre;Cuivre;Domaine
 DEFAUSSE

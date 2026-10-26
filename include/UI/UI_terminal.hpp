@@ -6,6 +6,8 @@
 #include <thread>  // Pour les chargements
 #include <chrono>
 
+#include <fstream>
+
 #include "plateau.hpp"
 #include "joueur.hpp"
 #include "carte.hpp"

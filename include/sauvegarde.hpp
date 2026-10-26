@@ -19,4 +19,5 @@ class Sauvegarde {
     public:
         static bool sauvegarder(const Plateau& P, size_t numJoueur, bool phaseAchat, const std::string& cheminFichier = "sauvegarde.txt");
         static bool charger(Plateau& P, size_t& numJoueur, bool& phaseAchat, const std::string& cheminFichier = "sauvegarde.txt");
-};
+        static bool effacer(const std::string& cheminFichier = "sauvegarde.txt");
+    };

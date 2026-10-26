@@ -123,6 +123,21 @@ int main(){
                 }
                 break;
                 }
+            case 3 :
+
+                if (Sauvegarde::effacer()){
+                    UI::afficherInformation("Votre sauvegarde a bien été effacée.");
+                    UI::sautDeLigne();
+                    UI::animationChargement(2);
+                    ecran = Ecran::ACCUEIL;
+                } else {
+                    UI::annonceErreur("aucune sauvegarde valide trouvée");
+                    UI::sautDeLigne();
+                    UI::animationChargement(2);
+                    ecran = Ecran::ACCUEIL;
+                }
+
+
             case 0 :
                 ecran = Ecran::QUITTER_JEU;
                 break;
@@ -302,11 +317,11 @@ int main(){
             case 1 : {
                 bool phaseAchat = (dernierEcranTour == Ecran::TOUR_JOUEUR_ACHAT);
                 if (Sauvegarde::sauvegarder(P, numJoueur, phaseAchat, "sauvegarde.txt")) {
-                    UI::afficherInformation("Partie sauvegardee avec succès !");
+                    UI::afficherInformation(UI::BLUE + "Partie sauvegardée avec succès !" + UI::RESET);
                     UI::sautDeLigne();
                     UI::animationChargement(2);
                 } else {
-                    UI::annonceErreur("Échec de la sauvegarde.");
+                    UI::annonceErreur("échec de la sauvegarde");
                     UI::sautDeLigne();
                     UI::animationChargement(2);
                 }
