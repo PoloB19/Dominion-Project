@@ -93,6 +93,4 @@ class Joueur {
 
         void finDeTour();
 
-        
-        bool operator== (const Joueur& J) const {return m_idJoueur == J.m_idJoueur;}
 };
