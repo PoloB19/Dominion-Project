@@ -26,9 +26,6 @@ class Joueur {
 
     private:
 
-        static unsigned short m_nextId;
-        unsigned short m_idJoueur;
-
         std::string m_pseudo;
 
         std::stack<const Carte*> m_pioche;
@@ -47,7 +44,6 @@ class Joueur {
         ~Joueur();
 
         //Getters
-        unsigned short getId() const {return m_idJoueur;}
         std::string getPseudo() const {return m_pseudo;}
         std::stack<const Carte*> getPioche() const {return m_pioche;}
         std::vector<const Carte*> getMain() const {return m_main;}
