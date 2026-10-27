@@ -331,7 +331,7 @@ int main(){
                 ecran = Ecran::ACCUEIL;
                 break;
             case 0 :
-                ecran = Ecran::TOUR_JOUEUR_ACTION;
+                ecran = dernierEcranTour;
                 break;
             }
             break;

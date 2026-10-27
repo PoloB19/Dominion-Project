@@ -125,7 +125,7 @@ void UI::afficherPilesPlateau(const Plateau& P) {
             std::cout << prix << " : " << ligne << "\n";
         }
     }
-
+    sautDeLigne();
     std::cout << "Rebut (" << std::to_string(P.getRebut().size()) << ")";
     retourALigne();
 }
