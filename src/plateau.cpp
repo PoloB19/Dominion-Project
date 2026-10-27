@@ -39,7 +39,6 @@ Plateau::Plateau(std::vector<std::string> joueurs, size_t idCompositionPartie) :
             m_piles.insert({Cartes::malediction(),30});
             break;
         default :
-            std::cerr << "Erreur dans le nombre de joueur passé dans le vecteur du constructeur plateau" << std::endl;
             break;
     }    
 }
