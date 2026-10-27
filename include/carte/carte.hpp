@@ -8,8 +8,6 @@ class Joueur;
 class Carte {
 
     private:
-        static unsigned short m_nextId;
-        unsigned short m_id;
 
         std::string m_nom;
         std::string m_type;

@@ -5,9 +5,7 @@
 
 #include "UI_terminal.hpp"
 
-unsigned short Joueur::m_nextId = 0;
-
-Joueur::Joueur(std::string pseudo) : m_idJoueur(m_nextId++), m_pseudo (pseudo){
+Joueur::Joueur(std::string pseudo) : m_pseudo (pseudo){
 
     m_pioche = std::stack<const Carte*>(); 
     m_main = std::vector<const Carte*>(); 
