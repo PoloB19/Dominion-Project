@@ -16,8 +16,8 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
     std::vector<Joueur*> ciblesAttaque = ActionAttaque::determinerCibles(J, P, this);
     for (Joueur* ptr_j : ciblesAttaque) {
 
-        if (cible == nullptr) continue; // Sécurité
-        Joueur& j = *cible; // On transforme le pointeur en référence
+        if (ptr_j == nullptr) continue; // Sécurité
+        Joueur& j = *ptr_j; // On transforme le pointeur en référence
 
         // On révèle les 2 cartes de la pioche d'un joueur
         carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
