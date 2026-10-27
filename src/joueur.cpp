@@ -289,7 +289,7 @@ void Joueur::utiliserCarte(Plateau& P, const Carte* carte) {
 
 bool Joueur::reagirAttaque(const Carte* carteAttaque, Plateau& P) {
     for (const Carte* c : m_main) {
-        if (c->getSousType() == "Reaction" && c->reagir(*this, carteAttaque, P)) {
+        if (c->getSousType() == "ActionReaction" && c->reagir(*this, carteAttaque, P)) {
             return true;
         }
     }
@@ -299,7 +299,10 @@ bool Joueur::reagirAttaque(const Carte* carteAttaque, Plateau& P) {
 // --- Rafraîchir attributs ---
 
 void Joueur::compterPiecesEnMain(Plateau& P) {
-    for (const Carte* carteEnMain : m_main) {
+
+    std::vector<const Carte*> copieMain = m_main;
+
+    for (const Carte* carteEnMain : copieMain) {
         if (carteEnMain->getType() == "Tresor") {
             utiliserCarte(P,carteEnMain);
         }

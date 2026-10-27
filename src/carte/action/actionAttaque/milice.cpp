@@ -19,7 +19,7 @@ void Milice::utiliser(Joueur& J, Plateau& P) const {
         
         while (mainj.size() > 3) {
         
-            size_t idCarteChoisie = UI::choixParmiCartes(J,mainj,1).at(0);
+            size_t idCarteChoisie = UI::choixParmiCartes(j,mainj,1).at(0);
             j.enleverDepuisMain(mainj.at(idCarteChoisie)->getNom(),Emplacement::DEFAUSSE);
 
             mainj = j.getMain();
