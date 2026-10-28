@@ -22,6 +22,7 @@ void UI::clearScreen() {
 }
 
 void UI::animationChargement(size_t temps_attente) {
+    retourALigne(); // VERIFIER QUE CA FAIT PAS TROP
     const size_t tailleBarre = 20;
     const size_t delaiMs = (temps_attente * 1000) / tailleBarre; // découpe le temps pour la barre
 
@@ -40,7 +41,7 @@ void UI::animationChargement(size_t temps_attente) {
 }
 
 void UI::afficherInformation(const std::string& info) {
-    std::cout << info;
+    std::cout << info << std::flush;
 }
 
 void UI::afficherTitre(const std::string& titre) {
@@ -598,7 +599,7 @@ size_t UI::ecranFinDePartie(Plateau& P) {
         }
 
         std::cout << pseudosGagants << " !!!" << RESET;
-        std::cout << "Ils ont obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points à égalité";
+        std::cout << "Ils ont obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points à égalité.";
         retourALigne();
         std::cout << "Qui viendra les détrôner ? :)";
 
@@ -607,7 +608,6 @@ size_t UI::ecranFinDePartie(Plateau& P) {
     sautDeLigne();
 
     return choixParmiChiffre({}, "Retour au menu principal");
-
 }
 
 //Onglets

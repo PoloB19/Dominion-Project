@@ -16,6 +16,7 @@ void Cave::utiliser(Joueur& J,  Plateau&) const {
         size_t idxChoix = UI::choixParmiCartes(J,J.getMain(),1).at(0);
         J.enleverDepuisMain(J.getMain().at(idxChoix)->getNom(),Emplacement::DEFAUSSE);
         compt_tmp ++;
+        UI::annonceCarteDepuis(J.getPioche().top()->getNom(),Emplacement::PIOCHE);
     }
 
     J.piocher(compt_tmp);
