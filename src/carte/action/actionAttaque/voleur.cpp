@@ -21,6 +21,7 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
 
         // On révèle les 2 cartes de la pioche d'un joueur
         carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
+        UI::annonceRevelerCartes(j, {carteRevelee});
         if (carteRevelee->getType() == "Tresor") {
             tresorReveles.push_back(carteRevelee);
         }
@@ -29,6 +30,7 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
         }
 
         carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
+        UI::annonceRevelerCartes(j, {carteRevelee});
         if (carteRevelee->getType() == "Tresor") {
             tresorReveles.push_back(carteRevelee);
         }
@@ -54,8 +56,15 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
             }
         }
     }
+    
     if (cartesEcartees.size()==0) {
         UI::afficherInformation("Vous n'avez rien à voler.\n"); 
+        UI::animationChargement(4);
+    }
+    else if (cartesEcartees.size()==1) {
+        UI::afficherInformation(J.getPseudo() + ", vous volez : " + cartesEcartees.at(0)->getNom());
+        J.ajouterADefausse(cartesEcartees.at(0));
+        UI::animationChargement(4);
     }
     else {
         UI::afficherInformation("Voici les cartes que vous venez d'écarter..."); 

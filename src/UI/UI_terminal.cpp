@@ -588,7 +588,7 @@ size_t UI::ecranFinDePartie(Plateau& P) {
         retourALigne();
         std::cout << "Il/Elle a obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points.";
         retourALigne();
-        std::cout << "Qui viendra le détrôner :) ?";
+        std::cout << "Qui viendra le/la détrôner ? :)";
 
     } else {
 
@@ -600,7 +600,7 @@ size_t UI::ecranFinDePartie(Plateau& P) {
         std::cout << pseudosGagants << " !!!" << RESET;
         std::cout << "Ils ont obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points à égalité";
         retourALigne();
-        std::cout << "Qui viendra les détrôner :) ?";
+        std::cout << "Qui viendra les détrôner ? :)";
 
     }
 
@@ -743,24 +743,24 @@ void UI::annonceCarteDepuis(std::string nomCarte, Emplacement depuis) {
 
 }
 
-void UI::annonceCarteVers(std::string nomCarte, Emplacement vers) {
+void UI::annonceCarteVers(const Carte* carte, Emplacement vers) {
 
     switch (vers)
     {
     case Emplacement::PIOCHE :
-        std::cout << "Vous mettez sur la pioche la carte " << nomCarte << ". ";
+        std::cout << "Vous mettez sur la pioche la carte " << carte->getNom() << ". ";
         break;
     
     case Emplacement::DEFAUSSE :
-        std::cout << "Vous défaussez la carte " << nomCarte << ". ";
+        std::cout << "Vous défaussez la carte " << carte->getNom() << ". ";
         break;
     case Emplacement::EN_JEU:
-        std::cout << "Vous jouez la carte " << nomCarte << ". ";
+        std::cout << "Vous jouez la carte " << carte->getNom() << " : " << carte->getDescription();
+        retourALigne();
         break;
     default:
         break;
     }
-
 }
 
 void UI::annonceRevelerCartes(const Joueur& J, const std::vector <const Carte*>& cartes) {

@@ -14,6 +14,6 @@ void Sorciere::utiliser(Joueur& J, Plateau& P) const {
         if (cible == nullptr) continue; // Sécurité
         Joueur& j = *cible; // On transforme le pointeur en référence
 
-        j.obtenirCartePlateau(P.getCarteParNom("Malédiction"), P, Emplacement::DEFAUSSE);
+        j.obtenirCartePlateau(P.getCarteParNom("Malediction"), P, Emplacement::DEFAUSSE);
     }
 }
