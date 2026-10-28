@@ -1,13 +1,13 @@
 #include "festin.hpp"
 #include "UI_terminal.hpp"
 
-Festin::Festin() : ActionSimple("Festin", 4, "Écartez cette carte. \nObtenez une carte coûtant au plus 5 pièces."){}
+Festin::Festin() : ActionSimple("Festin", 4, "Utilisez cette carte pour l'écarter. \nObtenez une carte coûtant au plus 5 pièces."){}
 
 Festin::~Festin() {}
 
 void Festin::utiliser(Joueur& J, Plateau& P) const {
 
-    // Vérification qu'il existe encore une cartes coûtant au plus 5 pièces sur le plateau
+    // Vérification qu'il existe encore une carte coûtant au plus 5 pièces sur le plateau
 
     bool gainPossible = false;
     for (const auto& pair : P.getPiles()) {
@@ -21,6 +21,8 @@ void Festin::utiliser(Joueur& J, Plateau& P) const {
         P.ajoutRebut(this);
         return;
     }
+    
+    J.ecarter(this->getNom(),P,Emplacement::MAIN);
 
     while(true){
 
@@ -28,7 +30,7 @@ void Festin::utiliser(Joueur& J, Plateau& P) const {
 
         if (carteVoulue->getPrix() > 5){
 
-            UI::annonceErreur("cette carte est trop cher");
+            UI::annonceErreur("cette carte est trop chère");
 
         } else if (carteVoulue == nullptr){
             

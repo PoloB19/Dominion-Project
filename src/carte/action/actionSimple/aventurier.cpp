@@ -21,7 +21,7 @@ void Aventurier::utiliser(Joueur& J, Plateau&) const {
             nbTresorTrouveTmp++;
         } else {
             //On défausse la carte qu'on vient de piocher
-            UI::annonceCarteVers(carteRevelee->getNom(), Emplacement::DEFAUSSE);
+            UI::annonceCarteVers(carteRevelee, Emplacement::DEFAUSSE);
             J.ajouterADefausse(carteRevelee);
         }
         

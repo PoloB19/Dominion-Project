@@ -55,15 +55,15 @@ void Joueur::piocher(unsigned short nbPioche){
             return;
         }        
         m_main.push_back(m_pioche.top());
+        UI::annonceCarteDepuis(m_pioche.top()->getNom(),Emplacement::PIOCHE);
         m_pioche.pop();
-        
     }
 }
 
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
-        //UI::annonceCarteVers(carte->getNom(),Emplacement::PIOCHE); on garde??? à voir en testant si ça manque
+        UI::annonceCarteVers(carte,Emplacement::PIOCHE); //on garde??? à voir en testant si ça sert
     }
 }
 
@@ -81,7 +81,7 @@ void Joueur::ajouterADefausse(const Carte* carte){
 void Joueur::ajouterAEnJeu(const Carte* carte){
     if(carte != nullptr){
         m_enJeu.push_back(carte);
-        UI::annonceCarteVers(carte->getNom(),Emplacement::EN_JEU);
+        UI::annonceCarteVers(carte,Emplacement::EN_JEU);
     }
 }
 
@@ -229,7 +229,6 @@ void Joueur::melangerDefausse(){
 
 }
 
-//APPELER ANNONCE REVELER CARTE ! peut-être pas nécessaire, je crois que ca a été fait dans les cartes. -> vérifier toutes les cartes 
 const Carte* Joueur::revelerCarte(Emplacement depuis){
 
     const Carte* carteRevelee = nullptr;
