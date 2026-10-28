@@ -55,7 +55,6 @@ void Joueur::piocher(unsigned short nbPioche){
             return;
         }        
         m_main.push_back(m_pioche.top());
-        UI::annonceCarteDepuis(m_pioche.top()->getNom(),Emplacement::PIOCHE);
         m_pioche.pop();
     }
 }
