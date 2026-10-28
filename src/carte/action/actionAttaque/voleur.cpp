@@ -9,8 +9,8 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
     // vecteur contenant les cartes écartées par le voleur
     std::vector<const Carte*> cartesEcartees;
 
-    std::vector<const Carte*> tresorReveles = {};
     const Carte* carteRevelee;
+    std::vector<const Carte*> tresorReveles;
 
     // on parcout les joueurs attaquables
     std::vector<Joueur*> ciblesAttaque = ActionAttaque::determinerCibles(J, P, this);
@@ -19,23 +19,15 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
         if (ptr_j == nullptr) continue; // Sécurité
         Joueur& j = *ptr_j; // On transforme le pointeur en référence
 
-        // On révèle les 2 cartes de la pioche d'un joueur
-        carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
-        UI::annonceRevelerCartes(j, {carteRevelee});
-        if (carteRevelee->getType() == "Tresor") {
-            tresorReveles.push_back(carteRevelee);
-        }
-        else {
-            j.ajouterADefausse(carteRevelee);
-        }
+        tresorReveles = {}; 
 
-        carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
-        UI::annonceRevelerCartes(j, {carteRevelee});
-        if (carteRevelee->getType() == "Tresor") {
-            tresorReveles.push_back(carteRevelee);
-        }
-        else {
-            j.ajouterADefausse(carteRevelee);
+        // On révèle les 2 cartes de la pioche d'un joueur
+        for (int k = 0; k < 2; k++) {
+            carteRevelee = j.revelerCarte(Emplacement::PIOCHE);
+            if (carteRevelee == nullptr) break;
+            UI::annonceRevelerCartes(j, {carteRevelee});
+            if (carteRevelee->getType() == "Tresor") tresorReveles.push_back(carteRevelee);
+            else j.ajouterADefausse(carteRevelee);
         }
     
         // Si seulement une des 2 cartes révélées était un trésor, on l'écarte.
@@ -44,7 +36,7 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
         }
         // Sinon on laisse au voleur le choix entre les 2
         else if (tresorReveles.size() == 2) {
-            UI::afficherInformation("Quelle carte de " + j.getPseudo() + " écartez-vous ?");
+            UI::afficherInformation("Quelle carte de " + j.getPseudo() + " écartez-vous ? ");
             size_t idxChoix = UI::choixParmiCartes(J,tresorReveles,1).at(0);
             cartesEcartees.push_back(tresorReveles.at(idxChoix));
 
