@@ -599,7 +599,7 @@ size_t UI::ecranFinDePartie(Plateau& P) {
         }
 
         std::cout << pseudosGagants << " !!!" << RESET;
-        std::cout << "Ils ont obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points à égalité";
+        std::cout << "Ils ont obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points à égalité.";
         retourALigne();
         std::cout << "Qui viendra les détrôner ? :)";
 
@@ -608,7 +608,6 @@ size_t UI::ecranFinDePartie(Plateau& P) {
     sautDeLigne();
 
     return choixParmiChiffre({}, "Retour au menu principal");
-
 }
 
 //Onglets
