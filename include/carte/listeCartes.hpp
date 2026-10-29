@@ -1,7 +1,21 @@
 #pragma once
+
+#include <vector>
+
 #include "carte.hpp"
 
 namespace Cartes {
+
+    template <typename T>
+    const Carte* getCarte(){
+        static const T instanceCarte;
+        return &instanceCarte;
+    }
+
+
+    /*
+
+
     // Trésor
     const Carte* cuivre();
     const Carte* argent();
@@ -38,6 +52,9 @@ namespace Cartes {
     const Carte* sorciere();
     const Carte* village();
     const Carte* voleur();
+
+    */
+
 
     const std::vector<const Carte*>& catalogue();
     

@@ -6,8 +6,12 @@
 #include <string>
 
 #include "composition.hpp"
-#include "carte.hpp"
 #include "joueur.hpp"
+
+#include "carte.hpp"
+#include "listeCartes.hpp"
+
+#include "UI_terminal.hpp"
 
 class Carte;
 

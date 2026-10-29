@@ -1,6 +1,10 @@
 #include "dominion.hpp"
 
 namespace Cartes {
+
+    /*
+
+
     // Trésor
     const Carte* cuivre() { static const Cuivre c; return &c; }
     const Carte* argent() { static const Argent c; return &c; }
@@ -38,21 +42,26 @@ namespace Cartes {
     const Carte* espion() { static const Espion c;  return &c; }
     const Carte* voleur() { static const Voleur c;  return &c; }
 
+    */
+
+
     // Catalogue de toutes les cartes
     const std::vector<const Carte*>& catalogue() {
         static const std::vector<const Carte*> v = {
             // Trésors
-            cuivre(), argent(), or_(),
+            getCarte<Cuivre>(), getCarte<Argent>(), getCarte<Or>(),
             // Malédiction
-            malediction(),
+            getCarte<Malediction>(),
             // Victoire
-            domaine(), duche(), province(),
+            getCarte<Domaine>(), getCarte<Duche>(), getCarte<Province>(),
             // Royaume
-            jardins(), atelier(), aventurier(), bibliotheque(), bucheron(), cave(),
-            chambreDuConseil(), chancelier(), chapelle(), douves(),
-            espion(), festin(), festival(), forgeron(), laboratoire(),
-            marche(), milice(), mine(), preteurSurGages(), renovation(),
-            salleDuTrone(), sorciere(), village(), voleur(), bureaucrate()
+            getCarte<Jardins>(), getCarte<Atelier>(), getCarte<Aventurier>(), getCarte<Bibliotheque>(), 
+            getCarte<Bucheron>(), getCarte<Cave>(), getCarte<ChambreDuConseil>(), getCarte<Chancelier>(), 
+            getCarte<Chapelle>(), getCarte<Douves>(), getCarte<Espion>(), getCarte<Festin>(), 
+            getCarte<Festival>(), getCarte<Forgeron>(), getCarte<Laboratoire>(), getCarte<Marche>(), 
+            getCarte<Milice>(), getCarte<Mine>(), getCarte<PreteurSurGages>(), getCarte<Renovation>(),
+            getCarte<SalleDuTrone>(), getCarte<Sorciere>(), getCarte<Village>(), getCarte<Voleur>(), 
+            getCarte<Bureaucrate>()
         };
         return v;
     }
