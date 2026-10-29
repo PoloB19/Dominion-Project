@@ -579,33 +579,30 @@ size_t UI::ecranFinDePartie(Plateau& P) {
 
     sautDeLigne();
 
-    std::vector<Joueur *> gagnants = P.determinerGagnant();
+    std::vector<Joueur*> classement = P.determinerClassement();
+    Joueur* premier = classement.at(0);
+    short scoreMax = premier->compterPoints();
+    unsigned short toursMax = premier->getNbTourJoues();
 
-    std::cout << GREEN << "Un grand BRAVO à ";
+    UI::afficherInformation(BOLD + "--- CLASSEMENT FINAL ---" + RESET);
 
-    if(gagnants.size() == 1){
-
-        std::cout << gagnants.at(0)->getPseudo() << " !!!" << RESET;
-        retourALigne();
-        std::cout << "Il/Elle a obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points.";
-        retourALigne();
-        std::cout << "Qui viendra le/la détrôner ? :)";
-
-    } else {
-
-        std::string pseudosGagants;
-        for (const Joueur * J : gagnants){
-            pseudosGagants += J->getPseudo() + ", ";
+    for (size_t i = 0; i < classement.size(); i++) {
+        Joueur* j = classement.at(i);
+        
+        // On vérifie si ce joueur est à stricte égalité avec le premier
+        if (j->compterPoints() == scoreMax && j->getNbTourJoues() == toursMax) {
+            std::cout << GREEN << "1er (EX AEQUO) : " << j->getPseudo() 
+                    << " avec " << scoreMax << " points !" <<  RESET; 
+            retourALigne();
+        } else {
+            // Affichage classique pour les perdants
+            std::cout << (i + 1) << "e : " << j->getPseudo() 
+                    << " avec " << j->compterPoints() << " points."; 
+            retourALigne();
         }
-
-        std::cout << pseudosGagants << " !!!" << RESET;
-        std::cout << "Ils ont obtenu " << std::to_string(gagnants.at(0)->compterPoints()) << " points à égalité.";
-        retourALigne();
-        std::cout << "Qui viendra les détrôner ? :)";
-
     }
 
-    sautDeLigne();
+    retourALigne();
 
     return choixParmiChiffre({}, "Retour au menu principal");
 }

@@ -4,6 +4,7 @@
 #include <stack>
 #include <map>
 #include <string>
+#include <algorithm> // Pour le classement des gagnants
 
 #include "composition.hpp"
 #include "joueur.hpp"
@@ -52,7 +53,7 @@ class Plateau {
         void ajoutRebut(const Carte* carteRebutee);
         void retirerCartePlateau(const Carte* carte);
         bool checkerEndCondition();
-        std::vector<Joueur*> determinerGagnant();
+        std::vector<Joueur*> determinerClassement();
         void setModeRapide();
 
 };
