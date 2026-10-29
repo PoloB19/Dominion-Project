@@ -586,20 +586,29 @@ size_t UI::ecranFinDePartie(Plateau& P) {
     short scoreMax = premier->compterPoints();
     unsigned short toursMax = premier->getNbTourJoues();
 
-    UI::afficherInformation(BOLD + "--- CLASSEMENT FINAL ---" + RESET);
+    UI::afficherInformation(BOLD + "• • • CLASSEMENT FINAL • • •" + RESET);
+
+    sautDeLigne();
 
     for (size_t i = 0; i < classement.size(); i++) {
         Joueur* j = classement.at(i);
-        
-        // On vérifie si ce joueur est à stricte égalité avec le premier
+
+        // On vérifie s'il y a une égalité parfaite entre les premiers
         if (j->compterPoints() == scoreMax && j->getNbTourJoues() == toursMax) {
-            std::cout << GREEN << "1er (EX AEQUO) : " << j->getPseudo() 
-                    << " avec " << scoreMax << " points !" <<  RESET; 
+            std::cout << GREEN << "1er";
+
+            if (i != 0) {
+                std::cout << " (EX ÆQUO)";
+            }
+            
+            std::cout << " : " << j->getPseudo() << " avec " 
+                      << BOLD << scoreMax << " points !" <<  RESET; 
             retourALigne();
+
         } else {
             // Affichage classique pour les perdants
             std::cout << (i + 1) << "e : " << j->getPseudo() 
-                    << " avec " << j->compterPoints() << " points."; 
+                      << " avec "  << j->compterPoints() << " points."; 
             retourALigne();
         }
     }
