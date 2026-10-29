@@ -82,40 +82,30 @@ bool Plateau::checkerEndCondition(){
     return compteur_tmp >= 3;
 }
 
-std::vector<Joueur*> Plateau::determinerGagnant(){
+std::vector<Joueur*> Plateau::determinerClassement() {
+    std::vector<Joueur*> classement;
+    classement.reserve(m_joueurs.size());
 
-    //On suppose le premier joueur gagnant
-    std::vector<Joueur*> gagnantsTmp = {&m_joueurs.at(0)};
-    short meilleurScore = m_joueurs.at(0).compterPoints();
-
-    for (size_t i = 1; i < m_joueurs.size(); i++) {
-
-        Joueur& j = m_joueurs.at(i);
-        short score = j.compterPoints();
-
-        //Si le joueur a un meilleur score que les gagnants actuels
-        if(score > meilleurScore){
-            gagnantsTmp = {&j};
-            meilleurScore = score;
-
-        //Si le joueur a un score égal aux gagnants actuels
-        } else if (score == meilleurScore){
-
-            //Si le joueur a - de tour joués que les gagnants actuels
-            if (j.getNbTourJoues() < gagnantsTmp.at(0)->getNbTourJoues()){
-
-                gagnantsTmp = {&j};
-
-            //Si le joueur et les gagnants actuels ont le même score et le même nombre de tours joués
-            } else if (j.getNbTourJoues() == gagnantsTmp.at(0)->getNbTourJoues()){
-                gagnantsTmp.push_back(&j);
-            }
-
-        }
+    for (Joueur& j : m_joueurs) {
+        classement.push_back(&j);
     }
+
+    // On trie le vecteur avec une fonction lambda (règle de tri)
+    std::sort(classement.begin(), classement.end(), [](Joueur* a, Joueur* b) {
+        short scoreA = a->compterPoints();
+        short scoreB = b->compterPoints();
+
+        // Si les scores sont différents, le plus grand score passe devant
+        if (scoreA != scoreB) {
+            return scoreA > scoreB; 
+        }
+        //En cas d'égalité parfaite, celui qui a joué le moins de tours gagne
+        return a->getNbTourJoues() < b->getNbTourJoues();
+    });
     
-    return gagnantsTmp;
+    return classement;
 }
+
 
 void Plateau::setModeRapide() {
     for (auto& [carte, quantite] : m_piles) {
