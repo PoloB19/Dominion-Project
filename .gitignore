@@ -18,6 +18,7 @@ build/
 *.exe
 *.a
 *.dylib
+*Zone.Identifier
 
 # IDEs et Éditeurs
 compile_commands.json
