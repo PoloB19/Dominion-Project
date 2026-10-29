@@ -1,9 +1,5 @@
-#include <vector>
-
-#include "listeCartes.hpp"
 #include "plateau.hpp"
-
-#include "UI_terminal.hpp"
+#include "dominion.hpp"
 
 std::vector<Composition> Plateau::m_compositions = {};
 
@@ -12,31 +8,31 @@ Plateau::Plateau(std::vector<std::string> joueurs, size_t idCompositionPartie) :
     for (const std::string& pseudo : joueurs) {
         m_joueurs.emplace_back(pseudo); // construit le joueur directement dans le vecteur
         Joueur& j = m_joueurs.back();
-        for (int i = 0; i < 7; i++) j.ajouterADefausse(Cartes::cuivre());
-        for (int i = 0; i < 3; i++) j.ajouterADefausse(Cartes::domaine());
+        for (int i = 0; i < 7; i++) j.ajouterADefausse(Cartes::getCarte<Cuivre>());
+        for (int i = 0; i < 3; i++) j.ajouterADefausse(Cartes::getCarte<Domaine>());
         j.piocher(5);
     }
     
-    // CARTES COMMUNES A TOUTES LES COMPOSITIONS :
-    m_piles.insert({Cartes::cuivre(),60-m_joueurs.size()*7});
-    m_piles.insert({Cartes::argent(),40});
-    m_piles.insert({Cartes::or_(),30});
+    // CARTES COMMUNES A TOUTES LES COMPOSITIONS
+    m_piles.insert({Cartes::getCarte<Cuivre>(),60-m_joueurs.size()*7});
+    m_piles.insert({Cartes::getCarte<Argent>(),40});
+    m_piles.insert({Cartes::getCarte<Or>(),30});
     switch(m_joueurs.size()) {
         // nb provinces et malédiction en fonction du nb de joueurs
         case 2 :
-            m_piles.insert({Cartes::domaine(),8});
-            m_piles.insert({Cartes::duche(),8});
-            m_piles.insert({Cartes::province(),8});
-            m_piles.insert({Cartes::malediction(),10});
+            m_piles.insert({Cartes::getCarte<Domaine>(),8});
+            m_piles.insert({Cartes::getCarte<Duche>(),8});
+            m_piles.insert({Cartes::getCarte<Province>(),8});
+            m_piles.insert({Cartes::getCarte<Malediction>(),10});
             break;
         case 3 :
-            m_piles.insert({Cartes::malediction(),20});
+            m_piles.insert({Cartes::getCarte<Malediction>(),20});
             // fall through
         case 4 :
-            m_piles.insert({Cartes::domaine(),12});
-            m_piles.insert({Cartes::duche(),12});
-            m_piles.insert({Cartes::province(),12});
-            m_piles.insert({Cartes::malediction(),30});
+            m_piles.insert({Cartes::getCarte<Domaine>(),12});
+            m_piles.insert({Cartes::getCarte<Duche>(),12});
+            m_piles.insert({Cartes::getCarte<Province>(),12});
+            m_piles.insert({Cartes::getCarte<Malediction>(),30});
             break;
         default :
             break;
