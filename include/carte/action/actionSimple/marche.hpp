@@ -3,7 +3,6 @@
 #include "actionSimple.hpp"
 
 class Marche : public ActionSimple {
-
     public:
         Marche();
         ~Marche();

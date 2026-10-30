@@ -3,7 +3,6 @@
 #include "actionSimple.hpp"
 
 class Festival : public ActionSimple {
-
     public:
         Festival();
         ~Festival();

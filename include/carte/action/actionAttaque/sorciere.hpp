@@ -3,7 +3,6 @@
 #include "actionAttaque.hpp"
 
 class Sorciere : public ActionAttaque {
-
     public:
         Sorciere();
         ~Sorciere();

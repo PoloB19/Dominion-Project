@@ -3,7 +3,6 @@
 #include "actionSimple.hpp"
 
 class Chapelle : public ActionSimple {
-
     public:
         Chapelle();
         ~Chapelle();

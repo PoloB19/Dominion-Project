@@ -3,7 +3,6 @@
 #include "actionAttaque.hpp"
 
 class Espion : public ActionAttaque {
-
     public:
         Espion();
         ~Espion();

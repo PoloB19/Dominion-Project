@@ -3,7 +3,6 @@
 #include "actionSimple.hpp"
 
 class Mine : public ActionSimple {
-
     public:
         Mine();
         ~Mine();
