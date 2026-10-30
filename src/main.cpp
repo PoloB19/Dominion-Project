@@ -252,7 +252,7 @@ int main(){
                 break;
             case 2 :
             {
-                std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1);
+                std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1,"Retour");
                 if (!idxCarte.empty()) {
                     J.utiliserCarte(P,J.getMain().at(idxCarte.at(0)));
                 }
@@ -260,7 +260,7 @@ int main(){
             }
             case 3 : 
             {
-                std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1);
+                std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1,"Retour");
                 if (!idxCarte.empty()) {
                     J.ecarter(J.getMain().at(idxCarte.at(0))->getNom(),P,Emplacement::MAIN,true);
                 }
