@@ -3,7 +3,6 @@
 #include "actionSimple.hpp"
 
 class Festin : public ActionSimple {
-
     public:
         Festin();
         ~Festin();

@@ -62,7 +62,7 @@ void Joueur::piocher(unsigned short nbPioche){
 void Joueur::ajouterAPioche(const Carte* carte){
     if(carte != nullptr){
         m_pioche.push(carte);
-        UI::annonceCarteVers(carte,Emplacement::PIOCHE); //on garde??? à voir en testant si ça sert
+        UI::annonceCarteVers(carte,Emplacement::PIOCHE); 
     }
 }
 

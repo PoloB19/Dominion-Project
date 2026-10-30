@@ -3,7 +3,6 @@
 #include "actionReaction.hpp"
 
 class Douves : public ActionReaction {
-
     public:
         Douves();
         ~Douves();

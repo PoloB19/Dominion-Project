@@ -3,7 +3,6 @@
 #include "actionSimple.hpp"
 
 class Bibliotheque : public ActionSimple {
-
     public:
         Bibliotheque();
         ~Bibliotheque();

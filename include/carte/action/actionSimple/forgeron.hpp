@@ -3,7 +3,6 @@
 #include "actionSimple.hpp"
 
 class Forgeron : public ActionSimple {
-
     public:
         Forgeron();
         ~Forgeron();
