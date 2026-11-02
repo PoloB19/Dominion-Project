@@ -705,14 +705,12 @@ size_t UI::ongletPhaseAction() {
     UI::listeChoix = {
         CYAN + "Voir la description des cartes du jeu" + RESET,
         BLUE + "Utiliser une carte" + RESET,
-        YELLOW + "Écarter une carte" + RESET,
         GREEN + "Passer à la phase d'achat" + RESET,
     };
 
     UI::choix0 = RED + "Quitter la partie" + RESET;
 
     return choixParmiChiffre(listeChoix, choix0);
-
 }
 
 size_t UI::ongletPhaseAchat() {
