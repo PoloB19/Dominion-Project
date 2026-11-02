@@ -602,13 +602,15 @@ size_t UI::ecranFinDePartie(Plateau& P) {
             }
             
             std::cout << " : " << j->getPseudo() << " avec " 
-                      << BOLD << scoreMax << " points !" <<  RESET; 
+                      << BOLD << scoreMax << " points en " 
+                      << std::to_string(j->getNbTourJoues()) << " tours !" << RESET; 
             retourALigne();
 
         } else {
             // Affichage classique pour les perdants
             std::cout << (i + 1) << "e : " << j->getPseudo() 
-                      << " avec "  << j->compterPoints() << " points."; 
+                      << " avec "  << j->compterPoints() << " points en " 
+                      << std::to_string(j->getNbTourJoues()) << " tours."; 
             retourALigne();
         }
     }
@@ -703,14 +705,12 @@ size_t UI::ongletPhaseAction() {
     UI::listeChoix = {
         CYAN + "Voir la description des cartes du jeu" + RESET,
         BLUE + "Utiliser une carte" + RESET,
-        YELLOW + "Écarter une carte" + RESET,
         GREEN + "Passer à la phase d'achat" + RESET,
     };
 
     UI::choix0 = RED + "Quitter la partie" + RESET;
 
     return choixParmiChiffre(listeChoix, choix0);
-
 }
 
 size_t UI::ongletPhaseAchat() {
