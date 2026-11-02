@@ -258,15 +258,7 @@ int main(){
                 }
                 break;
             }
-            case 3 : 
-            {
-                std::vector<size_t> idxCarte = UI::choixParmiCartes(J,J.getMain(),1,"Retour");
-                if (!idxCarte.empty()) {
-                    J.ecarter(J.getMain().at(idxCarte.at(0))->getNom(),P,Emplacement::MAIN,true);
-                }
-                break;
-            }
-            case 4 :
+            case 3 :
                 ecran = Ecran::TOUR_JOUEUR_ACHAT;
                 break;
             case 0 :
