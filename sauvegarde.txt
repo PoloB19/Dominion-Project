@@ -1,4 +1,4 @@
-TOUR;1;1
+TOUR;1;0
 PILE;Cuivre;43
 PILE;Argent;37
 PILE;Or;23
@@ -7,9 +7,9 @@ PILE;Domaine;6
 PILE;Duche;8
 PILE;Province;3
 PILE;Jardins;7
-PILE;Atelier;10
+PILE;Millice;10
 PILE;Bûcheron;6
-PILE;Cave;8
+PILE;Douves;8
 PILE;Chapelle;10
 PILE;Festin;9
 PILE;Laboratoire;7
@@ -18,12 +18,12 @@ PILE;Village;3
 PILE;Voleur;8
 REBUT;Domaine;Domaine;Festin;Festin;Festin;Malediction;Malediction
 JOUEUR;Mélo;1;1;0;19
-MAIN;Or;Cuivre;Cuivre;Village;Bûcheron
+MAIN;Festin;Douves;Douves;Cuivre;Village;Mine;Voleur;SalleDuTrone
 EN_JEU
-PIOCHE;Domaine;Province;Or;Laboratoire
+PIOCHE;SalleDuTrone;Voleur
 DEFAUSSE;Province;Province;Province;Village;Village;Or;Or;Or;Argent;Laboratoire;Province;Cuivre;Or;Cuivre
 JOUEUR;Paul;2;0;0;18
-MAIN;Domaine;Domaine
+MAIN;Douves;Douves;Douves;Mine;Millice
 EN_JEU;Village;Cuivre;Cuivre;Cuivre
-PIOCHE;Village;Cave;Jardins;Sorcière;Domaine;Cuivre;Domaine;Village;Voleur;Cuivre;Cuivre;Cuivre;Cuivre;Cuivre;Cuivre;Argent;Festin;Bûcheron;Domaine;Jardins;Village;Laboratoire;Bûcheron;Cuivre
-DEFAUSSE;Or;Jardins;Cave;Voleur;Cuivre;Cuivre;Argent;Bûcheron
+PIOCHE;Village;Cave;Jardins;Voleur;SalleDuTrone
+DEFAUSSE
