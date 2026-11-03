@@ -1,4 +1,4 @@
-TOUR;1;0
+TOUR;0;0
 PILE;Cuivre;43
 PILE;Argent;37
 PILE;Or;23
