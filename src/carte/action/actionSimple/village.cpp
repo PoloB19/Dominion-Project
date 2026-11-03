@@ -1,6 +1,6 @@
 #include "village.hpp"
 
-Village::Village() : ActionSimple("Village", 5, "+1 Carte \n+2 Actions") {}
+Village::Village() : ActionSimple("Village", 3, "+1 Carte \n+2 Actions") {}
 
 Village::~Village() {}
 

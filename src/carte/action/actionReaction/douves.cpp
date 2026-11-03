@@ -10,7 +10,7 @@ void Douves::utiliser(Joueur& J, Plateau&) const {
 } 
 
 bool Douves::reagir(Joueur& cible, const Carte* carteAttaque, Plateau&) const {
-    if (UI::choixOuiNon("voulez-vous dévoiler Douves pour vous protéger de " + carteAttaque->getNom() + " ?")) {
+    if (UI::choixOuiNon(cible.getPseudo()+", voulez-vous dévoiler Douves pour vous protéger de " + carteAttaque->getNom() + " ?")) {
         UI::annonceRevelerCartes(cible,{this});
         return true;   // immunisé
     }

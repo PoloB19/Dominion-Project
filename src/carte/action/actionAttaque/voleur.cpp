@@ -1,6 +1,8 @@
 #include "voleur.hpp"
 #include "UI_terminal.hpp"
 
+#include "string"
+
 Voleur::Voleur() : ActionAttaque("Voleur", 4, "Tous vos adversaires dévoilent les 2 premières cartes de leur deck.\nS'ils dévoilent des cartes Trésor, ils en écartent une de votre choix. Parmi ces cartes Trésor écartées, recevez celles de votre choix. Les autres cartes dévoilées sont défaussées.") {}
 Voleur::~Voleur() {}
 
@@ -53,16 +55,28 @@ void Voleur::utiliser(Joueur& J, Plateau& P) const {
         UI::afficherInformation("Vous n'avez rien à voler.\n"); 
         UI::animationChargement(4);
     }
-    else if (cartesEcartees.size()==1) {
-        UI::afficherInformation(J.getPseudo() + ", vous volez : " + cartesEcartees.at(0)->getNom());
-        J.ajouterADefausse(cartesEcartees.at(0));
-        UI::animationChargement(4);
-    }
     else {
-        UI::afficherInformation("Voici les cartes que vous venez d'écarter..."); 
-        size_t idxChoix = UI::choixParmiCartes(J,cartesEcartees,1).at(0);
-        J.ajouterADefausse(cartesEcartees.at(idxChoix));
-        cartesEcartees.erase(cartesEcartees.begin() + idxChoix);
+        // on affiche les cartes écartées
+        UI::afficherInformation("Voici les cartes que vous allez écarter : "); 
+        std::string texte = "|";
+        for (auto carte : cartesEcartees) {
+            texte += carte->getNom() + "|";
+        }
+        texte += " ";
+        UI::afficherInformation(texte);
+
+        // on demande au joueur s'il veut en voler une
+        std::vector<size_t> idxChoix = {};
+        if (UI::choixOuiNon("Souhaitez-vous en voler une ?")) {
+            idxChoix = UI::choixParmiCartes(J,cartesEcartees,1);
+        }
+        
+        // si une carte est volée :
+        if (!idxChoix.empty()) {
+            J.ajouterADefausse(cartesEcartees.at(idxChoix.at(0)));
+            cartesEcartees.erase(cartesEcartees.begin() + idxChoix.at(0));
+        }
+        // on met dans le rebut les autres
         for (const Carte* c : cartesEcartees) {
             P.ajoutRebut(c);
         }
