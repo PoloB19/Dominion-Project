@@ -18,12 +18,12 @@ PILE;Village;3
 PILE;Voleur;8
 REBUT;Domaine;Domaine;Festin;Festin;Festin;Malediction;Malediction
 JOUEUR;Mélo;1;1;0;19
-MAIN;Festin;Douves;Douves;Cuivre;Village;Mine;Voleur;SalleDuTrone
+MAIN;Festin;Cuivre;SalleDuTrone
 EN_JEU
 PIOCHE;SalleDuTrone;Voleur
 DEFAUSSE;Province;Province;Province;Village;Village;Or;Or;Or;Argent;Laboratoire;Province;Cuivre;Or;Cuivre
 JOUEUR;Paul;2;0;0;18
 MAIN;Douves;Douves;Douves;Mine;Millice
 EN_JEU;Village;Cuivre;Cuivre;Cuivre
-PIOCHE;Village;Cave;Jardins;Voleur;SalleDuTrone
+PIOCHE;Voleur;Voleur;Village;Cave;Jardins;Voleur;SalleDuTrone;Voleur;Voleur;Voleur;SalleDuTrone
 DEFAUSSE
