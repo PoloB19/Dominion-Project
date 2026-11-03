@@ -22,7 +22,7 @@ void UI::clearScreen() {
 }
 
 void UI::animationChargement(size_t temps_attente) {
-    retourALigne(); // VERIFIER QUE CA FAIT PAS TROP
+    retourALigne(); 
     const size_t tailleBarre = 20;
     const size_t delaiMs = (temps_attente * 1000) / tailleBarre; // découpe le temps pour la barre
 

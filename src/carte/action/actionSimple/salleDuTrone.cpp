@@ -8,26 +8,23 @@ SalleDuTrone::~SalleDuTrone() {}
 
 void SalleDuTrone::utiliser(Joueur& J, Plateau& P) const {
 
-    while(true){
+    std::vector<const Carte*> mainAction;
 
-        std::vector<const Carte*> mainAction;
-
-        for (const Carte* c : J.getMain()){
-            if (c->getType() == "Action"){
-                mainAction.push_back(c);
-            }
+    for (const Carte* c : J.getMain()){
+        if (c->getType() == "Action"){
+            mainAction.push_back(c);
         }
-
-        if(mainAction.size() <= 1){
-            UI::annonceErreur("vous n'avez pas de cartes type Action dans votre main.");
-            return;
-        }
-
-        const size_t idCarteChoisie = UI::choixParmiCartes(J,mainAction, 1).at(0);
-
-        mainAction.at(idCarteChoisie)->utiliser(J, P);
-        mainAction.at(idCarteChoisie)->utiliser(J, P);
-
-        J.enleverDepuisMain(mainAction.at(idCarteChoisie)->getNom(),Emplacement::DEFAUSSE);
     }
+
+    if(mainAction.size() < 1){ // erreur corrigée
+        UI::annonceErreur("vous n'avez pas de cartes type Action dans votre main.");
+        return;
+    }
+
+    const size_t idCarteChoisie = UI::choixParmiCartes(J,mainAction, 1).at(0);
+
+    mainAction.at(idCarteChoisie)->utiliser(J, P);
+    mainAction.at(idCarteChoisie)->utiliser(J, P);
+
+    J.enleverDepuisMain(mainAction.at(idCarteChoisie)->getNom(),Emplacement::DEFAUSSE);
 }
